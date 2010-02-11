@@ -1,0 +1,16 @@
+\newcommand\@ptsize{}
+\DeclareOption{a3paper}{\setlength\paperheight{420mm}\setlength\paperwidth{297mm}}
+\DeclareOption{a4paper}{\setlength\paperheight{297mm}\setlength\paperwidth{210mm}}
+\DeclareOption{a5paper}{\setlength\paperheight{210mm}\setlength\paperwidth{148mm}}
+\DeclareOption{10pt}{\renewcommand\@ptsize{10}}
+\DeclareOption{12pt}{\renewcommand\@ptsize{12}}
+\DeclareOption{14pt}{\renewcommand\@ptsize{14}}
+\DeclareOption{draft}{\setlength\overfullrule{5pt}}
+\DeclareOption{final}{\setlength\overfullrule{0pt}}
+
+\ExecuteOptions{a4paper,14pt,final,koi8-r}
+\ProcessOptions
+
+\input{size\@ptsize.clo}
+%\RequirePackage{DefFonts}
+\RequirePackage{G2-105}

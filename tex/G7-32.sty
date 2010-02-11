@@ -1,0 +1,166 @@
+% This package designed and commented in russian utf-8 encoding.
+%
+% Лицензия GNU GPL v2 и совместимые
+%
+% Автор - Алексей Томин, с помощью списка рассылки latex-gost-request@ice.ru
+% Все вопросы, замечания и пожелания сюда: mailto:alxt@yandex.ru
+%
+% Дальнейшая разработка и поддержка - Михаил Конник,
+% связаться можно по адресу mydebianblog@gmail.com
+%
+\ProvidesPackage{G7-32}[2003/07/07 v1.00 Titles for GOST 7.32-2001]
+
+%стандартные части
+\newcommand\Executors{%список исполнителей
+ \chapter*{\CYRS\cyrp\cyri\cyrs\cyro\cyrk~%
+           \cyri\cyrs\cyrp\cyro\cyrl\cyrn\cyri\cyrt\cyre\cyrl\cyre\cyr\cyrishrt}%
+}
+\newcommand\Referat{%реферат
+ \chapter*{\CYRR\cyre\cyrf\cyre\cyrr\cyra\cyrt}%
+}
+\addto\captionsrussian{%содержание
+ \def\contentsname{%
+  \CYRS\cyro\cyrd\cyre\cyrr\cyrzh\cyra\cyrn\cyri\cyre}%
+}
+\newcommand\NormRefs{%нормативные ссылки
+ \chapter*{\CYRN\cyro\cyrr\cyrm\cyra\cyrt\cyri\cyrv\cyrn\cyrery\cyre~%
+           \cyrs\cyrs\cyrery\cyrl\cyrk\cyri}%
+}
+\newcommand\Defines{%определения
+ \chapter*{\CYRO\cyrp\cyrr\cyre\cyrd\cyre\cyrl\cyre\cyrn\cyri\cyrya}%
+}
+\newcommand\Abbreviations{%обозначения и сокращения
+ \chapter*{\CYRO\cyrb\cyro\cyrz\cyrn\cyra\cyrch\cyre\cyrn\cyri\cyrya~\cyri~%
+           \cyrs\cyro\cyrk\cyrr\cyra\cyrshch\cyre\cyrn\cyri\cyrya}%
+}
+\newcommand\Introduction{%введение
+ \chapter{\CYRV\cyrv\cyre\cyrd\cyre\cyrn\cyri\cyre}%
+}
+\newcommand\Conclusion{%заключение
+ \chapter{\CYRZ\cyra\cyrk\cyrl\cyryu\cyrch\cyre\cyrn\cyri\cyre}%
+}
+\addto\captionsrussian{%список использованных источников
+ \def\bibname{%
+  \CYRS\cyrp\cyri\cyrs\cyro\cyrk~
+  \cyri\cyrs\cyrp\cyro\cyrl\cyrsftsn\cyrz\cyro\cyrv\cyra\cyrn\cyrn\cyrery\cyrh~
+  \cyri\cyrs\cyrt\cyro\cyrch\cyrn\cyri\cyrk\cyro\cyrv}%
+}
+
+%Элементы оформления титульной страницы
+\newcommand\Nir@UdkName{\CYRU\CYRD\CYRK}
+
+\newcommand\Nir@No{%
+ \No~\cyrg\cyro\cyrs\cyrr\cyre\cyrg\cyri\cyrs\cyrt\cyrr\cyra\cyrc\cyri\cyri%
+}
+
+\newcommand\Nir@Confirm{
+ {\small\CYRU\CYRT\CYRV\CYRE\CYRR\CYRZH\CYRD\CYRA\CYRYU}%
+}
+
+\newcommand\Nir@InventarNo{
+ \CYRI\cyrn\cyrv.~\No
+}
+
+\newcommand\Nir@Otchet{{%
+ \small\CYRO\CYRT\CYRCH\CYRYO\CYRT \\
+ \CYRO{} \CYRN\CYRA\CYRU\CYRCH\CYRN\CYRO-%
+ \CYRI\CYRS\CYRS\CYRL\CYRE\CYRD\CYRO\CYRV\CYRA\CYRT\CYRE\CYRL\CYRSFTSN\CYRS\CYRK\CYRO\CYRISHRT{} %
+ \CYRR\CYRA\CYRB\CYRO\CYRT\CYRE%
+}}
+
+\newcommand\Nir@AnnOtchet{ %отчёт аннотационный!?
+}
+
+\newcommand\Nir@MainBegin{%
+ \CYRR\cyru\cyrk\cyro\cyrv\cyro\cyrd\cyri\cyrt\cyre\cyrl\cyrsftsn{} %
+ \CYRN\CYRI\CYRR%
+}
+
+\newcommand\Nir@OrgLongName{%
+ \CYRP\cyro\cyrl\cyrn\cyro\cyre~
+ \cyrn\cyra\cyrz\cyrv\cyra\cyrn\cyri\cyre~
+ \cyro\cyrr\cyrg\cyra\cyrn\cyri\cyrz\cyra\cyrc\cyri\cyri%
+}
+
+\newcommand\Nir@StageNo{ % номер этапа работ
+}
+
+\newcommand\Nir@StageTitle{ % заголовок этапа работ
+}
+\newcommand\Nir@StageType{ % вид отчёта
+}
+
+
+\newcommand\Nir@BossPost{%
+ \CYRK\cyrt\cyro \newline
+ \cyru\cyrt\cyrv\cyre\cyrr\cyrzh\cyrd\cyra\cyre\cyrt%
+}
+
+\newcommand\Nir@BossName{\CYRF.~\CYRI.~\CYRO}
+\newcommand\Nir@Year{\the\year}
+\newcommand\Nir@Town{\CYRG\cyro\cyrr\cyro\cyrd}
+\newcommand\Nir@ManagerPost{%
+ \cyrb\cyro\cyrl\cyrsftsn\cyrsh\cyro\cyrishrt{}
+ \cyrn\cyra\cyrch\cyra\cyrl\cyrsftsn\cyrn\cyri\cyrk%
+}
+
+\newcommand\Nir@ManagerName{\CYRI\cyrv\cyra\cyrn\cyro\cyrv}
+
+\newcommand\NirTitle[1]{
+ \thispagestyle{empty}
+ \begin{centering}
+  \linespread{1.1}\normalsize
+  {\Nir@OrgLongName}
+
+  \vfill
+  \begin{tabular}{p{80mm}p{80mm}}
+    \Nir@UdkName \newline
+    \Nir@No \newline
+    \Nir@InventarNo \newline
+   &
+    \Nir@Confirm
+
+    \vspace{5mm}
+    \Nir@BossPost \newline \newline
+    \underline{~~~~~~~~~~~~~~~~~} \Nir@BossName \newline
+    <<\underline{~~~~}>>\underline{~~~~~~~~~~~~~~~~~} \Nir@Year~\cyrg.
+  \end{tabular}
+  \vfill
+
+\Nir@AnnOtchet \Nir@Otchet
+
+  \vspace{8mm}
+  #1
+  \vspace{8mm}
+
+\Nir@StageNo~~\Nir@StageTitle 
+
+(\Nir@StageType)
+
+
+
+  \vfill
+  \begin{tabular}{p{80mm}p{80mm}}
+    \Nir@MainBegin, \newline
+    \Nir@ManagerPost
+   &
+    ~\newline\underline{~~~~~~~~~~~~~~~~~~~} \Nir@ManagerName \newline
+  \end{tabular}
+  \vfill
+  \vfill
+  \Nir@Town~\Nir@Year
+
+ \end{centering}
+ \linespread{\Gost@LineSpread}\normalsize
+}
+
+%Эти команды нужно вызвать для корректного определения титульной страницы
+\newcommand\NirStage[3]{\renewcommand\Nir@StageNo{#1}\renewcommand\Nir@StageType{#2}\renewcommand\Nir@StageTitle{#3}}%%virens added: номер госрегистрации
+\newcommand\NirIsAnnotacion[1]{\renewcommand\Nir@AnnOtchet{#1}} %%Если отчёт аннотационный
+\newcommand\NirOrgLongName[1]{\renewcommand\Nir@OrgLongName{#1}}
+\newcommand\NirBoss[2]{\renewcommand\Nir@BossPost{#1}\renewcommand\Nir@BossName{#2}}
+\newcommand\NirYear[1]{\renewcommand\Nir@Year{#1}}
+\newcommand\NirManager[2]{\renewcommand\Nir@ManagerPost{#1}\renewcommand\Nir@ManagerName{#2}}
+\newcommand\NirTown[1]{\renewcommand\Nir@Town{#1}}%%virens added: указываем город написания отчёта
+\newcommand\NirUdk[1]{\renewcommand\Nir@UdkName{#1}}%%virens added: для изменения УДК в тексте документа
+\newcommand\NirGosNo[1]{\renewcommand\Nir@No{#1}}%%virens added: номер госрегистрации

@@ -1,0 +1,529 @@
+% This package designed and commented in russian koi8-r encoding.
+%
+% Лицензия GNU GPL v2 и совместимые
+%
+% Стиль, задающий соответствие документа ГОСТ 2-105-95.
+%
+% Автор - Алексей Томин, с помощью списка рассылки latex-gost-request@ice.ru
+% Все вопросы, замечания и пожелания сюда: mailto:alxt@yandex.ru
+%
+% Дальнейшая разработка и поддержка - Михаил Конник,
+% связаться можно по адресу mydebianblog@gmail.com
+%
+% Используется:
+%  footmisc.sty для сносок снизу и нумерации на каждой странице
+%  amssymb      для русских "меньше или равно" "больше или равно"
+%  leqno.clo    формулы правильно
+%  caption2     оформление заголовков риснуков и таблиц
+%  icomma       запятая в формулах
+%  longtable    многостраничные таблицы
+
+% Также дополнялся Иваном Коротковым и Всеволодом Крищенко.
+% Основные изменения:
+% 1) заработал cases и tabular;
+% 2) добавлены точки после номеров (по ГОСТ);
+% 3) добавлена опция utf8
+% 4) комментарии к UTF-8.
+% 5) разное.
+
+\ProvidesPackage{G2-105}[2003/07/07 v1.00 General reqs. GOST 2.105-95]
+\NeedsTeXFormat{LaTeX2e}
+
+\newif\if@usehyperref\@usehyperreffalse
+\newif\if@usepscyr   \@usepscyrfalse
+\newcommand\Gost@encoding{}
+\newcommand\Gost@LineSpread{1.3}
+\DeclareOption{usehyperref}{\@usehyperreftrue}
+\DeclareOption{usepscyr}{\@usepscyrtrue}
+\DeclareOption{koi8-r}{\renewcommand\Gost@encoding{koi8-r}}
+\DeclareOption{cp1251}{\renewcommand\Gost@encoding{cp1251}}
+\DeclareOption{utf8}{\renewcommand\Gost@encoding{utf8}}
+\DeclareOption{cp866} {\renewcommand\Gost@encoding{cp866} }
+\DeclareOption{econommode}{\newcommand\Gost@LineSpread{1.3}\erroqweqwe}
+
+\ExecuteOptions{a4paper,14pt,final,koi8-r}
+\ProcessOptions
+
+%стиль страницы
+\pagestyle{plain}
+\pagenumbering{arabic}
+\raggedbottom
+\onecolumn
+
+%нечто
+\newcommand\@pnumwidth{1.55em}
+\renewcommand\baselinestretch{}
+\@lowpenalty   51                     %
+\@medpenalty  151                     %
+\@highpenalty 301                     %
+\renewcommand\topfraction{.7}         %
+\renewcommand\bottomfraction{.3}      %
+\renewcommand\textfraction{.2}        %
+\renewcommand\floatpagefraction{.5}   %
+\renewcommand\dbltopfraction{.7}      %
+\renewcommand\dblfloatpagefraction{.5}%
+\def\ps@headings{%
+  \let\@oddfoot\@empty
+  \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
+  \let\@mkboth\markboth
+  \def\chaptermark##1{%
+    \markright {\MakeUppercase{%
+      \ifnum \c@secnumdepth >\m@ne
+          \@chapapp\ \thechapter. \ %
+      \fi
+      ##1}}}}
+\def\ps@myheadings{%
+    \let\@oddfoot\@empty\let\@evenfoot\@empty
+    \def\@evenhead{\thepage\hfil\slshape\leftmark}%
+    \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
+    \let\@mkboth\@gobbletwo
+    \let\chaptermark\@gobble
+    \let\sectionmark\@gobble
+}
+\setlength\columnsep{10\p@}
+\setlength\columnseprule{0\p@}
+\setlength\lineskip{1\p@}
+\setlength\normallineskip{1\p@}
+\setlength\parskip{0\p@ \@plus \p@}
+\setlength\leftmargini {2.5em}
+\setlength\leftmarginii{2.2em}
+\setlength\labelsep  {.5em}
+\setlength\labelwidth{\leftmargini}\addtolength\labelwidth{-\labelsep}
+\setlength\arraycolsep{5\p@}
+\setlength\tabcolsep{6\p@}
+\setlength\arrayrulewidth{.4\p@}
+\setlength\doublerulesep{2\p@}
+\setlength\tabbingsep{\labelsep}
+\setlength\fboxsep{3\p@}
+\setlength\fboxrule{.4\p@}
+\newcommand\appendix{}
+
+% Счётчики общего числа страниц, таблиц, рисунков и источников
+\newcounter{totalpage}
+\newcounter{totaltable} \setcounter{totaltable} {0}
+\newcounter{totalfigure}\setcounter{totalfigure}{0}
+\newcounter{totalbib}   \setcounter{totalbib}   {0}
+\newif\if@tablesonchapter \@tablesonchapterfalse
+\newif\if@figuresonchapter\@figuresonchapterfalse
+
+% На последней странице ставятся метки с номерами
+%  - последней страницы
+%  - числа таблиц, имеющих caption
+%  - числа рисунков, имеющих caption
+\def\totalobjects@putlabel{%
+ \addtocounter{totalpage}  {\c@page}
+ \addtocounter{totaltable} {\c@table}
+ \addtocounter{totalfigure}{\c@figure}
+ \addtocounter{totaltable} {-1}
+ \addtocounter{totalfigure}{-1}
+ \addtocounter{totalbib}{-1}
+ \refstepcounter{totalpage}  \label{reftotalpages}
+ \refstepcounter{totaltable} \label{reftotaltables}
+ \refstepcounter{totalfigure}\label{reftotalfigures}
+ \refstepcounter{totalbib}   \label{reftotalbibs}
+}
+\AtEndDocument{\totalobjects@putlabel}
+
+% Команды отображение общего числа ...
+\newcommand\totalpages  {\pageref{reftotalpages}}
+\newcommand\totaltables {\ref{reftotaltables}   }
+\newcommand\totalfigures{\ref{reftotalfigures}  }
+\newcommand\totalbibs   {\ref{reftotalbibs}     }
+
+% 3.6 Абзацный отступ - 15..17 мм
+\setlength\parindent{15mm}
+
+% 4.1.1 - 4.1.6 Деление документа
+
+% Точки после номеров разделов, глав и тд. -- Коротков И.
+% НЕВЕРНОЕ РЕШЕНИЕ Крищенко В.
+% \renewcommand*{\@seccntformat}[1]{\csname the#1\endcsname.\quad}
+
+
+
+%  Команды для подстройки вида заголовков:
+%   расстояние между заголовком и текстом
+\newlength\GostAfterTitleSkip    \setlength\GostAfterTitleSkip    {3.2ex}%15mm}
+\newlength\GostBetweenTitleSkip  \setlength\GostBetweenTitleSkip  {1.8ex}%8mm}
+\newlength\GostBeforTitleSkip    \setlength\GostBeforTitleSkip    {1.8ex}%\GostAfterTitleSkip}
+\newlength\GostBeforNoTitleSkip  \setlength\GostBeforNoTitleSkip  {1.0ex}
+\newlength\GostHTitleSpace       \setlength\GostHTitleSpace       {2mm}
+\newlength\GostTitleIndent       \setlength\GostTitleIndent       {\parindent}
+\newlength\Gost@ChapterIndent    \setlength\Gost@ChapterIndent    {\GostTitleIndent}
+\newlength\Gost@MainChapterIndent\setlength\Gost@MainChapterIndent{\parindent}
+\newlength{\Gost@TitleDropSkip}
+ \setlength\Gost@TitleDropSkip{\GostBetweenTitleSkip}
+ \addtolength\Gost@TitleDropSkip{-\GostAfterTitleSkip}
+%  стиль всех заголовков
+\newcommand\GostTitleStyle{\normalfont\bfseries}
+\newcommand\Gost@MainChapterStyle{}
+\newcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}
+
+%  Раздел
+\newcounter{chapter}
+\renewcommand\thechapter{\@arabic\c@chapter}
+\newcommand\chapter{%
+ \clearpage%
+ \if@figuresonchapter%
+  \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
+ \fi%
+ \if@tablesonchapter%
+  \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
+ \fi%
+ \@startsection{chapter}{0}%
+  {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
+  {\GostTitleStyle\large\Gost@ChapterStyle}%
+}
+\newcommand*\chaptermark[1]{}
+\newcommand\apart[2]{\chapter {#2\label{#1}}}
+\newcommand\cpart[2]{\chapter*{#2\label{#1}}}
+
+%  Подраздел
+\newcounter{section}[chapter]
+\renewcommand\thesection{\thechapter.\@arabic\c@section}
+\newcommand\section{%
+ \@startsection{section}{1}%
+ {\GostTitleIndent}{\GostBeforTitleSkip}{\GostAfterTitleSkip}%
+ {\GostTitleStyle}%
+}
+\newcommand{\asubpart}[2]{\section{#2\label{#1}}}
+
+%  Пункт
+\newcounter{subsection}[section]
+\renewcommand\thesubsection{\thesection.\@arabic\c@subsection}
+%  ... попадающий в оглавление
+\newcommand\subsection{%
+ \@startsection{subsection}{2}%
+ {\GostTitleIndent}{\GostBeforTitleSkip}{\GostAfterTitleSkip}%
+ {\GostTitleStyle}%
+}
+\newcommand{\apara}[2]{\subsection{#2\label{#1}}}
+%  ... не попадающий в оглавление
+\newcommand\nsubsection{%
+ \par\vspace{\GostBeforNoTitleSkip}%
+ \refstepcounter{subsection}\thesubsection%
+ \hspace{\GostHTitleSpace}%
+}
+\newcommand{\npara}[1]{\nsubsection\label{#1}}
+
+%  Подпункт
+\newcounter{subsubsection}[subsection]
+\renewcommand\thesubsubsection{\thesubsection.\@arabic\c@subsubsection}
+%  ... попадающий в оглавление
+\newcommand\subsubsection{%
+ \@startsection{subsubsection}{4}%
+ {\GostTitleIndent}{\GostBeforTitleSkip}{\GostAfterTitleSkip}%
+ {\GostTitleStyle}%
+}
+\newcommand\asubpara[2]{\subsubsection{#2\label{#1}}}
+%  ... не попадающий в оглавление
+\newcommand\nsubsubsection{%
+ \par\vspace{\GostBeforNoTitleSkip}%
+ \refstepcounter{subsubsection}\thesubsubsection%
+ \hspace{\GostHTitleSpace}%
+}
+\newcommand\nsubpara[1]{\nsubsubsection\label{#1}}
+
+\newlength{\NirTitleDropSkip}
+%  Эта команда должна вставлятся между двумя заголовками
+\newcommand\ttl{\vspace{\Gost@TitleDropSkip}}
+
+%  Нумеруются все заголовки
+\setcounter{secnumdepth}{3}
+%  в оглавлении- тоже могут быть все.
+\setcounter{tocdepth}{4} %% virens: обычно только первый подраздел
+%  перенос в словах-с-дефисом
+\lccode`\-=`\-
+\defaulthyphenchar=127
+
+% Импорт необходимых пакетов
+\if@usehyperref
+ \RequirePackage[unicode]{hyperref}
+\fi
+\if@usepscyr
+  \RequirePackage[math]{pscyr}
+\fi
+\RequirePackage{mathtext}%русские буквы в формулах
+\RequirePackage[T2A]{fontenc}
+\RequirePackage[\Gost@encoding]{inputenc}
+\RequirePackage[english,russian]{babel}
+\RequirePackage{flafter}
+
+% 4.2.7 Перечисления
+
+\newlength{\GostItemGap}
+\newlength{\GostItemIndent}
+\newcommand\Gost@List{%
+ \setlength{\itemsep}{0mm}%                пробел между последовательными элементами
+ \setlength{\topsep}{1mm}%                 отступ от текста до перечня
+ \setlength{\partopsep}{0mm}%              дополнительный отступ,  если начали абзац
+ \setlength{\parsep}{1mm}%                 расстояние между абзацами внутри пункта
+ \setlength{\leftmargin}{\GostItemIndent}% левый отступ до текста
+ \setlength{\itemindent}{\GostItemGap}%    дополнительный левый отступ первой строчки
+ \setlength{\labelsep}{2\GostItemGap}%     от метки до текста
+}
+\renewcommand{\@listI} {\Gost@List}
+\renewcommand{\@listii}{\Gost@List}
+\setlength\GostItemGap{2mm} % небольшие отступы для пунктов перечисления
+\setlength\leftmarginii{\parindent}
+\setlength\GostItemIndent{\parindent}
+ \addtolength\GostItemIndent{-\GostItemGap}
+
+%  ненумерованные перечисления
+\newcommand{\labelitemi}{--}
+
+%  нумерованные перечисления
+\renewcommand\theenumi {\asbuk{enumi}}
+\renewcommand\theenumii{\arabic{enumii}}
+\newcommand\labelenumi{\theenumi)}
+\newcommand\labelenumii{\theenumii)}
+\renewcommand\p@enumii{\theenumi}
+
+%  ссылка на нумерованное перечисление
+\newcommand\pref[2]{%
+ \cyrp\cyre\cyrr\cyre\cyrch\cyri\cyrs\cyrl\cyre\cyrn\cyri\cyre~\ref{#2})~\ref{#1}}
+
+%перечисление типа abbreviation - для списка сокращения
+%заменено на description для совместимости -- Коротков И.
+\newenvironment{description}{%
+ \list{}{%
+  \labelwidth\z@ \itemindent-\leftmargin \leftmargin 25mm%
+  \let\makelabel\abbreviationlabel%
+ }%
+}{%
+ \endlist%
+}
+\newcommand*\abbreviationlabel[1]{\hspace\labelsep\normalfont #1~---}
+
+% 4.2.15 - 4.2.19 Формулы
+
+\RequirePackage{amssymb} % для русских "меньше или равно" "больше или равно"
+\RequirePackage{amsmath} % Пусть сразу будет, какой НИР без него -- Коротков И.
+\RequirePackage{icomma}
+\input{leqno.clo}
+
+\renewcommand\eqref[1]{\ref{#1}} %Было newcommand -- Коротков И.
+\def\@eqnnum{{\normalfont\normalcolor\theequation}}
+
+
+% Убраны скобки вокруг  \arabic{equation} -- Крищенко В.
+% В какой-то момент (после ams*?) стало появляться две пары скобок вокруг номеров формул.
+%\renewcommand{\theequation}{\arabic{equation}}
+\newlength\Gost@EqRemLen
+\newlength\Gost@@EqRemLen
+\newenvironment{eqrem}{%
+ \begin{tabular}{p{\Gost@@EqRemLen}p{\Gost@EqRemLen}}
+  \cyrg\cyrd\cyre
+}{
+ \end{tabular}
+}
+% пояснения м.б. в виде
+%  \begin{eqrem}
+%   & X~--- неизвестная \\
+%   & Y~--- ещё неизвестная \\
+%  \end{eqrem}
+
+% ... допускается нумерация формул в пределах раздела
+
+% Скобки убраны
+\newcommand\EqInChaper{%
+ \@addtoreset{equation}{chapter}%
+ \renewcommand{\theequation}{\thechapter.\arabic{equation}}%
+}
+
+%Перенос формул по =+-
+%\begingroup
+%\catcode`\+\active\gdef+{\mathchar8235\nobreak\discretionary{}%
+% {\usefont{OT1}{cmr}{m}{n}\char43}{}}
+%\catcode`\-\active\gdef-{\mathchar8704\nobreak\discretionary{}%
+% {\usefont{OMS}{cmsy}{m}{n}\char0}{}}
+%\catcode`\=\active\gdef={\mathchar12349\nobreak\discretionary{}%
+% {\usefont{OT1}{cmr}{m}{n}\char61}{}}
+%\endgroup
+%\def\cdot{\mathchar8705\nobreak\discretionary{}%
+% {\usefont{OMS}{cmsу}{m}{n}\char1}{}}
+%\def\times{\mathchar8706\nobreak\discretionary{}%
+% {\usefont{OMS}{cmsy}{m}{n}\char2}{}}
+%\mathcode`\==32768
+%\mathcode`\+=32768
+%\mathcode`\-=32768
+
+\renewcommand\leq{\leqslant}
+\renewcommand\geq{\geqslant}
+
+% 4.3.1 - 4.3.3 Иллюстрации
+
+\newcommand\@makecaption{}
+\RequirePackage[center]{caption2}
+
+\def\fps@figure{bph}
+\def\ftype@figure{1}
+\def\ext@figure{lof}
+\def\fnum@figure{\figurename~\thefigure}
+
+\newcounter{figure}
+\newenvironment{figure} {\@float   {figure}}{\end@float   }
+\newenvironment{figure*}{\@dblfloat{figure}}{\end@dblfloat}
+\renewcommand\captionlabeldelim{ ---}
+% \renewcommand\captionmargin{0.2cm} %% virens: это приводит к существенному сужению ширины подписи!!!!
+
+%  Подпись к рисунку
+\addto\captionsrussian{\def\figurename{{\cyr\CYRR\cyri\cyrs\cyru\cyrn\cyro\cyrk}}}
+
+% ... допускается нумерация рисунков в пределах раздела
+\newcommand\PicInChaper{%
+ \@addtoreset{figure}{chapter}%
+ \@figuresonchaptertrue%
+ \renewcommand{\thefigure}{\thechapter.\arabic{figure}}%
+}
+
+% 4.4 - таблицы
+% ... допускается нумерация таблиц в пределах раздела
+
+% НЕ добавлена точка после таблицы. Крищенко
+
+\newcommand\TableInChaper{%
+ \@addtoreset{table}{chapter}%
+ \@tablesonchaptertrue%
+ \renewcommand{\thetable}{\thechapter.\arabic{table}}%
+}
+
+\RequirePackage{longtable}% многостраничные таблицы
+%   Для выравнивания длинных таблиц
+\LTleft=\z@
+\LTright=\fill
+\def\LT@makecaption#1#2#3{%
+  \LT@mcol\LT@cols l{\hbox to\z@{\parbox[t]\LTcapwidth{%
+      \sbox\@tempboxa{#1{#2\captionlabeldelim{} }#3}%
+          {\box\@tempboxa\hfil}%
+          \endgraf}%
+    \hss}}}
+
+%  4.3.4 - 4.1.14 Приложения
+\renewcommand\appendix{\par
+ \setcounter{secnumdepth}{4}
+ \setcounter{chapter}{0}%
+ \EqInChaper\PicInChaper\TableInChaper%
+ \gdef\@chapapp{\appendixname}%
+ \gdef\thechapter{\@Asbuk\c@chapter}%
+ \renewcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}%
+ \setlength\Gost@ChapterIndent{\Gost@MainChapterIndent}%
+}
+
+% 4.5 Сноски
+\RequirePackage[perpage,bottom]{footmisc}
+
+% Части документа- для выбора вида заголовков и т.д.
+%  введение, обозначения
+\newcommand\frontmatter{%
+ \setcounter{secnumdepth}{-1}%
+ \renewcommand\Gost@ChapterStyle{\centering}%
+ \setlength\Gost@ChapterIndent{0mm}%
+}
+%  основная часть
+\newcommand\mainmatter{
+ \setcounter{secnumdepth}{4}
+ \renewcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}%
+ \setlength\Gost@ChapterIndent{\Gost@MainChapterIndent}%
+}
+%  заключение, библиография
+\newcommand\backmatter{
+ \setcounter{secnumdepth}{-1}
+ \renewcommand\Gost@ChapterStyle{\centering}%
+ \setlength\Gost@ChapterIndent{0mm}%
+}
+
+%всякие оглавления
+\newcommand\tableofcontents{\chapter*{\contentsname}\@starttoc{toc}}
+\newcommand\listoffigures{\chapter*{\listfigurename}\@starttoc{lof}}
+\newcommand\listoftables{\chapter*{\listtablename}\@starttoc{lot}}
+
+\newcommand{\l@chapter}   {\@dottedtocline{1}{12mm}{1.1em}}
+\newcommand{\l@section}{\@dottedtocline{2}{12mm}{2.1em}}
+\newcommand{\l@subsection}   {\@dottedtocline{3}{12mm}{3.1em}}
+\newcommand{\l@subsubsection}{\@dottedtocline{4}{12mm}{4.1em}}
+\newcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
+\newcommand*\l@table {\@dottedtocline{1}{1.5em}{2.3em}}
+\newcommand\@tocrmarg{2.55em} %отступ правого края оглавления перенесённых строк
+\newcommand\@dotsep{4.5}      %между точками в оглавлении в em
+\linespread{\Gost@LineSpread} %полуторный межстрочный интервал
+
+\AtBeginDocument{%
+ \makeatletter%
+  \setlength\Gost@EqRemLen{\textwidth}%
+  \addtolength\Gost@EqRemLen{-10mm}%
+  \settowidth\Gost@@EqRemLen{\cyrg\cyrd\cyre}%
+  \addtolength\Gost@EqRemLen{-\Gost@@EqRemLen}%
+ \makeatother%
+}
+
+%библиография
+\newdimen\bibindent
+\newenvironment{thebibliography}[1]{
+ \chapter*{\bibname}\addcontentsline{toc}{chapter}{\bibname}%
+ \list{\@biblabel{\@arabic\c@enumiv}}%
+      {\settowidth\labelwidth{\@biblabel{#1}}%
+       \leftmargin\labelwidth
+       \advance\leftmargin\labelsep
+       \@openbib@code
+       \usecounter{enumiv}%
+       \let\p@enumiv\@empty
+       \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+ \sloppy\clubpenalty4000\widowpenalty4000%
+ \sfcode`\.\@m
+}{
+ \setcounter{totalbib}{\c@enumiv}%
+ \def\@noitemerr
+ {\@latex@warning{Empty `thebibliography' environment}}%
+ \endlist
+}
+\renewcommand\@biblabel{}%
+\setlength\bibindent{1.5em}
+
+% Точки после номеров в библиографии. Несовместимо с natbib! -- Коротков И.
+%\makeatletter
+\renewcommand*{\@biblabel}[1]{\hfill#1.}
+%\makeatother
+
+%индекс
+\newenvironment{theindex}{
+                \columnseprule \z@
+                \columnsep 35\p@
+                \twocolumn[\@makeschapterhead{\indexname}]%
+                \thispagestyle{plain}\parindent\z@
+                \parskip\z@ \@plus .3\p@\relax
+                \let\item\@idxitem}
+               {\onecolumn}
+\newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
+\let\@openbib@code\@empty
+\newcommand\@idxitem{\par\hangindent 40\p@}
+\newcommand\subitem{\@idxitem \hspace*{20\p@}}
+\newcommand\subsubitem{\@idxitem \hspace*{30\p@}}
+\newcommand\indexspace{\par \vskip 10\p@ \@plus5\p@ \@minus3\p@\relax}
+
+%для русского языка
+\righthyphenmin=2
+\unitlength=1mm
+\clubpenalty=10000
+\widowpenalty=10000
+%что-то, связаннное с разрывом строк
+\@beginparpenalty -\@lowpenalty
+\@endparpenalty   -\@lowpenalty
+\@itempenalty     -\@lowpenalty
+\skip\@mpfootins = \skip\footins
+
+% потерянные окружения и команды (далеко не все) -- Коротков И.
+\newenvironment{quote}
+               {\list{}{\rightmargin\leftmargin}%
+                \item\relax}
+               {\endlist}
+
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
+\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
+\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+\DeclareRobustCommand*\cal{\@fontswitch\relax\mathcal}
+\DeclareRobustCommand*\mit{\@fontswitch\relax\mathnormal}
