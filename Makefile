@@ -5,7 +5,7 @@ TEX=tex
 
 all: $(PDF)
 
-.PHONY: all tarball
+.PHONY: all tarball clean
 
 
 $(PDF): $(TEX)/$(MAINTEX)
@@ -14,5 +14,5 @@ $(PDF): $(TEX)/$(MAINTEX)
 clean:
 	find $(TEX)/ -regextype posix-egrep -type f ! -regex ".*\.(sty|tex|clo|cls)" -exec rm -f {} \; ;
 
-tarball: clean
+tarball: $(PDF) clean
 	rm latex-G7-32.tar.gz; cd $(TEX) && tar -cjf ../latex-G7-32.tar.gz *
