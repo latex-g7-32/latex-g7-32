@@ -24,7 +24,10 @@
 % 2) добавлены точки после номеров (по ГОСТ);
 % 3) добавлена опция utf8
 % 4) комментарии к UTF-8.
-% 5) разное.
+% 5) изменены отспуты после тире в description;
+% 6) добавлен paragraph;
+% 7) уменьшены отспупы после заголовков и учеличены --- до;
+% 8) разное.
 
 \ProvidesPackage{G2-105}[2003/07/07 v1.00 General reqs. GOST 2.105-95]
 \NeedsTeXFormat{LaTeX2e}
@@ -143,9 +146,17 @@
 
 %  Команды для подстройки вида заголовков:
 %   расстояние между заголовком и текстом
-\newlength\GostAfterTitleSkip    \setlength\GostAfterTitleSkip    {3.2ex}%15mm}
+
+
+% Уменьшено --- Seva
+% \newlength\GostAfterTitleSkip    \setlength\GostAfterTitleSkip    {3.2ex}%15mm}
+\newlength\GostAfterTitleSkip    \setlength\GostAfterTitleSkip    {1.2ex}%5mm}
+
 \newlength\GostBetweenTitleSkip  \setlength\GostBetweenTitleSkip  {1.8ex}%8mm}
-\newlength\GostBeforTitleSkip    \setlength\GostBeforTitleSkip    {1.8ex}%\GostAfterTitleSkip}
+
+% Увеличено --- Seva
+% \newlength\GostBeforTitleSkip    \setlength\GostBeforTitleSkip    {1.8ex}%\GostAfterTitleSkip}
+\newlength\GostBeforTitleSkip    \setlength\GostBeforTitleSkip    {3.2ex}%\GostAfterTitleSkip}
 \newlength\GostBeforNoTitleSkip  \setlength\GostBeforNoTitleSkip  {1.0ex}
 \newlength\GostHTitleSpace       \setlength\GostHTitleSpace       {2mm}
 \newlength\GostTitleIndent       \setlength\GostTitleIndent       {\parindent}
@@ -224,6 +235,14 @@
 }
 \newcommand\nsubpara[1]{\nsubsubsection\label{#1}}
 
+\newcommand\paragraph[1]{%
+ \par\vspace{\GostBeforNoTitleSkip}%
+ \textbf{#1}%
+ \hspace{\GostHTitleSpace}%
+}
+
+
+
 \newlength{\NirTitleDropSkip}
 %  Эта команда должна вставлятся между двумя заголовками
 \newcommand\ttl{\vspace{\Gost@TitleDropSkip}}
@@ -264,10 +283,14 @@
 }
 \renewcommand{\@listI} {\Gost@List}
 \renewcommand{\@listii}{\Gost@List}
-\setlength\GostItemGap{2mm} % небольшие отступы для пунктов перечисления
+
+% 2mm? -- Seva 
+\setlength\GostItemGap{1mm} % небольшие отступы для пунктов перечисления
 \setlength\leftmarginii{\parindent}
 \setlength\GostItemIndent{\parindent}
- \addtolength\GostItemIndent{-\GostItemGap}
+ 
+% ??? -- Seva 
+\addtolength\GostItemIndent{-\GostItemGap}
 
 %  ненумерованные перечисления
 \newcommand{\labelitemi}{--}
@@ -287,7 +310,7 @@
 %заменено на description для совместимости -- Коротков И.
 \newenvironment{description}{%
  \list{}{%
-  \labelwidth\z@ \itemindent-\leftmargin \leftmargin 25mm%
+  \labelwidth\z@ \itemindent-\leftmargin \leftmargin 29mm% 25mm --? Seva
   \let\makelabel\abbreviationlabel%
  }%
 }{%
