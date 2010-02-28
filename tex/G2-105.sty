@@ -349,7 +349,7 @@
 % ... допускается нумерация формул в пределах раздела
 
 % Скобки убраны
-\newcommand\EqInChaper{%
+\newcommand\EqInChapter{%
  \@addtoreset{equation}{chapter}%
  \renewcommand{\theequation}{\thechapter.\arabic{equation}}%
 }
@@ -394,7 +394,7 @@
 \addto\captionsrussian{\def\figurename{{\cyr\CYRR\cyri\cyrs\cyru\cyrn\cyro\cyrk}}}
 
 % ... допускается нумерация рисунков в пределах раздела
-\newcommand\PicInChaper{%
+\newcommand\PicInChapter{%
  \@addtoreset{figure}{chapter}%
  \@figuresonchaptertrue%
  \renewcommand{\thefigure}{\thechapter.\arabic{figure}}%
@@ -405,7 +405,7 @@
 
 % НЕ добавлена точка после таблицы. Крищенко
 
-\newcommand\TableInChaper{%
+\newcommand\TableInChapter{%
  \@addtoreset{table}{chapter}%
  \@tablesonchaptertrue%
  \renewcommand{\thetable}{\thechapter.\arabic{table}}%
@@ -426,7 +426,7 @@
 \renewcommand\appendix{\par
  \setcounter{secnumdepth}{4}
  \setcounter{chapter}{0}%
- \EqInChaper\PicInChaper\TableInChaper%
+ \EqInChapter\PicInChapter\TableInChapter%
  \gdef\@chapapp{\appendixname}%
  \gdef\thechapter{\@Asbuk\c@chapter}%
  \renewcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}%
