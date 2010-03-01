@@ -20,14 +20,15 @@
 
 % Также дополнялся Иваном Коротковым и Всеволодом Крищенко.
 % Основные изменения:
-% 1) заработал cases и tabular;
-% 2) добавлены точки после номеров (по ГОСТ);
-% 3) добавлена опция utf8
-% 4) комментарии к UTF-8.
-% 5) изменены отспуты после тире в description;
-% 6) добавлен paragraph;
-% 7) уменьшены отспупы после заголовков и учеличены --- до;
-% 8) разное.
+% 1) заработали cases и tabular;
+% 2) добавлена опция utf8;
+% 3) комментарии в UTF-8;
+% 4) изменены отступы после тире в description;
+% 5) добавлен \paragraph;
+% 6) уменьшены отспупы после заголовков и учеличены --- до (хотя это, возможно, и нарушает 7-32);
+% 7) сделаны отсупы в оглалвнеии (ГОСТ эту тему обходит, как мы поняли);
+% 8) убран \normalfont отовсюду --- теперь usefont действует на всё.
+% 9) разные мелочи.
 
 \ProvidesPackage{G2-105}[2003/07/07 v1.00 General reqs. GOST 2.105-95]
 \NeedsTeXFormat{LaTeX2e}
@@ -166,7 +167,7 @@
  \setlength\Gost@TitleDropSkip{\GostBetweenTitleSkip}
  \addtolength\Gost@TitleDropSkip{-\GostAfterTitleSkip}
 %  стиль всех заголовков
-\newcommand\GostTitleStyle{\normalfont\bfseries}
+\newcommand\GostTitleStyle{\bfseries}% убран \normalfont
 \newcommand\Gost@MainChapterStyle{}
 \newcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}
 
@@ -316,7 +317,7 @@
 }{%
  \endlist%
 }
-\newcommand*\abbreviationlabel[1]{\hspace\labelsep\normalfont #1~---}
+\newcommand*\abbreviationlabel[1]{\hspace\labelsep #1~---}% убран \normalfont
 
 % 4.2.15 - 4.2.19 Формулы
 
@@ -326,7 +327,7 @@
 \input{leqno.clo}
 
 \renewcommand\eqref[1]{\ref{#1}} %Было newcommand -- Коротков И.
-\def\@eqnnum{{\normalfont\normalcolor\theequation}}
+\def\@eqnnum{{\normalcolor\theequation}}% убран \normalfont
 
 
 % Убраны скобки вокруг  \arabic{equation} -- Крищенко В.
@@ -541,12 +542,13 @@
                 \item\relax}
                {\endlist}
 
-\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
-\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
-\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
-\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
-\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
-\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
-\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+% убран \normalfont из всех \DeclareOldFontCommand
+\DeclareOldFontCommand{\rm}{\rmfamily}{\mathrm}
+\DeclareOldFontCommand{\sf}{\sffamily}{\mathsf}
+\DeclareOldFontCommand{\tt}{\ttfamily}{\mathtt}
+\DeclareOldFontCommand{\bf}{\bfseries}{\mathbf}
+\DeclareOldFontCommand{\it}{\itshape}{\mathit}
+\DeclareOldFontCommand{\sl}{\slshape}{\@nomath\sl}
+\DeclareOldFontCommand{\sc}{\scshape}{\@nomath\sc}
 \DeclareRobustCommand*\cal{\@fontswitch\relax\mathcal}
 \DeclareRobustCommand*\mit{\@fontswitch\relax\mathnormal}
