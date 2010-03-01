@@ -32,9 +32,12 @@ citecolor=black, menucolor=black, filecolor=bla,
 % \usepackage{sectsty} % shit! Does not work
 % \allsectionsfont{\usefont{T2A}{ftm}{m}{}\selectfont}
 
+% Изменение начертания шрифта в подписях к рисункам --- после чего выглядит таймсоподобно.
+\renewcommand{\captionfont}{\usefont{T2A}{ftm}{m}{}}
+\renewcommand{\captionlabelfont}{\usefont{T2A}{ftm}{m}{}}
+
 \begin{document}
 \usefont{T2A}{ftm}{m}{} % Изменение начертания шрифта --- после чего выглядит таймсоподобно.
-
 \frontmatter % выключает нумерацию ВСЕГО; здесь начинаются ненумерованные главы: реферат, введение, глоссарий, сокращения и прочее
 
 \Referat
@@ -74,17 +77,17 @@ citecolor=black, menucolor=black, filecolor=bla,
 % % В начале раздела  можно напмнить его цель
 %
 В данном разделе анализируется и классифицируется существующая всячина и пути создания новой всячины. А вот отступ справа в 1 см.~-- это хоть и по ГОСТ, но ведь диагноз же...
-%
+
+\section{Анализ того и сего}
 
 \textbf{textbf}
+
 \begin{figure}
 \centering
 \caption{Test textbf (\textbf{textbf}).}
 \label{fig:dia}
 \end{figure}
 
-
-\section{Анализ того и сего}
 
 В \cite{Pup99} указано, что...
 
