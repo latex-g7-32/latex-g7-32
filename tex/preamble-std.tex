@@ -14,18 +14,19 @@ urlcolor=black,linkcolor=black, anchorcolor=black,
 citecolor=black, menucolor=black, filecolor=bla,
 ]{hyperref}
 
+
 % 3. Изменение начертания шрифта --- после чего выглядит таймсоподобно.
 \newcommand{\Font}{\usefont{T2A}{ftm}{m}{}}
 % Шрифт в подписях к рисункам.
 \renewcommand{\captionfont}{\Font}
 \renewcommand{\captionlabelfont}{\Font}
-% Шрифт в номерах страниц
-% \renewcommand{\thepage}{\Font\arabic{page}}
-% 
-\makeatletter
-\renewcommand{\@evenfoot}{\hfil\Font\arabic{page}\hfil}  
-\renewcommand{\@oddfoot}{\hfil\Font\arabic{page}\hfil} 
-\makeatother
+% Шрифт в номерах страниц. Вызывает огромное число предупреждений от hyperref.Увы.
+\renewcommand{\thepage}{\Font\arabic{page}}
+% Альтернативный способ. Но он неменяет шрифт в огралвлении.
+% \makeatletter
+% \renewcommand{\@evenfoot}{\hfil\Font\arabic{page}\hfil}  
+% \renewcommand{\@oddfoot}{\hfil\Font\arabic{page}\hfil} 
+% \makeatother
 % Шрифт в номерах формул (предполагается \EqInChaper) 
 \renewcommand{\theequation}{\Font\thechapter.\arabic{equation}} 
 
