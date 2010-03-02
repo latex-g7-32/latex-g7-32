@@ -20,9 +20,12 @@ citecolor=black, menucolor=black, filecolor=bla,
 \renewcommand{\captionfont}{\Font}
 \renewcommand{\captionlabelfont}{\Font}
 % Шрифт в номерах страниц
-\renewcommand{\thepage}{\Font\arabic{page}}
-% \renewcommand{\@evenfoot}{\Font\thepage} 
-% \renewcommand{\@oddfoot}{\Font\thepage} 
+% \renewcommand{\thepage}{\Font\arabic{page}}
+% 
+\makeatletter
+\renewcommand{\@evenfoot}{\hfil\Font\arabic{page}\hfil}  
+\renewcommand{\@oddfoot}{\hfil\Font\arabic{page}\hfil} 
+\makeatother
 % Шрифт в номерах формул (предполагается \EqInChaper) 
 \renewcommand{\theequation}{\Font\thechapter.\arabic{equation}} 
 
