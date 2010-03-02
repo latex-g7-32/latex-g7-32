@@ -27,7 +27,7 @@
 % 5) добавлен \paragraph;
 % 6) уменьшены отспупы после заголовков и учеличены --- до (хотя это, возможно, и нарушает 7-32);
 % 7) сделаны отсупы в оглалвнеии (ГОСТ эту тему обходит, как мы поняли);
-% 8) убран \normalfont отовсюду --- теперь usefont действует на всё.
+% 8) \normalfont
 % 9) разные мелочи.
 
 \ProvidesPackage{G2-105}[2003/07/07 v1.00 General reqs. GOST 2.105-95]
@@ -166,8 +166,8 @@
 \newlength{\Gost@TitleDropSkip}
  \setlength\Gost@TitleDropSkip{\GostBetweenTitleSkip}
  \addtolength\Gost@TitleDropSkip{-\GostAfterTitleSkip}
-%  стиль всех заголовков
-\newcommand\GostTitleStyle{\bfseries}% убран \normalfont
+%  стиль всех заголовков, \normalfont оставлен
+\newcommand\GostTitleStyle{\normalfont\bfseries}
 \newcommand\Gost@MainChapterStyle{}
 \newcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}
 

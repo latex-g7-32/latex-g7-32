@@ -15,7 +15,15 @@ citecolor=black, menucolor=black, filecolor=bla,
 ]{hyperref}
 
 % 3. Изменение начертания шрифта --- после чего выглядит таймсоподобно.
-\usepackage{cyrtimespatched} % apt-get install scalable-cyrfonts-tex
+% apt-get install scalable-cyrfonts-tex
+% Если у вас этого нет --- закомментируйте
+\usepackage{cyrtimespatched} 
+
+\newcommand{\Font}{\usefont{T2A}{ftm}{m}{}} % На всякий случай
+\renewcommand{\captionfont}{\Font} % костыль на случай отсутствия cyrtimes
+\renewcommand{\captionlabelfont}{\Font} % костыль на случай отсутствия cyrtimes
+
+
 
 % 4. Прочие полезные пакеты.
 \usepackage{cmap} % теперь из pdf можно копипастить русский текст
