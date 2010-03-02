@@ -3,51 +3,25 @@
 % 1. Стиль и язык
 \documentclass[utf8]{G7-32} % Стиль (по умолчанию будет 14pt)
 
+% Остальные стандартные настройки убраны в preamble-std.tex
+\input{preamble-std.tex}
+
 % С такими оно полями оно работает по-умолчанию:
 % \RequirePackage[left=20mm,right=10mm,top=20mm,bottom=20mm,headsep=0pt]{geometry}
 % Если вас тошнит от поля в 10мм --- увеличивайте до 20-ти, ну и про переплёт не забывайте:
 \geometry{right=20mm}
 \geometry{left=30mm}
 
-\sloppy 
-
-% Настройки стиля ГОСТ 7-32
-% Для начала определяем, хотим мы или нет, чтобы рисунки и таблицы нумеровались в пределах раздела, или нам нужна сквозная нумерация.
-% В оригинале в слове Chapter отсутствовала буква t. Убивать.
-\EqInChapter % формулы будут нумероваться в пределах раздела
-\TableInChapter % таблицы будут нумероваться в пределах раздела
-\PicInChapter % рисунки будут нумероваться в пределах раздела
-
-% 3. Добавляем гипертекстовое оглавление в PDF
-\usepackage[
-bookmarks=true, colorlinks=true, unicode=true,
-urlcolor=black,linkcolor=black, anchorcolor=black,
-citecolor=black, menucolor=black, filecolor=bla,
-]{hyperref}
-
-% Прочее, дополнять по вкусу
-\usepackage{cmap} % теперь из pdf можно копипастить русский текст
-\usepackage{underscore} % Ура! Теперь можно писать подчёркивание.
-\usepackage{graphicx}	% Пакет для включения рисунков
- 
-\newcommand{\Code}[1]{\textbf{#1}}
-
-% \usepackage{sectsty} % shit! Does not work
-% \allsectionsfont{\usefont{T2A}{ftm}{m}{}\selectfont}
-
-% Изменение начертания шрифта в подписях к рисункам --- после чего выглядит таймсоподобно.
-\renewcommand{\captionfont}{\usefont{T2A}{ftm}{m}{}}
-\renewcommand{\captionlabelfont}{\usefont{T2A}{ftm}{m}{}}
-
 \begin{document}
-\usefont{T2A}{ftm}{m}{} % Изменение начертания шрифта --- после чего выглядит таймсоподобно.
+\Font  % Осталось ещё 
+
 \frontmatter % выключает нумерацию ВСЕГО; здесь начинаются ненумерованные главы: реферат, введение, глоссарий, сокращения и прочее
 
 % Также можно использовать \Referat, как в оригинале
 \begin{abstract}
 Это пример каркаса расчётно-пояснительной записки, желательный к использованию в РПЗ проекта по курсу РСОИ.
 
-Дополняет краткое пособие по графике в Latex.  Данный опус, как и более новые версии этого документа, можно взять по адресу (\url{http://sevik.ru/latex}). Минимально необходимые пакеты Latex, которые должны стоять: mathtext, amssymb, amsmath, icomma, longtable. graphicx, underscore.
+Дополняет краткое пособие по графике в Latex.  Данный опус, как и более новые версии этого документа, можно взять по адресу (\url{http://sevik.ru/latex}). Минимально необходимые пакеты Latex, которые должны стоять: mathtext, amssymb, amsmath, icomma, longtable, graphicx, underscore, cmap, hyperref.
 
 Текст в документе носит совершенно абстрактный характер.
 \end{abstract}
