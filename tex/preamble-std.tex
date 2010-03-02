@@ -16,13 +16,14 @@ citecolor=black, menucolor=black, filecolor=bla,
 
 % 3. Изменение начертания шрифта --- после чего выглядит таймсоподобно.
 % apt-get install scalable-cyrfonts-tex
-% Если у вас этого нет --- закомментируйте
-\usepackage{cyrtimespatched} 
 
-\newcommand{\Font}{\usefont{T2A}{ftm}{m}{}} % На всякий случай
-\renewcommand{\captionfont}{\Font} % костыль на случай отсутствия cyrtimes
-\renewcommand{\captionlabelfont}{\Font} % костыль на случай отсутствия cyrtimes
-
+\IfFileExists{cyrtimes.sty}
+    {
+        \usepackage{cyrtimespatched}
+    } 
+    {
+        % А если Times нету, то будет CM...
+    }
 
 
 % 4. Прочие полезные пакеты.
