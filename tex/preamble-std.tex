@@ -1,0 +1,33 @@
+\sloppy 
+
+% 1. Настройки стиля ГОСТ 7-32
+% Для начала определяем, хотим мы или нет, чтобы рисунки и таблицы нумеровались в пределах раздела, или нам нужна сквозная нумерация.
+% А не забыл ли автор букву 't' ?
+\EqInChapter % формулы будут нумероваться в пределах раздела
+\TableInChapter % таблицы будут нумероваться в пределах раздела
+\PicInChapter % рисунки будут нумероваться в пределах раздела
+
+% 2. Добавляем гипертекстовое оглавление в PDF
+\usepackage[
+bookmarks=true, colorlinks=true, unicode=true,
+urlcolor=black,linkcolor=black, anchorcolor=black,
+citecolor=black, menucolor=black, filecolor=bla,
+]{hyperref}
+
+% 3. Изменение начертания шрифта --- после чего выглядит таймсоподобно.
+\newcommand{\Font}{\usefont{T2A}{ftm}{m}{}}
+% Шрифт в подписях к рисункам.
+\renewcommand{\captionfont}{\Font}
+\renewcommand{\captionlabelfont}{\Font}
+% Шрифт в номерах страниц
+\renewcommand{\thepage}{\Font\arabic{page}}
+% Шрифт в номерах формул (предполагается \EqInChaper) 
+\renewcommand{\theequation}{\Font\thechapter.\arabic{equation}} 
+
+% 4. Прочие полезные пакеты.
+\usepackage{cmap} % теперь из pdf можно копипастить русский текст
+\usepackage{underscore} % Ура! Теперь можно писать подчёркивание.
+\usepackage{graphicx}   % Пакет для включения рисунков
+ 
+ % 5. Любимые команды
+\newcommand{\Code}[1]{\textbf{#1}}
