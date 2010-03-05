@@ -401,6 +401,16 @@
 }
 
 % 4.4 - таблицы
+
+\newcounter{table}
+\newenvironment{table} {\@float   {table}}{\end@float   }
+\newenvironment{table*}{\@dblfloat{table}}{\end@dblfloat}
+\renewcommand\captionlabeldelim{ ---}
+% \renewcommand\captionmargin{0.2cm} %% virens: это приводит к существенному сужению ширины подписи!!!!
+
+%  Подпись к таблице
+\addto\captionsrussian{\def\tablename{{\cyr\CYRT\cyra\cyrb\cyrl\cyri\cyrc\cyra}}}
+
 % ... допускается нумерация таблиц в пределах раздела
 
 % НЕ добавлена точка после таблицы. Крищенко
@@ -421,6 +431,11 @@
           {\box\@tempboxa\hfil}%
           \endgraf}%
     \hss}}}
+
+\def\fps@table{bph}
+\def\ftype@table{1}
+\def\ext@table{lof}
+\def\fnum@table{\tablename~\thetable}
 
 %  4.3.4 - 4.1.14 Приложения
 \renewcommand\appendix{\par
