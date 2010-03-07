@@ -376,8 +376,10 @@
 
 % 4.3.1 - 4.3.3 Иллюстрации
 
-\newcommand\@makecaption{}
-\RequirePackage[center]{caption2}
+\RequirePackage[normal,nooneline,labelsep=endash]{caption}
+
+% У caption нет встроенной опции для em dash
+\def\caption@lsep{~---~}
 
 \def\fps@figure{bph}
 \def\ftype@figure{1}
@@ -387,8 +389,6 @@
 \newcounter{figure}
 \newenvironment{figure} {\@float   {figure}}{\end@float   }
 \newenvironment{figure*}{\@dblfloat{figure}}{\end@dblfloat}
-\renewcommand\captionlabeldelim{ ---}
-% \renewcommand\captionmargin{0.2cm} %% virens: это приводит к существенному сужению ширины подписи!!!!
 
 %  Подпись к рисунку
 \addto\captionsrussian{\def\figurename{{\cyr\CYRR\cyri\cyrs\cyru\cyrn\cyro\cyrk}}}
@@ -405,8 +405,6 @@
 \newcounter{table}
 \newenvironment{table} {\@float   {table}}{\end@float   }
 \newenvironment{table*}{\@dblfloat{table}}{\end@dblfloat}
-\renewcommand\captionlabeldelim{ ---}
-% \renewcommand\captionmargin{0.2cm} %% virens: это приводит к существенному сужению ширины подписи!!!!
 
 %  Подпись к таблице
 \addto\captionsrussian{\def\tablename{{\cyr\CYRT\cyra\cyrb\cyrl\cyri\cyrc\cyra}}}
@@ -421,16 +419,18 @@
  \renewcommand{\thetable}{\thechapter.\arabic{table}}%
 }
 
-\RequirePackage{longtable}% многостраничные таблицы
-%   Для выравнивания длинных таблиц
+\RequirePackage{longtable} % многостраничные таблицы
+
 \LTleft=\z@
 \LTright=\fill
-\def\LT@makecaption#1#2#3{%
-  \LT@mcol\LT@cols l{\hbox to\z@{\parbox[t]\LTcapwidth{%
-      \sbox\@tempboxa{#1{#2\captionlabeldelim{} }#3}%
-          {\box\@tempboxa\hfil}%
-          \endgraf}%
-    \hss}}}
+
+% Нулевой зазор между заголовком и таблицей
+\setlength\belowcaptionskip{0pt}
+\setlength\abovecaptionskip{0pt}
+
+\newcommand\subcaption[1]{ % Заголовок без "Таблица..." -- для заголовков на других стр.
+  \multicolumn{\LT@cols}{p{1\textwidth}}{#1}
+}
 
 \def\fps@table{bph}
 \def\ftype@table{1}
