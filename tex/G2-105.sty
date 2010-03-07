@@ -375,8 +375,9 @@
 \renewcommand\geq{\geqslant}
 
 % 4.3.1 - 4.3.3 Иллюстрации
-
-\RequirePackage[normal,nooneline,labelsep=endash]{caption}
+% normal нет в 2007 ?
+\newcommand\@makecaption{}
+\RequirePackage[nooneline,labelsep=endash]{caption}
 
 % У caption нет встроенной опции для em dash
 \def\caption@lsep{~---~}
