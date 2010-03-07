@@ -377,7 +377,13 @@
 % 4.3.1 - 4.3.3 Иллюстрации
 
 \newcommand\@makecaption{}
-\RequirePackage[center]{caption2}
+\RequirePackage[normal]{caption2}
+
+\renewcommand*\caption@makecaption[1]{%
+  \usecaptionmargin
+    \def\caption@label{%
+      {\captionlabelfont\captionlabel\captionlabeldelim}\captionlabelsep}%
+  \captionfont\caption@label\captiontext}
 
 \def\fps@figure{bph}
 \def\ftype@figure{1}
