@@ -91,7 +91,7 @@
 полностью аналогичен \Code{figure}, но добавляет другую подпись).
 
 \begin{table}[ht]
-  \centering
+  \caption{Пример короткой таблицы}
   \begin{tabular}{|r|c|c|c|l|}
   \hline
   Тело      & $F$ & $V$  & $E$ & $F+V-E-2$ \\
@@ -105,7 +105,6 @@
   Эйлер     & 666 & 9000 & 42  & $+\infty$ \\
   \hline
   \end{tabular}      
-  \caption{Пример короткой таблицы}
   \label{tab:tabular}
 \end{table}
 
@@ -122,14 +121,14 @@
 
 \begin{center}
   \begin{longtable}{|p{0.40\textwidth}|c|p{0.30\textwidth}|}
-    \caption{Пример длинной таблицы}
+    \caption{Пример длинной таблицы с длинным названием на много длинных-длинных строк}
     \label{tab:longtable}
-    \\ \hline
+    \hline
     Вид шума & Громкость, дБ & Комментарий \\
     \hline \endfirsthead
-    \multicolumn{3}{l}{Продолжение таблицы~\ref{tab:longtable}} \\
+    \subcaption{Продолжение таблицы~\ref{tab:longtable}}
     \hline \endhead
-    \hline \multicolumn{3}{l}{Продолжение на след. стр.} \\
+    \hline \subcaption{Продолжение на след. стр.}
     \endfoot
     \hline \endlastfoot
     Порог слышимости             & 0     &                                                \\

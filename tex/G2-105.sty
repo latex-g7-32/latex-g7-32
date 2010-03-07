@@ -425,12 +425,13 @@
 %   Для выравнивания длинных таблиц
 \LTleft=\z@
 \LTright=\fill
-\def\LT@makecaption#1#2#3{%
-  \LT@mcol\LT@cols l{\hbox to\z@{\parbox[t]\LTcapwidth{%
-      \sbox\@tempboxa{#1{#2\captionlabeldelim{} }#3}%
-          {\box\@tempboxa\hfil}%
-          \endgraf}%
-    \hss}}}
+\def\LT@makecaption#1#2#3{
+  \multicolumn{\LT@cols}{p{1\textwidth}}{#1{#2\captionlabeldelim{} }#3}
+}
+
+\newcommand\subcaption[1]{ % Заголовок без "Таблица..." -- для заголовков на других стр.
+  \multicolumn{\LT@cols}{p{1\textwidth}}{#1}
+}
 
 \def\fps@table{bph}
 \def\ftype@table{1}
