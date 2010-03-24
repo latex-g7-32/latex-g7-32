@@ -375,8 +375,8 @@
 \renewcommand\geq{\geqslant}
 
 % 4.3.1 - 4.3.3 Иллюстрации
-% normal нет в 2007 ?
-\newcommand\@makecaption{}
+
+\newcommand\@makecaption{} % Это не нужно 2009
 \RequirePackage[nooneline,labelsep=endash]{caption}
 
 % У caption нет встроенной опции для em dash
@@ -424,7 +424,6 @@
 
 \LTleft=\z@
 \LTright=\fill
-\setlength{\LTcapwidth}{1.075\textwidth}    
 
 % Нулевой зазор между заголовком и таблицей
 \setlength\belowcaptionskip{0pt}
