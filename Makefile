@@ -16,4 +16,4 @@ clean:
 	find $(TEX)/ -regextype posix-egrep -type f ! -regex ".*\.(sty|tex|clo|cls|gitignore)" -exec rm -f {} \; ;
 
 tarball: $(PDF) clean
-	rm latex-G7-32.tar.gz; cd $(TEX) && tar -cjf ../latex-G7-32.tar.gz *
+	rm latex-G7-32.tar.gz; cd $(TEX) && tar -czf ../latex-G7-32.tar.gz *
