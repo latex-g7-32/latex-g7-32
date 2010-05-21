@@ -377,10 +377,19 @@
 % 4.3.1 - 4.3.3 Иллюстрации
 
 \newcommand\@makecaption{} % Это не нужно 2009
-\RequirePackage[nooneline,labelsep=endash]{caption}
 
-% У caption нет встроенной опции для em dash
-\def\caption@lsep{~---~}
+\IfFileExists{caption2.sty}
+{
+  \RequirePackage[center]{caption2}
+  \renewcommand\captionlabeldelim{~---}  % Магейа. ~ на конец не нужен.
+}
+{
+  % Так хуже смотрится (подпись ближе к рисунку), но что поделаешь -- Коротков.
+  \RequirePackage[center,nooneline,labelsep=endash]{caption}
+  \newcommand\captionlabeldelim{~---~}
+}
+
+\def\caption@lsep{~---~}   % У caption нет встроенной опции для em dash
 
 \def\fps@figure{bph}
 \def\ftype@figure{1}
