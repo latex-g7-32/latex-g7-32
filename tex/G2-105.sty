@@ -566,6 +566,65 @@
                 \item\relax}
                {\endlist}
 
+
+% Листинги
+
+\usepackage{listings}
+\usepackage{listingsutf8}  % будет работать только с \lstinputlisting
+
+% Значения по умолчанию
+\lstset{
+  breakatwhitespace=true,% разрыв строк только на whitespacce
+  breaklines=true,       % переносить длинные строки
+  captionpos=b,          % подписи снизу
+  extendedchars=\true,   % допуск utf
+  inputencoding=utf8,
+  numbers=left,          % нумерация слва
+  showspaces=false,      % показывать пробелы подчеркиваниями -- идиотизм 70-х годов
+  showstringspaces=false,
+  showtabs=false,        % и табы тоже
+  stepnumber=1,
+  tabsize=4              % кому нужны табы по 8 символов?..
+}
+
+% Стиль для псесдовода: строчки обычно короткие, поэтому размер шрифта побольше
+\lstdefinestyle{pseudocode}{
+  basicstyle=\small,
+  frame=none,
+  keywordstyle=\color{black}\bfseries\underbar,
+  language=Pseudocode,
+  numberstyle=\footnotesize
+}
+
+% Стиль для обычного кода: маленький шрифт
+\lstdefinestyle{realcode}{
+  basicstyle=\scriptsize,
+  frame=none,
+  numberstyle=\footnotesize
+}
+
+% Стиль для коротких кусков обычного кода: средний шрифт
+\lstdefinestyle{simplecode}{
+  basicstyle=\footnotesize,
+  frame=none,
+  numberstyle=\footnotesize
+}
+
+% Определим свой язык для написания псевдокодов на основе Python
+\lstdefinelanguage[]{Pseudocode}[]{Python}{
+  morekeywords={each,empty},% ключевые слова добавлять сюда
+  morecomment=[s]{\{}{\}},% комменты {а-ля Pascal} смотрятся нагляднее
+  literate=% а сюда добавлять операторы, которые хотите отображать как мат. символы
+    {->}{\ensuremath{$\rightarrow$}~}2%
+    {<-}{\ensuremath{$\leftarrow$}~}2%
+    {:=}{\ensuremath{$\leftarrow$}~}2%
+}[keywords,comments]
+
+% Подписи к листингам
+\renewcommand*\thelstnumber{\oldstylenums{\the\value{lstnumber}}}
+\renewcommand\lstlistingname{\cyr\CYRL\cyri\cyrs\cyrt\cyri\cyrn\cyrg}
+\renewcommand\lstlistlistingname{\cyr\CYRL\cyri\cyrs\cyrt\cyri\cyrn\cyrg\cyri}
+
 % убран \normalfont из всех \DeclareOldFontCommand
 \DeclareOldFontCommand{\rm}{\rmfamily}{\mathrm}
 \DeclareOldFontCommand{\sf}{\sffamily}{\mathsf}
