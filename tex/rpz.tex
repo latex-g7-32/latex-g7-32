@@ -232,6 +232,14 @@ def EvaluateDiplomas():
             student.Mark := 4
 \end{lstlisting}
 
+Еще в шаблоне определен псевдоязык для BNF:
+
+\begin{lstlisting}[style=grammar,basicstyle=\small,caption={Грамматика}]
+  ifstmt -> "if" "(" expression ")" stmt |
+            "if" "(" expression ")" stmt1 "else" stmt2
+  number -> digit digit*
+\end{lstlisting}
+
 Для вставки реального кода лучше использовать \texttt{\textbackslash lstinputlisting} (который понимает
 UTF8) и стили \Code{realcode} либо \Code{simplecode} (в зависимости от размера куска).
 
