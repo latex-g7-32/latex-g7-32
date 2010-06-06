@@ -33,20 +33,7 @@
 \ProvidesPackage{G2-105}[2003/07/07 v1.00 General reqs. GOST 2.105-95]
 \NeedsTeXFormat{LaTeX2e}
 
-\newif\if@usehyperref\@usehyperreffalse
-\newif\if@usepscyr   \@usepscyrfalse
-\newcommand\Gost@encoding{}
-\newcommand\Gost@LineSpread{1.3}
-\DeclareOption{usehyperref}{\@usehyperreftrue}
-\DeclareOption{usepscyr}{\@usepscyrtrue}
-\DeclareOption{koi8-r}{\renewcommand\Gost@encoding{koi8-r}}
-\DeclareOption{cp1251}{\renewcommand\Gost@encoding{cp1251}}
-\DeclareOption{utf8}{\renewcommand\Gost@encoding{utf8x}}
-\DeclareOption{cp866} {\renewcommand\Gost@encoding{cp866} }
-\DeclareOption{econommode}{\newcommand\Gost@LineSpread{1.3}\erroqweqwe}
-
-\ExecuteOptions{a4paper,14pt,final,koi8-r}
-\ProcessOptions
+\input{GostBase.clo}
 
 %стиль страницы
 \pagestyle{plain}
