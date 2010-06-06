@@ -363,20 +363,19 @@
 
 % 4.3.1 - 4.3.3 Иллюстрации
 
-\newcommand\@makecaption{} % Это не нужно 2009
+% Подпись по умолчанию слева (для таблиц, листингов и т.п.)
+\RequirePackage[normal,nooneline]{caption}
 
-\IfFileExists{caption2.sty}
-{
-  \RequirePackage[center]{caption2}
-  \renewcommand\captionlabeldelim{~---}  % Магейа. ~ на конец не нужен.
-}
-{
-  % Так хуже смотрится (подпись ближе к рисунку), но что поделаешь -- Коротков.
-  \RequirePackage[center,nooneline,labelsep=endash]{caption}
-  \newcommand\captionlabeldelim{~---~}
-}
+% Длинное тире в качестве разделителя
+\DeclareCaptionLabelSeparator*{emdash}{\space\textemdash\space}
 
-\def\caption@lsep{~---~}   % У caption нет встроенной опции для em dash
+% Между подписью и рисунком 10pt
+\captionsetup{labelsep=emdash,aboveskip=10pt,belowskip=0pt,position=bottom}
+
+% У рисунков вырвнивание по центру
+\captionsetup[figure]{justification=centering}
+% У таблиц -- слева с понтовым выравниванием, зазор 5pt вместо 10
+\captionsetup[table]{position=top,aboveskip=5pt,format=hang}
 
 \def\fps@figure{bph}
 \def\ftype@figure{1}
@@ -420,10 +419,6 @@
 
 \LTleft=\z@
 \LTright=\fill
-
-% Нулевой зазор между заголовком и таблицей
-\setlength\belowcaptionskip{0pt}
-\setlength\abovecaptionskip{0pt}
 
 \newcommand\subcaption[1]{ % Заголовок без "Таблица..." -- для заголовков на других стр.
   \multicolumn{\LT@cols}{p{1\textwidth}}{#1}
