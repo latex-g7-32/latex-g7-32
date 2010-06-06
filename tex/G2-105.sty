@@ -265,14 +265,13 @@
  \setlength{\topsep}{1mm}%                 отступ от текста до перечня
  \setlength{\partopsep}{0mm}%              дополнительный отступ,  если начали абзац
  \setlength{\parsep}{1mm}%                 расстояние между абзацами внутри пункта
- \setlength{\leftmargin}{\GostItemIndent}% левый отступ до текста
- \setlength{\itemindent}{0mm}%             дополнительный левый отступ первой строчки
+ \setlength{\leftmargin}{0mm}%             левый отступ до текста
+ \setlength{\itemindent}{\GostItemIndent}% дополнительный левый отступ первой строчки
  \setlength{\labelsep}{2\GostItemGap}%     от метки до текста
 }
 \renewcommand{\@listI} {\Gost@List}
 \renewcommand{\@listii}{\Gost@List}
 
-% 2mm? -- Seva 
 \setlength\GostItemGap{1mm} % небольшие отступы для пунктов перечисления
 \setlength\leftmarginii{0mm}
 \setlength\GostItemIndent{\parindent}
