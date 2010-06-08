@@ -251,7 +251,9 @@
   \RequirePackage[math]{pscyr}
 \fi
 \RequirePackage{mathtext}%русские буквы в формулах
-\RequirePackage[T2A]{fontenc}
+% \RequirePackage[T2A]{fontenc}
+\RequirePackage{cmap} %теперь из pdf можно копипастить русский текст
+\RequirePackage[T1]{fontenc} % T1 по этой же пичине, иначе акробату плохо.
 \RequirePackage[\Gost@encoding]{inputenc}
 \RequirePackage[english,russian]{babel}
 \RequirePackage{flafter}
