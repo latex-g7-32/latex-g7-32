@@ -8,6 +8,8 @@ PREAMBLE=preamble-std.tex
 STYLES=$(TEX)/GostBase.clo $(TEX)/G7-32.sty $(TEX)/G7-32.cls $(TEX)/G2-105.sty
 DIA_PDF = $(patsubst $(DIA)/%.dia,$(DIA)/%.pdf, $(wildcard $(DIA)/*.dia))
 
+# FIXME: texdepend required!!!
+
 all: $(PDF)
 
 .PHONY: all tarball clean
