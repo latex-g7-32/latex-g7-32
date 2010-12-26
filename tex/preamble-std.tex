@@ -42,3 +42,94 @@ citecolor=black, menucolor=black, filecolor=black,
 % Если вас тошнит от поля в 10мм --- увеличивайте до 20-ти, ну и про переплёт не забывайте:
 \geometry{right=20mm}
 \geometry{left=30mm}
+
+
+% 7. Tikz
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,shadows}
+
+% 8 Листинги
+
+% \usepackage{listings}
+\usepackage{listingsutf8}  % будет работать только с \lstinputlisting
+
+% Значения по умолчанию
+\lstset{
+  basicstyle= \footnotesize,
+  breakatwhitespace=true,% разрыв строк только на whitespacce
+  breaklines=true,       % переносить длинные строки
+%   captionpos=b,          % подписи снизу ! Не работает!
+%   extendedchars=\true,   % допуск utf
+%   inputencoding=utf8x, 
+  inputencoding=utf8/koi8-r,
+  numbers=left,          % нумерация слева
+  numberstyle=\footnotesize,
+  showspaces=false,      % показывать пробелы подчеркиваниями -- идиотизм 70-х годов
+  showstringspaces=false,
+  showtabs=false,        % и табы тоже
+  stepnumber=1,
+  tabsize=4,              % кому нужны табы по 8 символов?
+  frame=single
+}
+
+% Стиль для псевдокода: строчки обычно короткие, поэтому размер шрифта побольше
+\lstdefinestyle{pseudocode}{
+  basicstyle=\small,
+  frame=none,
+  keywordstyle=\color{black}\bfseries\underbar,
+  language=Pseudocode,
+  numberstyle=\footnotesize,
+  commentstyle=\footnotesize\it
+}
+
+% Стиль для обычного кода: маленький шрифт
+\lstdefinestyle{realcode}{
+  basicstyle=\scriptsize,
+  frame=none,
+  numberstyle=\footnotesize
+}
+
+% Стиль для коротких кусков обычного кода: средний шрифт
+\lstdefinestyle{simplecode}{
+  basicstyle=\footnotesize,
+  frame=none,
+  numberstyle=\footnotesize
+}
+
+% Стиль для BNF
+\lstdefinestyle{grammar}{
+  basicstyle=\footnotesize,
+  frame=none,
+  numberstyle=\footnotesize,
+  stringstyle=\bfseries\ttfamily,
+  language=BNF
+}
+
+% Определим свой язык для написания псевдокодов на основе Python
+\lstdefinelanguage[]{Pseudocode}[]{Python}{
+  morekeywords={each,empty,wait,do},% ключевые слова добавлять сюда
+  morecomment=[s]{\{}{\}},% комменты {а-ля Pascal} смотрятся нагляднее
+  literate=% а сюда добавлять операторы, которые хотите отображать как мат. символы
+    {->}{\ensuremath{$\rightarrow$}~}2%
+    {<-}{\ensuremath{$\leftarrow$}~}2%
+    {:=}{\ensuremath{$\leftarrow$}~}2%
+    {<--}{\ensuremath{$\Longleftarrow$}~}2%
+}[keywords,comments]
+
+% Свой язык для задания грамматик в BNF
+\lstdefinelanguage[]{BNF}[]{}{
+  morekeywords={},
+  morecomment=[s]{@}{@},
+  morestring=[b]",%
+  literate=%
+    {->}{\ensuremath{$\rightarrow$}~}2%
+    {*}{\ensuremath{$^*$}~}2%
+    {+}{\ensuremath{$^+$}~}2%
+    {|}{\ensuremath{$|$}~}2%
+}[keywords,comments,strings]
+
+% Подписи к листингам
+\renewcommand*\thelstnumber{\oldstylenums{\the\value{lstnumber}}}
+\renewcommand\lstlistingname{\cyr\CYRL\cyri\cyrs\cyrt\cyri\cyrn\cyrg}
+\renewcommand\lstlistlistingname{\cyr\CYRL\cyri\cyrs\cyrt\cyri\cyrn\cyrg\cyri}
+
