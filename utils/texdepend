@@ -15,7 +15,7 @@ $License = 'LPPL';      # released under the LPPL license
 # and creates the following lists:
 #   @includes -- from \input{} and \include{}
 #   @packages -- from \usepackage{}, \documentclass, \documentstyle
-#   @figs -- from \includegraphics{}
+#   @figs -- from \includegraphics{} and \lstinputlisting{}
 
 # If the .log and .aux file for the same basename.tex file exist,
 # texdepend also reads these and parses names of included dependent
@@ -70,7 +70,7 @@ $def_print = 'ipfbs';         # default lists to print
 
 # In this version, we only handle:
 $include_graphics = join('|',
-      qw(includegraphics myincludegraphics epsfbox epsffile));
+      qw(includegraphics myincludegraphics epsfbox epsffile lstinputlisting));
 
 # How to search for files on the various TeX paths:
 
@@ -92,7 +92,7 @@ $TEXFMTS   = "TEXFORMATS";    # Name of TEXFORMATS environment variable
 $ParenLevel    = 0;
 @includes      = ();          # \inputs and \includes
 @packages      = ();          # list of \usepackage
-@figs          = ();          # \includegraphics
+@figs          = ();          # \includegraphics and \lstinputlisting
 @bibfiles      = ();          # \bibdata .bib files
 @styles        = ();          # files treated as @style_types
 
@@ -226,7 +226,7 @@ sub get_direct_depend {
          }
        }
 
-    elsif (m#($include_graphics).*\{([/-\w\d.]+)\}#) {
+    elsif (m#\\($include_graphics).*\{([/-\w\d.]+)\}#) {
        $p = $2;
       $p .= '.pdf' unless $p =~ /\.\w+$/;
       push (@figs, $basepath.$p);
@@ -582,7 +582,8 @@ commands in the preamble of the main .tex file.
 
 =item @figs
 
-the names of all graphics files from \includegraphics{} commands in the .tex file.
+the names of all graphics files from \includegraphics{} and \lstinputlisting{}
+commands in the .tex file.
 
 =item @styles 
 
@@ -706,7 +707,7 @@ listed in the .log file because of the complex nesting
 of E<lt> E<gt> and "( )".  (Some experiments using F<Text::Balanced.pm>
 were made, but made the program very inefficient.)
 In parsing the .tex file, only a limited number
-of graphics commands are recognized, including \includegraphics{},
+of graphics commands are recognized, including \includegraphics{}, \lstinputlisting{},
 \epsfbox{}, and \epsffile{}.  But, you should be using \includegraphics{}
 anyway!
 
