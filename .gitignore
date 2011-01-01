@@ -7,3 +7,4 @@ auto
 *.bbl
 *.blg
 *.eps
+.deps
