@@ -50,18 +50,15 @@ citecolor=black, menucolor=black, filecolor=black,
 
 % 8 Листинги
 
-% \usepackage{listings}
-\usepackage{listingsutf8}  % будет работать только с \lstinputlisting
+\usepackage{listings}
 
 % Значения по умолчанию
 \lstset{
   basicstyle= \footnotesize,
   breakatwhitespace=true,% разрыв строк только на whitespacce
   breaklines=true,       % переносить длинные строки
-%   captionpos=b,          % подписи снизу ! Не работает!
-%   extendedchars=\true,   % допуск utf
-%   inputencoding=utf8x, 
-  inputencoding=utf8/koi8-r,
+%   captionpos=b,          % подписи снизу -- вроде не надо
+  inputencoding=koi8-r, 
   numbers=left,          % нумерация слева
   numberstyle=\footnotesize,
   showspaces=false,      % показывать пробелы подчеркиваниями -- идиотизм 70-х годов

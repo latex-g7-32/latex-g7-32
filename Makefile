@@ -40,7 +40,7 @@ $(INC)/dia/%.pdf: $(DIA)/%.dia
 
 $(INC)/src/%: $(SRC)/%
 	mkdir -p $(INC)/src
-	cp $< $@
+	iconv -f=UTF-8 -t=KOI8-R $< > $@
 
 clean:
 	find $(TEX)/ -regextype posix-egrep -type f ! -regex ".*\.(sty|tex|clo|cls|bib|bst|gitignore)" -exec $(RM) {} \; ;
