@@ -10,6 +10,7 @@ PDF=rpz.pdf
 DIA=dia
 TEX=tex
 DEPS=.deps
+SRC=src
 INC=$(TEX)/inc
 
 # Input files
@@ -36,6 +37,10 @@ $(PDF): $(TEX)/$(MAINTEX) $(TEX)/$(PREAMBLE) $(PARTS_TEX) $(STYLES)
 $(INC)/dia/%.pdf: $(DIA)/%.dia
 	mkdir -p $(INC)/dia
 	dia -e $(patsubst %.dia, %.eps, $<) -t eps $< && epstopdf --outfile $@ $(patsubst %.dia, %.eps, $<)
+
+$(INC)/src/%: $(SRC)/%
+	mkdir -p $(INC)/src
+	cp $< $@
 
 clean:
 	find $(TEX)/ -regextype posix-egrep -type f ! -regex ".*\.(sty|tex|clo|cls|bib|bst|gitignore)" -exec $(RM) {} \; ;
