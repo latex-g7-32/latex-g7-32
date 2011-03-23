@@ -50,5 +50,7 @@ clean:
 
 distclean: clean
 
+PACK = $(addprefix latex-g7-32/, Makefile tex/* src/* utils/* dia/*.dia)
+
 tarball: $(PDF) clean
-	rm latex-G7-32.tar.gz; cd $(TEX) && tar -czf ../latex-G7-32.tar.gz *
+	cd ..; rm latex-G7-32.tar.gz; tar -czf latex-G7-32.tar.gz $(PACK)
