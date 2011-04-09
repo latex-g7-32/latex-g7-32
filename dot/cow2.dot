@@ -1,0 +1,53 @@
+digraph G 
+{
+	nodesep = 0.05;
+	node [shape = record, width = 0.1, height = 0.1];
+	
+	subgraph cluster0
+	{
+		env1 [label = "<p0> R |<p1> R COW |<p2> R COW |<p3> R COW |<p4> R COW |<p5> R |<p6> R |<p7> R COW", height = 2.5];
+		color = "#00000000";
+		label = "Env1";
+	}
+	subgraph cluster1
+	{
+		mem [label = "<p0> |<p1> |<p2> |<p3> |<p4> |<p5> |<p6> |<p7> |<p8> |<p9> |<p10> |<p11> |<p12> |<p13> |<p14> ", height = 2.5];
+		color = "#00000000";
+		label = "Memory";
+	}
+	subgraph cluster2
+	{
+		env2 [label = "<p0> R |<p1> R COW |<p2> R COW |<p3> R COW |<p4> R COW |<p5> R |<p6> R |<p7> R COW", height = 2.5];
+		color = "#00000000";
+		label = "Env2";
+	rankdir = RL;
+	}
+
+	rankdir = LR;
+	env1:p0 -> mem:p0;
+	env1:p1 -> mem:p1;
+	env1:p2 -> mem:p3;
+	env1:p3 -> mem:p4;
+	env1:p4 -> mem:p5;
+	env1:p5 -> mem:p6;
+	env1:p6 -> mem:p9;
+	env1:p7 -> mem:p10;
+	
+	mem:p0 -> env2:p0 [dir = back];
+	mem:p1 -> env2:p1 [dir = back];
+	mem:p3 -> env2:p2 [dir = back];
+	mem:p4 -> env2:p3 [dir = back];
+	mem:p5 -> env2:p4 [dir = back];
+	mem:p6 -> env2:p5 [dir = back];
+	mem:p9 -> env2:p6 [dir = back];
+	mem:p10-> env2:p7 [dir = back];
+
+	/*env2:p0 -> mem:p0;
+	env2:p1 -> mem:p1;
+	env2:p2 -> mem:p3;
+	env2:p3 -> mem:p4;
+	env2:p4 -> mem:p5;
+	env2:p5 -> mem:p6;
+	env2:p6 -> mem:p9;
+	env2:p7 -> mem:p10;*/
+}
