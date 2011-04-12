@@ -1,8 +1,9 @@
 # Tools
 
 PDFLATEX=pdflatex -interaction=nonstopmode
-D2T=dot2tex -f tikz --crop
 TD=./utils/texdepend
+# TODO: dot2tex lacks any record support.
+# D2T=dot2tex -f tikz --crop
 
 # Output file
 PDF=rpz.pdf
@@ -40,15 +41,25 @@ $(INC)/dia/%.pdf: $(DIA)/%.dia
 	mkdir -p $(INC)/dia
 	dia -e $(patsubst %.dia, %.eps, $<) -t eps $< && epstopdf --outfile $@ $(patsubst %.dia, %.eps, $<)
 
+# .dot -> .eps (via dot2)
+$(INC)/dot/%.eps: $(DOT)/%.dot
+	mkdir -p $(INC)/dot
+	dot -Teps $< > $@
+
+# .eps --> .pdf
+$(INC)/dot/%.pdf: $(INC)/dot/%.eps
+	epstopdf --outfile $@ $<
+
 
 # .dot -> .tex (via dot2tex)
-$(INC)/dot/%.tex: $(DOT)/%.dot
-	mkdir -p $(INC)/dot
-	$(D2T) --preproc $< | $(D2T)  > $@
+# $(INC)/dot/%.tex: $(DOT)/%.dot
+# 	mkdir -p $(INC)/dot
+# 	$(D2T) --preproc $< | $(D2T)  > $@
+# 	$(D2T) $< > $@
 
 # .dot -> .tex --> .pdf
-$(INC)/dot/%.pdf: $(INC)/dot/%.tex
-	$(PDFLATEX) -output-directory=$(INC)/dot $<
+# $(INC)/dot/%.pdf: $(INC)/dot/%.tex
+# 	$(PDFLATEX) -output-directory=$(INC)/dot $<
 
 $(INC)/src/%: $(SRC)/%
 	mkdir -p $(INC)/src
