@@ -18,7 +18,7 @@ INC=$(TEX)/inc
 
 # Input files
 MAINTEX=rpz.tex
-BIBFILE=rpz
+BIBFILE=$(TEX)/rpz.bib
 PREAMBLE=preamble-std.tex
 STYLES=$(TEX)/GostBase.clo $(TEX)/G7-32.sty $(TEX)/G7-32.cls $(TEX)/G2-105.sty
 PARTS_TEX = $(wildcard $(TEX)/[0-9][0-9]-*.tex)
@@ -34,8 +34,8 @@ $(DEPS)/%-deps.mk: $(TEX)/% Makefile
 	mkdir -p $(DEPS)
 	(echo -n "$(PDF): " ; $(TD) -print=fi -format=1 $< | grep -v '^#' | xargs echo) > $@
 
-$(PDF): $(TEX)/$(MAINTEX) $(TEX)/$(PREAMBLE) $(PARTS_TEX) $(STYLES) $(TEX)/$(BIBFILE).bib
-	cd tex && $(PDFLATEX) $(MAINTEX) && bibtex $(BIBFILE) && $(PDFLATEX) $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && cp $(PDF) ..
+$(PDF): $(TEX)/$(MAINTEX) $(TEX)/$(PREAMBLE) $(PARTS_TEX) $(STYLES) $(BIBFILE)
+	cd tex && $(PDFLATEX) $(MAINTEX) && bibtex $(patsubst %.tex, %.aux, $(MAINTEX)) && $(PDFLATEX) $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && cp $(PDF) ..
 
 $(INC)/dia/%.pdf: $(DIA)/%.dia
 	mkdir -p $(INC)/dia
