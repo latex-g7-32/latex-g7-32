@@ -1,4 +1,4 @@
-\sloppy 
+\sloppy
 
 % 1. Настройки стиля ГОСТ 7-32
 % Для начала определяем, хотим мы или нет, чтобы рисунки и таблицы нумеровались в пределах раздела, или нам нужна сквозная нумерация.
@@ -20,19 +20,19 @@ citecolor=black, menucolor=black, filecolor=black,
 \IfFileExists{cyrtimes.sty}
     {
         \usepackage{cyrtimespatched}
-    } 
+    }
     {
         % А если Times нету, то будет CM...
     }
 
 
 % 4. Прочие полезные пакеты.
-\usepackage{underscore} % Ура! Теперь можно писать подчёркивание. 
-                        % И нельзя использовать подчёркивание в файлах. 
+\usepackage{underscore} % Ура! Теперь можно писать подчёркивание.
+                        % И нельзя использовать подчёркивание в файлах.
                         % Выбирай, но осторожно.
 
 \usepackage{graphicx}   % Пакет для включения рисунков
- 
+
  % 5. Любимые команды
 \newcommand{\Code}[1]{\textbf{#1}}
 
@@ -58,7 +58,7 @@ citecolor=black, menucolor=black, filecolor=black,
   breakatwhitespace=true,% разрыв строк только на whitespacce
   breaklines=true,       % переносить длинные строки
 %   captionpos=b,          % подписи снизу -- вроде не надо
-  inputencoding=koi8-r, 
+  inputencoding=koi8-r,
   numbers=left,          % нумерация слева
   numberstyle=\footnotesize,
   showspaces=false,      % показывать пробелы подчеркиваниями -- идиотизм 70-х годов
