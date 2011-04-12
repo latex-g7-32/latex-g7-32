@@ -17,7 +17,8 @@ SRC=src
 INC=$(TEX)/inc
 
 # Input files
-MAINTEX=rpz.tex
+# no .tex allowed in MAINTEX!
+MAINTEX=rpz
 BIBFILE=$(TEX)/rpz.bib
 PREAMBLE=preamble-std.tex
 STYLES=$(TEX)/GostBase.clo $(TEX)/G7-32.sty $(TEX)/G7-32.cls $(TEX)/G2-105.sty
@@ -34,8 +35,8 @@ $(DEPS)/%-deps.mk: $(TEX)/% Makefile
 	mkdir -p $(DEPS)
 	(echo -n "$(PDF): " ; $(TD) -print=fi -format=1 $< | grep -v '^#' | xargs echo) > $@
 
-$(PDF): $(TEX)/$(MAINTEX) $(TEX)/$(PREAMBLE) $(PARTS_TEX) $(STYLES) $(BIBFILE)
-	cd tex && $(PDFLATEX) $(MAINTEX) && bibtex $(patsubst %.tex, %.aux, $(MAINTEX)) && $(PDFLATEX) $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && cp $(PDF) ..
+$(PDF): $(TEX)/$(MAINTEX).tex $(TEX)/$(PREAMBLE) $(PARTS_TEX) $(STYLES) $(BIBFILE)
+	cd tex && $(PDFLATEX) $(MAINTEX) && bibtex $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && cp $(PDF) ..
 
 $(INC)/dia/%.pdf: $(DIA)/%.dia
 	mkdir -p $(INC)/dia
