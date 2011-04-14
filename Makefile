@@ -44,7 +44,7 @@ $(PDF): $(TEX)/$(MAINTEX).tex $(STYLES) $(BIBFILE)
 
 $(INC)/dia/%.pdf: $(DIA)/%.dia
 	mkdir -p $(INC)/dia
-	dia -e $(patsubst %.dia, %.eps, $<) -t eps $< && epstopdf --outfile $@ $(patsubst %.dia, %.eps, $<)
+	dia -e $(@:%.pdf=%.eps) -t eps $< && epstopdf --outfile $@ $(@:%.pdf=%.eps)
 
 # .dot -> .eps (via dot2)
 $(INC)/dot/%.eps: $(DOT)/%.dot
