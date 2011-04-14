@@ -42,9 +42,9 @@ $(DEPS)/%-deps.mk: $(TEX)/% Makefile
 $(PDF): $(TEX)/$(MAINTEX).tex $(STYLES) $(BIBFILE)
 	cd tex && $(PDFLATEX) $(MAINTEX) && bibtex $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && cp $(PDF) ..
 
-$(INC)/dia/%.pdf: $(DIA)/%.dia
+$(INC)/dia/%.eps: $(DIA)/%.dia
 	mkdir -p $(INC)/dia
-	dia -e $(@:%.pdf=%.eps) -t eps $< && epstopdf --outfile $@ $(@:%.pdf=%.eps)
+	dia -e $(@:%.pdf=%.eps) -t eps $<
 
 # .dot -> .eps (via dot2)
 $(INC)/dot/%.eps: $(DOT)/%.dot
@@ -52,7 +52,7 @@ $(INC)/dot/%.eps: $(DOT)/%.dot
 	dot -Teps $< > $@
 
 # .eps --> .pdf
-$(INC)/dot/%.pdf: $(INC)/dot/%.eps
+$(INC)/%.pdf: $(INC)/%.eps
 	epstopdf --outfile $@ $<
 
 
