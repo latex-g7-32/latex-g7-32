@@ -31,11 +31,15 @@ all: $(PDF)
 PARTS_DEPS=$(PARTS_TEX:tex/%=$(DEPS)/%-deps.mk)
 -include $(PARTS_DEPS)
 
+MAIN_DEP=$(DEPS)/$(MAINTEX).tex-deps.mk
+-include $(MAIN_DEP)
+
+
 $(DEPS)/%-deps.mk: $(TEX)/% Makefile
 	mkdir -p $(DEPS)
 	(echo -n "$(PDF): " ; $(TD) -print=fi -format=1 $< | grep -v '^#' | xargs echo) > $@
 
-$(PDF): $(TEX)/$(MAINTEX).tex $(TEX)/$(PREAMBLE) $(PARTS_TEX) $(STYLES) $(BIBFILE)
+$(PDF): $(TEX)/$(MAINTEX).tex $(STYLES) $(BIBFILE)
 	cd tex && $(PDFLATEX) $(MAINTEX) && bibtex $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && cp $(PDF) ..
 
 $(INC)/dia/%.pdf: $(DIA)/%.dia
