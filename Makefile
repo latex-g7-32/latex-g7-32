@@ -2,15 +2,16 @@
 
 PDFLATEX=pdflatex -interaction=nonstopmode
 TD=./utils/texdepend
-# TODO: dot2tex lacks any record support.
-# D2T=dot2tex -f tikz --crop
+D2T=dot2tex -f pgf --crop --docpreamble "\usepackage[T2A]{fontenc} \usepackage[utf8]{inputenc} \usepackage[english, russian]{babel}"
+PDFTRIMWHITE=utils/pdftrimwhite
 
 # Output file
 PDF=rpz.pdf
 
 # Input paths
-DIA=dia
-DOT=dot
+DIA=graphics/dia
+DOT=graphics/dot
+SVG=graphics/svg
 TEX=tex
 DEPS=.deps
 SRC=src
@@ -23,6 +24,8 @@ BIBFILE=$(TEX)/rpz.bib
 PREAMBLE=preamble-std.tex
 STYLES=$(TEX)/GostBase.clo $(TEX)/G7-32.sty $(TEX)/G7-32.cls $(TEX)/G2-105.sty
 PARTS_TEX = $(wildcard $(TEX)/[0-9][0-9]-*.tex)
+
+
 
 all: $(PDF)
 
@@ -46,10 +49,17 @@ $(INC)/dia/%.eps: $(DIA)/%.dia
 	mkdir -p $(INC)/dia
 	dia -e $(@:%.pdf=%.eps) -t eps $<
 
-# .dot -> .eps (via dot2)
+# .dot -> .eps (via dot2tex)
 $(INC)/dot/%.eps: $(DOT)/%.dot
 	mkdir -p $(INC)/dot
 	dot -Teps $< > $@
+
+$(INC)/svg/%.pdf : $(SVG)/%.svg
+	mkdir -p $(INC)/svg/
+# 	inkscape -A $@ $<
+# Обрезаем поля в svg автоматом:
+	inkscape -A $(INC)/svg/$*-tmp.pdf $< && cd $(INC)/svg && ../../../$(PDFTRIMWHITE) $*-tmp.pdf $*.pdf && rm $*-tmp.pdf
+
 
 # .eps --> .pdf
 $(INC)/%.pdf: $(INC)/%.eps
@@ -57,14 +67,14 @@ $(INC)/%.pdf: $(INC)/%.eps
 
 
 # .dot -> .tex (via dot2tex)
-# $(INC)/dot/%.tex: $(DOT)/%.dot
-# 	mkdir -p $(INC)/dot
-# 	$(D2T) --preproc $< | $(D2T)  > $@
+$(INC)/dot/%.tex: $(DOT)/%.dot
+	mkdir -p $(INC)/dot
+	$(D2T) --preproc $< | $(D2T)  > $@
 # 	$(D2T) $< > $@
 
 # .dot -> .tex --> .pdf
-# $(INC)/dot/%.pdf: $(INC)/dot/%.tex
-# 	$(PDFLATEX) -output-directory=$(INC)/dot $<
+$(INC)/dot/%.pdf: $(INC)/dot/%.tex
+	$(PDFLATEX) -output-directory=$(INC)/dot $<
 
 $(INC)/src/%: $(SRC)/%
 	mkdir -p $(INC)/src
@@ -72,13 +82,13 @@ $(INC)/src/%: $(SRC)/%
 
 clean:
 	find $(TEX)/ -regextype posix-egrep -type f ! -regex ".*\.(sty|tex|clo|cls|bib|bst|gitignore)" -exec $(RM) {} \; ;
-	$(RM) $(DIA)/*.pdf $(DIA)/*.eps
+# 	$(RM) $(DIA)/*.pdf $(DIA)/*.eps
 	$(RM) -r $(DEPS)
 	$(RM) -r $(INC)
 
 distclean: clean
 
-PACK = $(addprefix latex-g7-32/, Makefile tex/* src/* utils/* dia/*.dia)
+PACK = $(addprefix latex-g7-32/, Makefile tex/* src/* utils/* graphics/*)
 
 tarball: $(PDF) clean
 	cd ..; rm latex-G7-32.tar.gz; tar -czf latex-G7-32.tar.gz $(PACK)
