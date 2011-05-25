@@ -557,3 +557,39 @@
 \DeclareOldFontCommand{\sc}{\scshape}{\@nomath\sc}
 \DeclareRobustCommand*\cal{\@fontswitch\relax\mathcal}
 \DeclareRobustCommand*\mit{\@fontswitch\relax\mathnormal}
+
+% \nobreakingbeforechapters и \breakingbeforechapters
+% добавлены кем-то с ИУ7 %)
+
+\newcommand\nobreakingbeforechapters{
+\makeatletter
+\renewcommand\chapter{%
+ \if@figuresonchapter%
+  \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
+ \fi%
+ \if@tablesonchapter%
+  \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
+ \fi%
+ \@startsection{chapter}{0}%
+  {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
+  {\GostTitleStyle\large\Gost@ChapterStyle}%
+}
+\makeatother
+}
+
+\newcommand\breakingbeforechapters{
+\makeatletter
+\renewcommand\chapter{%
+ \clearpage%
+ \if@figuresonchapter%
+  \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
+ \fi%
+ \if@tablesonchapter%
+  \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
+ \fi%
+ \@startsection{chapter}{0}%
+  {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
+  {\GostTitleStyle\large\Gost@ChapterStyle}%
+}
+\makeatother
+}
