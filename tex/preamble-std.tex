@@ -121,8 +121,10 @@ citecolor=black, menucolor=black, filecolor=black,
     {|}{\ensuremath{$|$}~}2%
 }[keywords,comments,strings]
 
-% Подписи к листингам
+% Подписи к листингам на русском языке.
 \renewcommand*\thelstnumber{\oldstylenums{\the\value{lstnumber}}}
 \renewcommand\lstlistingname{\cyr\CYRL\cyri\cyrs\cyrt\cyri\cyrn\cyrg}
 \renewcommand\lstlistlistingname{\cyr\CYRL\cyri\cyrs\cyrt\cyri\cyrn\cyrg\cyri}
 
+% Произвольная нумерация списков.
+\usepackage{enumerate}
