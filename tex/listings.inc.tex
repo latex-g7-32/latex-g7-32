@@ -1,53 +1,3 @@
-\sloppy
-
-% 1. Настройки стиля ГОСТ 7-32
-% Для начала определяем, хотим мы или нет, чтобы рисунки и таблицы нумеровались в пределах раздела, или нам нужна сквозная нумерация.
-% А не забыл ли автор букву 't' ?
-\EqInChapter % формулы будут нумероваться в пределах раздела
-\TableInChapter % таблицы будут нумероваться в пределах раздела
-\PicInChapter % рисунки будут нумероваться в пределах раздела
-
-% 2. Добавляем гипертекстовое оглавление в PDF
-\usepackage[
-bookmarks=true, colorlinks=true, unicode=true,
-urlcolor=black,linkcolor=black, anchorcolor=black,
-citecolor=black, menucolor=black, filecolor=black,
-]{hyperref}
-
-% 3. Изменение начертания шрифта --- после чего выглядит таймсоподобно.
-% apt-get install scalable-cyrfonts-tex
-
-\IfFileExists{cyrtimes.sty}
-    {
-        \usepackage{cyrtimespatched}
-    }
-    {
-        % А если Times нету, то будет CM...
-    }
-
-
-% 4. Прочие полезные пакеты.
-\usepackage{underscore} % Ура! Теперь можно писать подчёркивание.
-                        % И нельзя использовать подчёркивание в файлах.
-                        % Выбирай, но осторожно.
-
-\usepackage{graphicx}   % Пакет для включения рисунков
-
- % 5. Любимые команды
-\newcommand{\Code}[1]{\textbf{#1}}
-
-% 6. Поля
-% С такими оно полями оно работает по-умолчанию:
-% \RequirePackage[left=20mm,right=10mm,top=20mm,bottom=20mm,headsep=0pt]{geometry}
-% Если вас тошнит от поля в 10мм --- увеличивайте до 20-ти, ну и про переплёт не забывайте:
-\geometry{right=20mm}
-\geometry{left=30mm}
-
-
-% 7. Tikz
-\usepackage{tikz}
-\usetikzlibrary{arrows,positioning,shadows}
-
 % 8 Листинги
 
 \usepackage{listings}
@@ -125,6 +75,3 @@ citecolor=black, menucolor=black, filecolor=black,
 \renewcommand*\thelstnumber{\oldstylenums{\the\value{lstnumber}}}
 \renewcommand\lstlistingname{\cyr\CYRL\cyri\cyrs\cyrt\cyri\cyrn\cyrg}
 \renewcommand\lstlistlistingname{\cyr\CYRL\cyri\cyrs\cyrt\cyri\cyrn\cyrg\cyri}
-
-% Произвольная нумерация списков.
-\usepackage{enumerate}
