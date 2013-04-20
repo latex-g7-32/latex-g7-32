@@ -37,10 +37,9 @@ PARTS_DEPS=$(PARTS_TEX:tex/%=$(DEPS)/%-deps.mk)
 MAIN_DEP=$(DEPS)/$(MAINTEX).tex-deps.mk
 -include $(MAIN_DEP)
 
-
 $(DEPS)/%-deps.mk: $(TEX)/% Makefile
 	mkdir -p $(DEPS)
-	(echo -n "$(PDF): " ; $(TD) -print=fi -format=1 $< | grep -v '^#' | xargs echo) > $@
+	(/bin/echo -n "$(PDF): " ; $(TD) -print=fi -format=1 $< | grep -v '^#' | xargs /bin/echo) > $@
 
 $(PDF): $(TEX)/$(MAINTEX).tex $(STYLES) $(BIBFILE)
 	cd tex && $(PDFLATEX) $(MAINTEX) && bibtex $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && cp $(PDF) ..
@@ -78,7 +77,7 @@ $(INC)/dot/%.pdf: $(INC)/dot/%.tex
 
 $(INC)/src/%: $(SRC)/%
 	mkdir -p $(INC)/src
-	iconv -f=UTF-8 -t=KOI8-R $< > $@
+	iconv -f UTF-8 -t KOI8-R $< > $@
 
 clean:
 	find $(TEX)/ -regextype posix-egrep -type f ! -regex ".*\.(sty|tex|clo|cls|bib|bst|gitignore)" -exec $(RM) {} \; ;
