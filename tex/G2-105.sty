@@ -263,21 +263,37 @@
 
 \newlength{\GostItemGap}
 \newlength{\GostItemIndent}
+\newlength{\GostItemNestedIndent}
+
 \newcommand\Gost@List{%
  \setlength{\itemsep}{0mm}%                пробел между последовательными элементами
  \setlength{\topsep}{3mm}%                 отступ от текста до перечня (и от перечня до текста)
  \setlength{\partopsep}{0mm}%              дополнительный отступ,  если начали абзац
  \setlength{\parsep}{0mm}%                 расстояние между абзацами внутри пункта
- \setlength{\leftmargin}{\GostItemIndent}% левый отступ до текста
+ \setlength{\leftmargin}{0mm}% левый отступ до текста
+ \setlength{\itemindent}{\GostItemIndent}%             дополнительный левый отступ первой строчки
+ \setlength{\labelsep}{2\GostItemGap}%     от метки до текста
+}
+
+\newcommand\Gost@NestedList{%
+ \setlength{\itemsep}{0mm}%                пробел между последовательными элементами
+ \setlength{\topsep}{0mm}%                 отступ от текста до перечня (и от перечня до текста)
+ \setlength{\partopsep}{0mm}%              дополнительный отступ,  если начали абзац
+ \setlength{\parsep}{0mm}%                 расстояние между абзацами внутри пункта
+ \setlength{\leftmargin}{\GostItemNestedIndent}% левый отступ до текста
  \setlength{\itemindent}{0mm}%             дополнительный левый отступ первой строчки
  \setlength{\labelsep}{2\GostItemGap}%     от метки до текста
 }
+
+
 \renewcommand{\@listI} {\Gost@List}
-\renewcommand{\@listii}{\Gost@List}
+\renewcommand{\@listii}{\Gost@NestedList}
 
 \setlength\GostItemGap{1mm} % небольшие отступы для пунктов перечисления
 \setlength\leftmarginii{0mm}
 \setlength\GostItemIndent{\parindent}
+\setlength\GostItemNestedIndent{\parindent}
+\addtolength\GostItemNestedIndent{6mm}
 
 %  ненумерованные перечисления
 \newcommand{\labelitemi}{---}
@@ -297,7 +313,7 @@
 %заменено на description для совместимости -- Коротков И.
 \newenvironment{description}{%
  \list{}{%
-  \labelwidth\z@ \itemindent-\leftmargin \leftmargin 25mm%
+  \labelwidth \z@ \leftmargin 0mm%
   \let\makelabel\abbreviationlabel%
  }%
 }{%
@@ -467,10 +483,10 @@
 \newcommand\listoffigures{\chapter*{\listfigurename}\@starttoc{lof}}
 \newcommand\listoftables{\chapter*{\listtablename}\@starttoc{lot}}
 
-\newcommand{\l@chapter}   {\@dottedtocline{1}{0mm}{1.1em}}
-\newcommand{\l@section}{\@dottedtocline{2}{10mm}{2.1em}}
-\newcommand{\l@subsection}   {\@dottedtocline{3}{20mm}{3.1em}}
-\newcommand{\l@subsubsection}{\@dottedtocline{4}{30mm}{4.1em}}
+\newcommand{\l@chapter}   {\@dottedtocline{1}{0mm}{1.6em}}
+\newcommand{\l@section}{\@dottedtocline{2}{10mm}{2.8em}}
+\newcommand{\l@subsection}   {\@dottedtocline{3}{20mm}{4.0em}}
+\newcommand{\l@subsubsection}{\@dottedtocline{4}{30mm}{5.2em}}
 \newcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
 \newcommand*\l@table {\@dottedtocline{1}{1.5em}{2.3em}}
 \newcommand\@tocrmarg{2.55em} %отступ правого края оглавления перенесённых строк
