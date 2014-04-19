@@ -3,7 +3,7 @@
 PDFLATEX=pdflatex -interaction=nonstopmode
 TD=./utils/texdepend
 D2T=dot2tex -f pgf --crop --docpreamble "\usepackage[T2A]{fontenc} \usepackage[utf8]{inputenc} \usepackage[english, russian]{babel}"
-PDFTRIMWHITE=utils/pdftrimwhite
+PDFTRIMWHITE=pdfcrop
 
 # Output file
 PDF=rpz.pdf
@@ -57,7 +57,7 @@ $(INC)/svg/%.pdf : $(SVG)/%.svg
 	mkdir -p $(INC)/svg/
 # 	inkscape -A $@ $<
 # Обрезаем поля в svg автоматом:
-	inkscape -A $(INC)/svg/$*-tmp.pdf $< && cd $(INC)/svg && ../../../$(PDFTRIMWHITE) $*-tmp.pdf $*.pdf && rm $*-tmp.pdf
+	inkscape -A $(INC)/svg/$*-tmp.pdf $< && cd $(INC)/svg && $(PDFTRIMWHITE) $*-tmp.pdf $*.pdf && rm $*-tmp.pdf
 
 
 # .eps --> .pdf
