@@ -11,7 +11,7 @@ latex-g7-32
 
 [Михаил Конник](http://mydebianblog.blogspot.nl/2008/09/732-2001-latex.html)
 
-|[Всеволод Крищенко](http://sevik.ru)|
+|[Всеволод Крищенко](http://sevik.ru/latex/)|
 -------------------
 
 Студенты кафедры [ИУ7](iu7.bmstu.ru)
