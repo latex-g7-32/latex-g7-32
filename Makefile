@@ -1,6 +1,6 @@
 # Tools
 
-LATEX=xelatex -interaction=nonstopmode
+LATEX=xelatex -interaction=nonstopmode -shell-escape
 TD=./utils/texdepend
 D2T=dot2tex -f pgf --crop --docpreamble "\usepackage[T2A]{fontenc} \usepackage[utf8]{inputenc} \usepackage[english, russian]{babel}"
 PDFTRIMWHITE=../../../utils/pdfcrop
@@ -25,6 +25,12 @@ PREAMBLE=preamble-std.tex
 STYLES=$(TEX)/GostBase.clo $(TEX)/G7-32.sty $(TEX)/G7-32.cls $(TEX)/G2-105.sty
 PARTS_TEX = $(wildcard $(TEX)/[0-9][0-9]-*.tex)
 
+
+ifeq ($(firstword $(LATEX)), pdflatex)
+	CODE_CONVERTION=iconv -f UTF-8 -t KOI8-R 
+else
+	CODE_CONVERTION=cat
+endif
 
 
 all: $(PDF)
@@ -77,7 +83,7 @@ $(INC)/dot/%.pdf: $(INC)/dot/%.tex
 
 $(INC)/src/%: $(SRC)/%
 	mkdir -p $(INC)/src
-	iconv -f UTF-8 -t KOI8-R $< > $@
+	$(CODE_CONVERTION) $< > $@
 
 clean:
 	find $(TEX)/ -regextype posix-egrep -type f ! -regex ".*\.(sty|tex|clo|cls|bib|bst|gitignore)" -exec $(RM) {} \; ;

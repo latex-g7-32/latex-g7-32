@@ -4,6 +4,7 @@
 В данном разделе описано изготовление и требование всячины. Кстати,
 в Latex нужно эскейпить подчёркивание (писать <<\verb|some\_function|>> для \Code{some\_function}).
 
+\ifPDFTeX
 Для вставки кода есть пакет \Code{listings}. К сожалению, пакет \Code{listings} всё ещё
 работает криво при появлении в листинге русских букв и кодировке исходников utf-8.
 В данном примере он (увы) на лету конвертируется в koi-8 в ходе сборки pdf.
@@ -13,7 +14,6 @@
 
 Вот так можно вставлять псевдокод (питоноподобный язык определен в \Code{listings.inc.tex}):
 
-\ifPDFTeX
 \begin{lstlisting}[style=pseudocode,caption={Алгоритм оценки дипломных работ}]
 def EvaluateDiplomas():
     for each student in Masters:
@@ -43,6 +43,52 @@ def EvaluateDiplomas():
 % весь остальной UTF-8 вроде CJK и египетских иероглифов -- нельзя.
 
 \lstinputlisting[language=C,caption=Пример (\Code{test.c}),label=lst:sample01]{inc/src/test.c}
+
+\else
+
+Для вставки кода есть пакет \texttt{minted}. Он хорош всем кроме: необходимости Python (есть во всех нормальных (нет, Windows, я не про тебя) ОС) и Pygments и того, что нормально работает лишь в \XeLaTeX.
+
+Можно пользоваться расширенным BFN:
+
+\begin{listing}[H]
+\begin{ebnfcode}
+ letter = "A" | "B" | "C" | "D" | "E" | "F" | "G"
+       | "H" | "I" | "J" | "K" | "L" | "M" | "N"
+       | "O" | "P" | "Q" | "R" | "S" | "T" | "U"
+       | "V" | "W" | "X" | "Y" | "Z" ;
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+symbol = "[" | "]" | "{" | "}" | "(" | ")" | "<" | ">"
+       | "'" | '"' | "=" | "|" | "." | "," | ";" ;
+character = letter | digit | symbol | "_" ;
+ 
+identifier = letter , { letter | digit | "_" } ;
+terminal = "'" , character , { character } , "'" 
+         | '"' , character , { character } , '"' ;
+ 
+lhs = identifier ;
+rhs = identifier
+     | terminal
+     | "[" , rhs , "]"
+     | "{" , rhs , "}"
+     | "(" , rhs , ")"
+     | rhs , "|" , rhs
+     | rhs , "," , rhs ;
+ 
+rule = lhs , "=" , rhs , ";" ;
+grammar = { rule } ;
+\end{ebnfcode}
+\caption{EBNF определённый через EBNF}
+\label{lst:ebnf}
+\end{listing}
+
+А вот в листинге \ref{lst:c} на языке C работают русские комменты. Спасибо Pygments и Minted за это.
+
+\begin{listing}[H]
+\cfile{inc/src/test.c}
+\caption{Пример — test.c} 
+\end{listing}
+\label{lst:c}
+
 \fi
 
 % Для вставки реального кода лучше использовать \texttt{\textbackslash lstinputlisting} (который понимает

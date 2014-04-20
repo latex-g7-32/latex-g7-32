@@ -9,12 +9,20 @@ latex-g7-32
 
 ### Зависимости
 
-#### LaTeX пакеты
+#### Основные
+
+##### LaTeX пакеты
 ```
 amssymb amsmath caption flafter footmisc hyperref icomma iftex graphicx longtable underscore 
 ```
 
+##### Программы
+```
+inkscape dia pgf context 
+```
+
 #### pdfLaTeX-версия
+##### LaTeX пакеты
 ```
 cmap babel mathtext pscyr ucs
 ```
@@ -22,13 +30,13 @@ cmap babel mathtext pscyr ucs
 Для придания таймовского вида нужно установить соотв. шрифты (пакет `cyrtimes.sty`), в Debian/Ubuntu это пакет `scalable-cyrfonts-tex`. Если этого пакета нет, оно использует стандартную гарнитуру CM.
 
 #### XeLaTeX-версия
+##### LaTeX пакеты
 ```
-polyglossia xecyr
+minted polyglossia xecyr
 ```
-
-#### Программы
+##### Программы
 ```
-inkscape dia pgf context 
+python pygments
 ```
 
 ## Использование
@@ -39,17 +47,27 @@ inkscape dia pgf context
 
 Авторы
 ------
-В порядке участия:
 
+### 1. Первая версия
 Алексей Томин
 
+### 2. Доработка "дебианщика"
 [Михаил Конник](http://mydebianblog.blogspot.ru/2008/09/732-2001-latex.html)
 
+### 3. Доработка кафедры [ИУ7](http://iu7.bmstu.ru): Makefile, рисунки (обрезка, конвертация dia, dot (графы), svg), листинги, дальнейшая ГОСТификация
 |[Всеволод Крищенко](http://sevik.ru/latex/)|
 -------------------
 
-[Иван Коротков](https://vk.com/ikorotkov)
+[Иван Коротков](https://github.com/tw33dl3dee)
 
-Студенты кафедры [ИУ7](http://iu7.bmstu.ru)
+### 4. Выкладывание на GitHub, поддержка XeLaTeX
+[Роман Инфлянскас](https://github.com/rominf)
 
-[Роман Инфлянскас](https://github.com/rominf/latex-g7-32)
+## См. также
+### Статьи
+[Записки дебианщика](http://mydebianblog.blogspot.nl/2008/11/latex.html)
+
+### Репозитории
+[@qrilka: порт второй версии на `XeLaTeX`](https://github.com/qrilka/G7-32)
+
+[@petethepig: порт урезанной третьей версии ("под себя") на `XeLaTeX`](https://github.com/petethepig/diploma)
