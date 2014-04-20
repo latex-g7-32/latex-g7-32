@@ -3,7 +3,7 @@
 LATEX=xelatex -interaction=nonstopmode
 TD=./utils/texdepend
 D2T=dot2tex -f pgf --crop --docpreamble "\usepackage[T2A]{fontenc} \usepackage[utf8]{inputenc} \usepackage[english, russian]{babel}"
-PDFTRIMWHITE=pdfcrop
+PDFTRIMWHITE=../../../utils/pdfcrop
 
 # Output file
 PDF=rpz.pdf
