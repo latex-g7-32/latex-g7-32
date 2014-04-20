@@ -10,20 +10,10 @@ latex-g7-32
 #### LaTeX пакеты
 mathtext, amssymb, amsmath, icomma, longtable, graphicx, underscore, cmap, hyperref
 
-#### P
+Для придания таймовского вида нужно установить соотв. шрифты (пакет `cyrtimes.sty`), в Debian/Ubuntu это пакет `scalable-cyrfonts-tex`. Если этого пакета нет, оно использует стандартную гарнитуру CM.
 
 #### Программы
 inkscape dia pgf context 
-
-
-### Debian
-
-Как минимум надо установить:
-```bash
-apt-get install texlive.*cyr.* texlive.*extra
-```
-
-Для придания таймовского вида нужно установить соотв. шрифты (пакет `cyrtimes.sty`), в Debian/Ubuntu это пакет `scalable-cyrfonts-tex`. Если этого пакета нет, оно использует стандартную гарнитуру CM.
 
 ## Использование
 После изменения РПЗ запустите `make` в корне. Результатом будет `rpz.pdf`.
@@ -46,4 +36,4 @@ apt-get install texlive.*cyr.* texlive.*extra
 
 Студенты кафедры [ИУ7](http://iu7.bmstu.ru)
 
-Роман Инфлянскас (Я)
+[Роман Инфлянскас](https://github.com/rominf/latex-g7-32)
