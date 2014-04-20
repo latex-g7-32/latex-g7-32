@@ -5,12 +5,22 @@ latex-g7-32
 
 ## Установка
 
+### Зависимости
+
+#### LaTeX пакеты
+mathtext, amssymb, amsmath, icomma, longtable, graphicx, underscore, cmap, hyperref
+
+#### P
+
+#### Программы
+inkscape dia pgf context 
+
 
 ### Debian
 
 Как минимум надо установить:
 ```bash
-apt-get install inkscape dia pgf context texlive.*cyr.* texlive.*extra
+apt-get install texlive.*cyr.* texlive.*extra
 ```
 
 Для придания таймовского вида нужно установить соотв. шрифты (пакет `cyrtimes.sty`), в Debian/Ubuntu это пакет `scalable-cyrfonts-tex`. Если этого пакета нет, оно использует стандартную гарнитуру CM.
@@ -27,7 +37,7 @@ apt-get install inkscape dia pgf context texlive.*cyr.* texlive.*extra
 
 Алексей Томин
 
-[Михаил Конник](http://mydebianblog.blogspot.nl/2008/09/732-2001-latex.html)
+[Михаил Конник](http://mydebianblog.blogspot.ru/2008/09/732-2001-latex.html)
 
 |[Всеволод Крищенко](http://sevik.ru/latex/)|
 -------------------
