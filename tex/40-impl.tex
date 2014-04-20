@@ -13,6 +13,7 @@
 
 Вот так можно вставлять псевдокод (питоноподобный язык определен в \Code{listings.inc.tex}):
 
+\ifPDFTeX
 \begin{lstlisting}[style=pseudocode,caption={Алгоритм оценки дипломных работ}]
 def EvaluateDiplomas():
     for each student in Masters:
@@ -42,6 +43,7 @@ def EvaluateDiplomas():
 % весь остальной UTF-8 вроде CJK и египетских иероглифов -- нельзя.
 
 \lstinputlisting[language=C,caption=Пример (\Code{test.c}),label=lst:sample01]{inc/src/test.c}
+\fi
 
 % Для вставки реального кода лучше использовать \texttt{\textbackslash lstinputlisting} (который понимает
 % UTF8) и стили \Code{realcode} либо \Code{simplecode} (в зависимости от размера куска).

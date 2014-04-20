@@ -1,6 +1,6 @@
 # Tools
 
-PDFLATEX=pdflatex -interaction=nonstopmode
+LATEX=xelatex -interaction=nonstopmode
 TD=./utils/texdepend
 D2T=dot2tex -f pgf --crop --docpreamble "\usepackage[T2A]{fontenc} \usepackage[utf8]{inputenc} \usepackage[english, russian]{babel}"
 PDFTRIMWHITE=utils/pdftrimwhite
@@ -42,7 +42,7 @@ $(DEPS)/%-deps.mk: $(TEX)/% Makefile
 	(/bin/echo -n "$(PDF): " ; $(TD) -print=fi -format=1 $< | grep -v '^#' | xargs /bin/echo) > $@
 
 $(PDF): $(TEX)/$(MAINTEX).tex $(STYLES) $(BIBFILE)
-	cd tex && $(PDFLATEX) $(MAINTEX) && bibtex $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && $(PDFLATEX) $(MAINTEX) && cp $(PDF) ..
+	cd tex && $(LATEX) $(MAINTEX) && bibtex $(MAINTEX) && $(LATEX) $(MAINTEX) && $(LATEX) $(MAINTEX) && cp $(PDF) ..
 
 $(INC)/dia/%.eps: $(DIA)/%.dia
 	mkdir -p $(INC)/dia
@@ -73,7 +73,7 @@ $(INC)/dot/%.tex: $(DOT)/%.dot
 
 # .dot -> .tex --> .pdf
 $(INC)/dot/%.pdf: $(INC)/dot/%.tex
-	$(PDFLATEX) -output-directory=$(INC)/dot $<
+	$(LATEX) -output-directory=$(INC)/dot $<
 
 $(INC)/src/%: $(SRC)/%
 	mkdir -p $(INC)/src

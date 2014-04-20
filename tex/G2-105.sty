@@ -239,24 +239,42 @@
 \setcounter{secnumdepth}{3}
 %  в оглавлении- тоже могут быть все.
 \setcounter{tocdepth}{4} %% virens: обычно только первый подраздел
-%  перенос в словах-с-дефисом
-\lccode`\-=`\-
-\defaulthyphenchar=127
 
 % Импорт необходимых пакетов
+\RequirePackage{iftex}
 \if@usehyperref
  \RequirePackage[unicode]{hyperref}
 \fi
-\if@usepscyr
-  \RequirePackage[math]{pscyr}
+\ifPDFTeX
+  %  перенос в словах-с-дефисом
+  \lccode`\-=`\-
+  \defaulthyphenchar=127
+  
+  \RequirePackage[english,russian]{babel}
+  \RequirePackage[T2A]{fontenc} % T1 по этой же пичине, иначе акробату плохо.
+  \RequirePackage[\Gost@encoding]{inputenc}
+  \RequirePackage{ucs} %теперь из pdf можно копипастить русский текст
+  \RequirePackage{mathtext}%русские буквы в формулах
+  \RequirePackage{cmap} %теперь из pdf можно копипастить русский текст
+  \if@usepscyr
+    \RequirePackage[math]{pscyr}
+  \fi
+\else
+  % breaks
+%   \RequirePackage{unicode-math}
+
+%   \RequirePackage{xunicode}
+%   \RequirePackage{xltxtra}
+  \RequirePackage{fontspec}
+  \RequirePackage{polyglossia}
+  \RequirePackage{xecyr}
+  \setmainlanguage[spelling=modern]{russian} 
+  \setotherlanguage{english}
+  \defaultfontfeatures{Mapping=tex-text}
+  \setmainfont{CMU Serif}
+  \setsansfont{CMU Sans Serif}
+  \setmonofont{CMU Typewriter Text}
 \fi
-\RequirePackage{mathtext}%русские буквы в формулах
-% \RequirePackage[T2A]{fontenc}
-\RequirePackage{cmap} %теперь из pdf можно копипастить русский текст
-\RequirePackage{ucs} %теперь из pdf можно копипастить русский текст
-\RequirePackage[T2A]{fontenc} % T1 по этой же пичине, иначе акробату плохо.
-\RequirePackage[\Gost@encoding]{inputenc}
-\RequirePackage[english,russian]{babel}
 \RequirePackage{flafter}
 
 % 4.2.7 Перечисления
