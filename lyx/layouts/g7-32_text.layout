@@ -1,0 +1,23 @@
+#% Do not delete the line below; configure depends on this
+# \LoadClass{G7-32}
+# \DeclareLaTeXClass[G7-32]{gost7.32}
+# eskd textclass definition file. 
+
+Format 11
+Input g32class.inc
+
+SecNumDepth             5
+TocDepth                5
+
+NoStyle Chapter
+
+
+Style Part
+	Align                 Left
+	AlignPossible         Left
+	TopSep                2
+	BottomSep             1.5
+	Font
+	  Size                Larger
+	EndFont
+End

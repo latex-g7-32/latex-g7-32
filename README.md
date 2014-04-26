@@ -54,11 +54,14 @@ python pygments
 ### 2. Доработка "дебианщика"
 [Михаил Конник](http://mydebianblog.blogspot.ru/2008/09/732-2001-latex.html)
 
-### 3. Доработка кафедры [ИУ7](http://iu7.bmstu.ru): Makefile, рисунки (обрезка, конвертация dia, dot (графы), svg), листинги, дальнейшая ГОСТификация
+### 3a. Доработка кафедры [ИУ7](http://iu7.bmstu.ru): Makefile, рисунки (обрезка, конвертация dia, dot (графы), svg), листинги, дальнейшая ГОСТификация
 |[Всеволод Крищенко](http://sevik.ru/latex/)|
 -------------------
 
 [Иван Коротков](https://github.com/tw33dl3dee)
+
+### 3b. Добавление layouts LyX
+[Расим (Brotherofken)](http://habrahabr.ru/post/116517/)
 
 ### 4. Выкладывание на GitHub, поддержка XeLaTeX
 [Роман Инфлянскас](https://github.com/rominf)

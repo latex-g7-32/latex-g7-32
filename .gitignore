@@ -9,3 +9,6 @@ auto
 *.eps
 .deps
 tex/inc
+.idea
+utils/install.fish
+utils/install.sh
