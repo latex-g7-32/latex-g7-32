@@ -13,17 +13,26 @@ Style Itemize
 	Margin                Static
 	LatexType             Item_Environment
 	LatexName             itemize
-	NextNoIndent          1
+	NextNoIndent          0
 	LeftMargin            MMN
 	LabelSep              xx
 	ItemSep               0.2
 	TopSep                0.7
 	BottomSep             0.7
 	ParSep                0.3
+	ParbreakIsNewline     0
+	#PassThru              1
+	#RightDelim            <br/>
 	Align                 Block
 	AlignPossible         Block, Left
 	LabelType             Itemize
-	LabelString           "*"
+	HTMLTag               ul
+	HTMLItem              li
+	HTMLLabel             NONE
+	Argument item:1
+		LabelString   "Custom Item|s"
+		Tooltip       "A customized item string"
+	EndArgument
 End
 
 
@@ -32,7 +41,7 @@ Style Enumerate
 	Margin                Static
 	LatexType             Item_Environment
 	LatexName             enumerate
-	NextNoIndent          1
+	NextNoIndent          0
 	LeftMargin            MMN
 	LabelSep              xx
 	ParSkip               0.0
@@ -40,9 +49,21 @@ Style Enumerate
 	TopSep                0.7
 	BottomSep             0.7
 	ParSep                0.3
+	ParbreakIsNewline     0
+	#PassThru              1
+	#RightDelim            <br/>
 	Align                 Block
 	AlignPossible         Block, Left
 	LabelType             Enumerate
+	LabelCounter          "enum"
+	HTMLTag               ol
+	HTMLItem              li
+	HTMLLabel             NONE
+	RefPrefix             enu
+	Argument item:1
+		LabelString   "Custom Item|s"
+		Tooltip       "A customized item string"
+	EndArgument
 End
 
 
@@ -51,7 +72,7 @@ Style Description
 	Margin                First_Dynamic
 	LatexType             Item_environment
 	LatexName             description
-	NextNoIndent          1
+	NextNoIndent          0
 	LeftMargin            MM
 	LabelSep              xxx
 	ParSkip               0.4
@@ -59,6 +80,9 @@ Style Description
 	TopSep                0.7
 	BottomSep             0.7
 	ParSep                0.3
+	ParbreakIsNewline     0
+	#PassThru              1
+	#RightDelim            <br/>
 	Align                 Block
 	AlignPossible         Block, Left
 	LabelType             Manual
@@ -66,6 +90,14 @@ Style Description
 	LabelFont
 	  Series              Bold
 	EndFont
+	HTMLTag               dl
+	HTMLAttr              class='description'
+	HTMLItem              dd
+	HTMLLabel             dt
+	HTMLLabelFirst        1
+	HTMLStyle
+		dl.description dt { font-weight: bold; }
+	EndHTMLStyle
 End
 
 
@@ -74,12 +106,15 @@ Style List
 	Margin                Manual
 	LatexType             Environment
 	LatexName             lyxlist
-	NextNoindent          1
+	NextNoindent          0
 	LabelSep              xxx
 	ParSkip               0.4
 	TopSep                0.7
 	BottomSep             0.7
 	ParSep                0.5
+	ParbreakIsNewline     0
+	#PassThru              1
+	#RightDelim            <br/>
 	Align                 Block
 	AlignPossible         Block, Left
 	LabelType             Manual
@@ -102,7 +137,7 @@ Style "Сокращения"
 	Margin                First_Dynamic
 	LatexType             List_Environment
 	LatexName             abbreviation
-	NextNoIndent          1
+	NextNoIndent          0
 	LeftMargin            MM
 	LabelSep              xxx
 	ParSkip               0.4
@@ -110,6 +145,9 @@ Style "Сокращения"
 	TopSep                0.7
 	BottomSep             0.7
 	ParSep                0.3
+	ParbreakIsNewline     0
+	#PassThru              1
+	#RightDelim            <br/>
 	Align                 Block
 	AlignPossible         Block, Left
 	LabelType             Manual

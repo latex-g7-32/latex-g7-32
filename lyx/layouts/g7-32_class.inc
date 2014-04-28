@@ -40,13 +40,13 @@ End
 #Input stdcharstyles.inc
 #Input stdcustom.inc
 Input stdfloats.inc
-Input g32counters.inc
+Input g7-32_counters.inc
 Input stdinsets.inc
-Input g32lists.inc
-Input g32sections.inc
-Input g32starsections.inc
+Input g7-32_lists.inc
+Input g7-32_sections.inc
+Input g7-32_starsections.inc
 #Input stdtitle.inc
-Input g32struct.inc
+Input g7-32_struct.inc
 Input lyxmacros.inc
 Input stdlayouts.inc
 

@@ -3,7 +3,7 @@ auto
 *.toc
 *.aux
 *.out
-*.pdf
+rpz*.pdf
 *.bbl
 *.blg
 *.eps

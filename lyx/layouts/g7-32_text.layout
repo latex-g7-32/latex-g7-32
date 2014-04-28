@@ -4,7 +4,7 @@
 # eskd textclass definition file. 
 
 Format 11
-Input g32class.inc
+Input g7-32_class.inc
 
 SecNumDepth             5
 TocDepth                5
