@@ -1,0 +1,11 @@
+#\DeclareLyXModule{Local minted options}
+#DescriptionBegin
+#Minted enviroments for listings.
+#DescriptionEnd
+#Category: local
+
+# Author: Inflianskas Roman <infroma@gmail.com>
+
+AddToPreamble
+\usepackage{local-minted}
+EndPreamble

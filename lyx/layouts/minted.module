@@ -1,0 +1,24 @@
+#\DeclareLyXModule{Minted}
+#DescriptionBegin
+#Minted enviroments for listings.
+#DescriptionEnd
+#Category: listings
+
+# Author: Inflianskas Roman <infroma@gmail.com>
+
+AddToPreamble
+\usepackage{minted}
+EndPreamble
+ 
+Float
+	Type                  listing
+	GuiName               Listing
+	Placement             htbp
+	Extension             loa
+	NumberWithin          none
+	Style                 ruled
+	ListName              "List of listings"
+	IsPredefined          true
+	UsesFloatPkg          true
+	RefPrefix             lst
+End

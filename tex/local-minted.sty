@@ -1,0 +1,24 @@
+\ProvidesPackage{local-minted}[2014/04/27 Local minted options]
+
+\usepackage{minted}
+
+% Сюда вставлять общие опции
+\def\mintedoptions{linenos,frame=single,fontsize=\footnotesize,style=bw}
+
+% Сюда пихать новые языки
+\newcommand{\makenewmintedenviromnents}[1]{%
+  \newminted{c}{#1}%
+  \newminted{ebnf}{#1}%
+  \newminted{python}{#1}%
+  \newmintedfile{c}{#1}%
+  \newmintedfile{ebnf}{#1}%
+  \newmintedfile{python}{#1}%
+}
+
+% Магия! Здесь происходит непосредственное определение всех окружений
+\expandafter\makenewmintedenviromnents\expandafter{\mintedoptions}
+
+\renewcommand{\listingscaption}{Листинг}
+\renewcommand{\listoflistingscaption}{Листинги} 
+
+\endinput
