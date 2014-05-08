@@ -18,6 +18,12 @@
 % Магия! Здесь происходит непосредственное определение всех окружений
 \expandafter\makenewmintedenviromnents\expandafter{\mintedoptions}
 
+% \newcommand{\makenewinputminted}[1]{%
+% 	\renewcommand{\inputminted}[3][]{\inputminted[#1,##1]{##2}{##3}}
+% }
+
+% \expandafter\makenewinputminted\expandafter{\mintedoptions}
+
 \renewcommand{\listingscaption}{Листинг}
 \renewcommand{\listoflistingscaption}{Листинги} 
 

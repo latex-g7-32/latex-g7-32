@@ -10,7 +10,7 @@ Options:
     -k --keep-existing       Keep existing files
     -o --overwrite-existing  Overwrite existing files
     -u --update-packages     Update packages
-    -n --update-packages     Don't update packages
+    -n --no-update-packages  Don't update packages
     -h --help                Show this screen
     --version                Show version
 """
@@ -24,7 +24,7 @@ from shutil import copyfile as copy, move
 from docopt import docopt
 from subprocess import call
 import logging
-logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
     args = docopt(__doc__, version=__version__)
@@ -32,14 +32,14 @@ if __name__ == '__main__':
     src_tex = Path(current_dir/"../tex")
     src_lyx = Path(current_dir/"../lyx")
     texmf = Path(os.environ.get('TEXMFHOME', os.path.expanduser("~/texmf")))
-    tex = texmf/"tex"
-    inc = tex/"inc"
-    g2_105 = tex/"latex/G2-105"
-    g7_32 = tex/"latex/G7-32"
-    base = tex/"latex/base"
+    latex = texmf/"tex/latex"
+    g2_105 = latex/"G2-105"
+    g7_32 = latex/"G7-32"
+    base = latex/"base"
+    local = latex/"local"
     bibtex = texmf/"bibtex/bst/gost780u"
     lyx = Path(os.path.expanduser("~/.lyx/layouts"))
-    destinations = [texmf, tex, g2_105, g7_32, base, bibtex, lyx];
+    destinations = [texmf, latex, g2_105, g7_32, base, bibtex, lyx];
     logging.debug("destinations: {}".format(destinations))
     for x in destinations:
         try:
@@ -52,10 +52,10 @@ if __name__ == '__main__':
     elif args['symlink']:
         move_function = lambda src, dst: symlink(str(src), str(dst/src.name))
     destination_source = {
-        inc: src_tex.glob("*.inc.tex"),
         g2_105: [src_tex/"G2-105.sty"],
         g7_32: [src_tex/"G7-32.sty", src_tex/"cyrtimespatched.sty", src_tex/"GostBase.clo"],
         base: [src_tex/"G7-32.cls"],
+        local: src_tex.glob("local-*.sty") + src_tex.glob("*.inc.tex"),
         bibtex: [src_tex/"gost780u.bst"],
         lyx: src_lyx.glob("layouts/*"),
     }
