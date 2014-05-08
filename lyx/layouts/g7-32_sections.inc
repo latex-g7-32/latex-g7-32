@@ -10,7 +10,7 @@
 Format 11
 
 Style "Раздел"
-    Category              "Раздел
+    Category              "Раздел"
     Margin                Dynamic
     LabelType             Counter
     LabelCounter          section
@@ -88,6 +88,22 @@ Style "Подпункт"
     Align                 Block
     AlignPossible         Block, Left
 End
+
+
+Style "Параграф"
+    CopyStyle             "Подпункт"
+    LabelCounter          paragraph
+    TocLevel              4
+    LatexName             paragraph
+    TopSep                0.4
+    BottomSep             0
+    Font
+        Series              Bold
+        Size                Normal
+    EndFont
+    HTMLTag               h5
+End
+
 
 Style "Приложение"
     Category              "Раздел"
