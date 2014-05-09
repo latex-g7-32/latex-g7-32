@@ -1,4 +1,7 @@
-﻿# Standard textclass definition file. Taken from initial LyX source code
+﻿# GOST 7.32
+# Author : Inflianskas Roman <infroma@gmail.com>
+
+# Standard textclass definition file. Taken from initial LyX source code
 # Author : Matthias Ettrich <ettrich@informatik.uni-tuebingen.de>
 # Transposed by Pascal André <andre@via.ecp.fr>
 # Heavily modifed and enhanced by several developers.
@@ -7,7 +10,7 @@
 # commands that are useful for article-like document classes, but not
 # for letters.
 
-Format 11
+Format 49
 
 Style "Раздел"
     Category              "Раздел"
@@ -31,6 +34,7 @@ Style "Раздел"
       Series              Bold
       Size                Larger
     EndFont
+    HTMLTag               h1
 End
 
 
@@ -46,57 +50,39 @@ Style "Подраздел"
 	  Series              Bold
 	  Size                Large
 	EndFont
+    HTMLTag               h2
 End
 
 Style "Пункт"
-    Category              "Раздел"
-    Margin                Dynamic
-    LabelType             Counter
-    LabelCounter          point
-    KeepEmpty             1
-    TocLevel              2
-    LatexType             Command
-    LatexName             subsection
-#   LatexParam            1
-    NeedProtect           0
-    NextNoIndent          0
-    LabelSep              xxx
-    ParSkip               0.4
-    TopSep                0.4
-    BottomSep             0
-    Align                 Block
-    AlignPossible         Block, Left
+	CopyStyle             "Подраздел"
+	LabelCounter	      point
+	TocLevel              2
+	LatexName             subsection
+	TopSep                0.4
+	BottomSep             0
+	ParSep                0.4
+    HTMLTag               h3
 End
-
 
 Style "Подпункт"
-    Category              "Раздел"
-    Margin                Dynamic
-    LabelType             Counter
-    LabelCounter          subpoint
-    KeepEmpty             1
-    TocLevel              3
-    LatexType             Command
-    LatexName             subsubsection
-#   LatexParam            1
-    NeedProtect           0
-    NextNoIndent          0
-    LabelSep              xxx
-    ParSkip               0.4
-    TopSep                0.4
-    BottomSep             0
-    Align                 Block
-    AlignPossible         Block, Left
+	CopyStyle             "Пункт"
+	LabelType             No_Label
+	TocLevel              3
+	LatexName             subsubsection
+	TopSep                0.3
+	BottomSep             0
+	ParSep                0.2
+    HTMLTag               h4
 End
-
 
 Style "Параграф"
     CopyStyle             "Подпункт"
     LabelCounter          paragraph
     TocLevel              4
     LatexName             paragraph
-    TopSep                0.4
-    BottomSep             0
+	TopSep                0.2
+	BottomSep             0
+	ParSep                0.2
     Font
         Series              Bold
         Size                Normal
