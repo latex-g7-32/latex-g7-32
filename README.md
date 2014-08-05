@@ -78,7 +78,7 @@ python3.4
 [Михаил Конник](http://mydebianblog.blogspot.ru/2008/09/732-2001-latex.html)
 
 ### 3a. Доработка кафедры [ИУ7](http://iu7.bmstu.ru)
-|[Всеволод Крищенко](http://sevik.ru/latex/)|
+|[Всеволод Крищенко](http://web.archive.org/web/20100424031801/http://sevik.ru/latex/)|
 -------------------
 
 [Иван Коротков](https://github.com/tw33dl3dee)
