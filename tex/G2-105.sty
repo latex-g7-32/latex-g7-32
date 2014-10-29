@@ -249,13 +249,13 @@
   %  перенос в словах-с-дефисом
   \lccode`\-=`\-
   \defaulthyphenchar=127
-  
-  \RequirePackage[english,russian]{babel}
+
+  \RequirePackage{cmap} %теперь из pdf можно копипастить русский текст
   \RequirePackage[T2A]{fontenc} % T1 по этой же пичине, иначе акробату плохо.
   \RequirePackage[\Gost@encoding]{inputenc}
+  \RequirePackage[english,russian]{babel}
   \RequirePackage{ucs} %теперь из pdf можно копипастить русский текст
   \RequirePackage{mathtext}%русские буквы в формулах
-  \RequirePackage{cmap} %теперь из pdf можно копипастить русский текст
   \if@usepscyr
     \RequirePackage[math]{pscyr}
   \fi
@@ -268,7 +268,7 @@
   \RequirePackage{fontspec}
   \RequirePackage{polyglossia}
   \RequirePackage{xecyr}
-  \setmainlanguage[spelling=modern]{russian} 
+  \setmainlanguage[spelling=modern]{russian}
   \setotherlanguage{english}
   \defaultfontfeatures{Mapping=tex-text}
   \setmainfont{CMU Serif}
