@@ -420,7 +420,7 @@
 \newenvironment{figure*}{\@dblfloat{figure}}{\end@dblfloat}
 
 %  Подпись к рисунку
-\addto\captionsrussian{\def\figurename{{\cyr\CYRR\cyri\cyrs\cyru\cyrn\cyro\cyrk}}}
+\addto\captionsrussian{\renewcommand{\figurename}{{\cyr\CYRR\cyri\cyrs\cyru\cyrn\cyro\cyrk}}}
 
 % ... допускается нумерация рисунков в пределах раздела
 \newcommand\PicInChapter{%

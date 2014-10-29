@@ -41,7 +41,7 @@ cmap babel mathtext pscyr ucs
 #### XeLaTeX-версия
 ##### LaTeX пакеты
 ```
-minted polyglossia xecyr
+cm-unicode-fonts minted polyglossia xecyr
 ```
 ##### Программы
 ```
@@ -68,6 +68,10 @@ python3.4
 
 ## Использование LyX
 Откройте `lyx/rpz.lyx` и редактируйте.
+
+В первый раз необходимо настроить параметры вызова XeLaTeX, для того, чтобы `minted` работал .
+
+Настроки -> Обработка файлов -> Конверторы -> LaTeX (XeTeX) -> PDF (XeTeX) -> Изменить -> Преобразователь: `xelatex -shell-escape $$i`.
 
 ## Авторы
 
