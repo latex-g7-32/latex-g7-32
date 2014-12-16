@@ -18,11 +18,17 @@
 
 ### Зависимости
 
+Поскольку я, @rominf, пользуюсь openSUSE, буду также писать список пакетов LaTeX, которые можно поставить через zypper.
+
 #### Основные
 
 ##### LaTeX пакеты
 ```
-amssymb amsmath caption flafter footmisc hyperref icomma iftex graphicx longtable underscore 
+amssymb amsmath caption flafter footmisc hyperref icomma iftex graphicx longtable underscore
+```
+###### openSUSE
+```
+texlive-latex texlive-iftex 
 ```
 
 ##### Программы
@@ -43,6 +49,12 @@ cmap babel mathtext pscyr ucs
 ```
 cm-unicode-fonts minted polyglossia xecyr
 ```
+
+###### openSUSE
+```
+cm-unicode-fonts texlive-minted texlive-polyglossia texlive-xecyr
+```
+
 ##### Программы
 ```
 python pygments
@@ -69,7 +81,7 @@ python3.4
 ## Использование LyX
 Откройте `lyx/rpz.lyx` и редактируйте.
 
-В первый раз необходимо настроить параметры вызова XeLaTeX, для того, чтобы `minted` работал .
+В первый раз необходимо настроить параметры вызова XeLaTeX, для того, чтобы `minted` работал.
 
 Настроки -> Обработка файлов -> Конверторы -> LaTeX (XeTeX) -> PDF (XeTeX) -> Изменить -> Преобразователь: `xelatex -shell-escape $$i`.
 
