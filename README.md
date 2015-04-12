@@ -10,6 +10,9 @@
 ## Результат
 См. вкладку [Релизы](https://github.com/rominf/latex-g7-32/releases).
 
+### Попробовать online
+Спасибо [@KMax](https://github.com/rominf/latex-g7-32/issues/11), теперь [можно попробовать](https://www.sharelatex.com/project/54885f204b9308be064f025e) шаблон в ShareLaTeX.
+
 ## Участие в проекте
 
 Стиль распространяется "как есть". В случае обнаружения несостыковок с ГОСТом, обнаружении багов, а также если есть вопросы по использованию, не отражённые в документации, заводите issue. Pull requests принимаются. Быстрой реакции не обещаю, особенно во время сессии.
@@ -18,11 +21,17 @@
 
 ### Зависимости
 
+Поскольку я, @rominf, пользуюсь openSUSE, буду также писать список пакетов LaTeX, которые можно поставить через zypper.
+
 #### Основные
 
 ##### LaTeX пакеты
 ```
-amssymb amsmath caption flafter footmisc hyperref icomma iftex graphicx longtable underscore 
+amssymb amsmath caption flafter footmisc hyperref icomma iftex graphicx longtable underscore
+```
+###### openSUSE
+```
+texlive-latex texlive-iftex 
 ```
 
 ##### Программы
@@ -43,6 +52,12 @@ cmap babel mathtext pscyr ucs
 ```
 cm-unicode-fonts minted polyglossia xecyr
 ```
+
+###### openSUSE
+```
+cm-unicode-fonts texlive-minted texlive-polyglossia texlive-xecyr
+```
+
 ##### Программы
 ```
 python pygments
@@ -69,7 +84,7 @@ python3.4
 ## Использование LyX
 Откройте `lyx/rpz.lyx` и редактируйте.
 
-В первый раз необходимо настроить параметры вызова XeLaTeX, для того, чтобы `minted` работал .
+В первый раз необходимо настроить параметры вызова XeLaTeX, для того, чтобы `minted` работал.
 
 Настроки -> Обработка файлов -> Конверторы -> LaTeX (XeTeX) -> PDF (XeTeX) -> Изменить -> Преобразователь: `xelatex -shell-escape $$i`.
 
