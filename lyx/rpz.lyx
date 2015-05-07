@@ -96,6 +96,26 @@ local-minted
 
 \begin_layout Standard
 \begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+mbox{} 
+\backslash
+thispagestyle{empty} 
+\backslash
+newpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
 status collapsed
 
 \begin_layout Plain Layout
@@ -289,6 +309,26 @@ filename "40-impl.lyx"
 \begin_inset CommandInset include
 LatexCommand include
 filename "50-research.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "60-economics.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "70-bzd.lyx"
 
 \end_inset
 
