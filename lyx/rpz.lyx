@@ -40,7 +40,7 @@ local-minted
 \output_sync 0
 \bibtex_command default
 \index_command default
-\paperfontsize 12
+\paperfontsize default
 \spacing single
 \use_hyperref false
 \pdf_bookmarks true
