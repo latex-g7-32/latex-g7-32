@@ -124,6 +124,9 @@ python3.4
 ### 4. GitHub, поддержка XeLaTeX, LyX
 [Роман Инфлянскас](https://github.com/rominf)
 
+#### Благодарности
+[Ростислав Листеренко](https://github.com/kaedvann) (сообщения об ошибках)
+
 ## См. также
 ### Статьи
 [Записки дебианщика](http://mydebianblog.blogspot.nl/2008/11/latex.html)
