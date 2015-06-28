@@ -10,6 +10,9 @@
 \DeclareOption{10pt}{\renewcommand\@ptsize{10}}
 \DeclareOption{12pt}{\renewcommand\@ptsize{12}}
 \DeclareOption{14pt}{\renewcommand\@ptsize{14}}
+\DeclareOption{15pt}{\renewcommand\@ptsize{15}}
+\DeclareOption{16pt}{\renewcommand\@ptsize{16}}
+\DeclareOption{17pt}{\renewcommand\@ptsize{17}}
 \DeclareOption{draft}{\setlength\overfullrule{5pt}}
 \DeclareOption{final}{\setlength\overfullrule{0pt}}
 \DeclareOption{usehyperref}{\@usehyperreftrue}
