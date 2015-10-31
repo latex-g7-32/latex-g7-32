@@ -41,7 +41,9 @@
 \ProvidesClass{G7-32}[2003/07/01 v1.0 Non Standard LaTeX document class]
 
 \RequirePackage{G2-105}
-\RequirePackage[left=20mm,right=10mm,top=20mm,bottom=20mm,headsep=0pt]{geometry}
+% minimal values from ГОСТ 7.32-2001 ред. 2009 года.pdf item 6.1.2
+% (a4paper is already selected as the default by GostBase.clo)
+\RequirePackage[right=10mm,top=20mm,bottom=20mm,left=30mm,headsep=0pt]{geometry}
 \RequirePackage{G7-32}
 
 \endinput
