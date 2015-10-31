@@ -156,6 +156,7 @@
 %  стиль всех заголовков, \normalfont оставлен
 \newcommand\GostTitleStyle{\normalfont\bfseries}
 \newcommand\Gost@MainChapterStyle{}
+\newcommand\Gost@StructChapterStyle{\centering}
 \newcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}
 
 %  Раздел
@@ -479,12 +480,13 @@
 \RequirePackage[perpage,bottom]{footmisc}
 
 % Части документа- для выбора вида заголовков и т.д.
-%  введение, обозначения
-\newcommand\frontmatter{%
+\newcommand\structmatter{% common code for the front- and back-matter
  \setcounter{secnumdepth}{-1}%
- \renewcommand\Gost@ChapterStyle{\centering}%
+ \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle}%
  \setlength\Gost@ChapterIndent{0mm}%
 }
+%  введение, обозначения
+\newcommand\frontmatter{\structmatter}
 %  основная часть
 \newcommand\mainmatter{
  \setcounter{secnumdepth}{4}
@@ -492,11 +494,7 @@
  \setlength\Gost@ChapterIndent{\Gost@MainChapterIndent}%
 }
 %  заключение, библиография
-\newcommand\backmatter{
- \setcounter{secnumdepth}{-1}
- \renewcommand\Gost@ChapterStyle{\centering}%
- \setlength\Gost@ChapterIndent{0mm}%
-}
+\newcommand\backmatter{\structmatter}
 
 %всякие оглавления
 \newcommand\tableofcontents{\chapter*{\contentsname}\@starttoc{toc}}
