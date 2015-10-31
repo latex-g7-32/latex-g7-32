@@ -10,6 +10,11 @@
 %
 \ProvidesPackage{G7-32}[2003/07/07 v1.00 Titles for GOST 7.32-2001]
 
+% ГОСТ 7.32-2001 ред. 2009 года.pdf item 6.1.2:
+% Полужирный шрифт не применяется
+% (TODO: Perhaps, bold titles could be a package option.)
+\renewcommand\GostTitleStyle{\normalfont}
+
 %стандартные части
 \newcommand\Executors{%список исполнителей
  \chapter*{\CYRS\cyrp\cyri\cyrs\cyro\cyrk~%
