@@ -155,8 +155,8 @@
  \addtolength\Gost@TitleDropSkip{-\GostAfterTitleSkip}
 %  стиль всех заголовков, \normalfont оставлен
 \newcommand\GostTitleStyle{\normalfont\bfseries}
-\newcommand\Gost@MainChapterStyle{}
-\newcommand\Gost@StructChapterStyle{\centering}
+\newcommand\Gost@MainChapterStyle{\large}
+\newcommand\Gost@StructChapterStyle{\large\centering}
 \newcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}
 
 %  Раздел
@@ -172,7 +172,7 @@
  \fi%
  \@startsection{chapter}{0}%
   {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  {\GostTitleStyle\large\Gost@ChapterStyle}%
+  {\GostTitleStyle\Gost@ChapterStyle}%
 }
 \newcommand*\chaptermark[1]{}
 \newcommand\apart[2]{\chapter {#2\label{#1}}}
@@ -606,7 +606,7 @@
  \fi%
  \@startsection{chapter}{0}%
   {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  {\GostTitleStyle\large\Gost@ChapterStyle}%
+  {\GostTitleStyle\Gost@ChapterStyle}%
 }
 \makeatother
 }
@@ -623,7 +623,7 @@
  \fi%
  \@startsection{chapter}{0}%
   {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  {\GostTitleStyle\large\Gost@ChapterStyle}%
+  {\GostTitleStyle\Gost@ChapterStyle}%
 }
 \makeatother
 }
