@@ -21,6 +21,11 @@
 % подчёркивая.
 \renewcommand\Gost@StructChapterStyle{\centering\MakeUppercase}
 
+% Get rid of the large font in chapter titles
+% (not sure whether this is regulated)
+% (TODO: Perhaps, this should be an option.)
+\renewcommand\Gost@MainChapterStyle{}
+
 %стандартные части
 \newcommand\Executors{%список исполнителей
  \chapter*{\CYRS\cyrp\cyri\cyrs\cyro\cyrk~%
