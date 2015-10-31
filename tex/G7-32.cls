@@ -43,7 +43,15 @@
 \RequirePackage{G2-105}
 % minimal values from ГОСТ 7.32-2001 ред. 2009 года.pdf item 6.1.2
 % (a4paper is already selected as the default by GostBase.clo)
-\RequirePackage[right=10mm,top=20mm,bottom=20mm,left=30mm,headsep=0pt]{geometry}
+\RequirePackage[right=10mm,top=20mm,bottom=20mm,left=30mm,headsep=0pt,includefoot]{geometry}
+% includefoot or includeall should be used-- 
+% It's not very clear whether the standard allows to put the page
+% numbers (and other stuff) on the bottom margin, but it's probably safer not to do so
+% (so that the minimal bottom margin size is not violated in any
+% case).
+% 
+% TODO: drop any stuff in the head that occupies space and use includeall.
+
 \RequirePackage{G7-32}
 
 \endinput
