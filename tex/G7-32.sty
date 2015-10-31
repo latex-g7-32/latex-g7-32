@@ -15,6 +15,12 @@
 % (TODO: Perhaps, bold titles could be a package option.)
 \renewcommand\GostTitleStyle{\normalfont}
 
+% ГОСТ 7.32-2001 ред. 2009 года.pdf item 6.2.1:
+% Заголовки структурных элементов следует располагать в середине
+% строки без точки в конце и печатать прописными буквами, не
+% подчёркивая.
+\renewcommand\Gost@StructChapterStyle{\centering\MakeUppercase}
+
 %стандартные части
 \newcommand\Executors{%список исполнителей
  \chapter*{\CYRS\cyrp\cyri\cyrs\cyro\cyrk~%
