@@ -1,4 +1,4 @@
-% This package designed and commented in russian utf-8 encoding.
+% This package designed and commented in Russian (utf-8 encoding).
 %
 % Класс документов по ГОСТ 7.32-2001 "Отчёт о научно-исследовательской работе"
 % на основе ГОСТ 2.105-95
@@ -8,6 +8,10 @@
 % Все вопросы, замечания и пожелания сюда: mailto:alxt@yandex.ru
 % Дальнейшая разработка и поддержка - Михаил Конник,
 % связаться можно по адресу mydebianblog@gmail.com
+%
+% Further tweaks and development (according to the requirements of
+% ГОСТ 7.32-2001 ред. 2009 года.pdf and some other random wishes)
+% -- Ivan Zakharyaschev <imz@altlinux.org>.
 
 % Параметры:
 %  a4paper, a5paper - размер бумаги. По-умолчанию- a4paper.
@@ -38,7 +42,7 @@
 % Используются группа пакетов extsizes.
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{G7-32}[2003/07/01 v1.0 Non Standard LaTeX document class]
+\ProvidesClass{G7-32}[2015/11/01 v2.0 Non Standard LaTeX document class]
 
 \RequirePackage{G2-105}
 % minimal values from ГОСТ 7.32-2001 ред. 2009 года.pdf item 6.1.2
