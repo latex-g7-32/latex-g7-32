@@ -162,8 +162,11 @@
 %  Раздел
 \newcounter{chapter}
 \renewcommand\thechapter{\@arabic\c@chapter}
+\newif\if@breakingbeforechapter\@breakingbeforechaptertrue
 \newcommand\chapter{%
- \clearpage%
+ \if@breakingbeforechapter%
+  \clearpage%
+ \fi%
  \if@figuresonchapter%
   \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
  \fi%
@@ -597,33 +600,12 @@
 
 \newcommand\nobreakingbeforechapters{
 \makeatletter
-\renewcommand\chapter{%
- \if@figuresonchapter%
-  \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
- \fi%
- \if@tablesonchapter%
-  \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
- \fi%
- \@startsection{chapter}{0}%
-  {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  {\GostTitleStyle\Gost@ChapterStyle}%
-}
+\@breakingbeforechapterfalse%
 \makeatother
 }
 
 \newcommand\breakingbeforechapters{
 \makeatletter
-\renewcommand\chapter{%
- \clearpage%
- \if@figuresonchapter%
-  \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
- \fi%
- \if@tablesonchapter%
-  \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
- \fi%
- \@startsection{chapter}{0}%
-  {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  {\GostTitleStyle\Gost@ChapterStyle}%
-}
+\@breakingbeforechaptertrue%
 \makeatother
 }
