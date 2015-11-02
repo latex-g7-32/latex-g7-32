@@ -103,15 +103,6 @@
  \cyro\cyrr\cyrg\cyra\cyrn\cyri\cyrz\cyra\cyrc\cyri\cyri%
 }
 
-\newcommand\Nir@StageNo{ % номер этапа работ
-}
-
-\newcommand\Nir@StageTitle{ % заголовок этапа работ
-}
-\newcommand\Nir@StageType{ % вид отчёта
-}
-
-
 \newcommand\Nir@BossPost{%
  \CYRK\cyrt\cyro \newline
  \cyru\cyrt\cyrv\cyre\cyrr\cyrzh\cyrd\cyra\cyre\cyrt%
@@ -127,7 +118,7 @@
 
 \newcommand\Nir@ManagerName{\CYRI\cyrv\cyra\cyrn\cyro\cyrv}
 
-\newcommand*\NirTitle[1]{
+\newcommand\NirMaketitle{
  \thispagestyle{empty}
  \begin{centering}
   \linespread{1.1}\normalsize
@@ -151,10 +142,7 @@
 \Nir@AnnOtchet \Nir@Otchet
 
   \vspace{8mm}
-  #1
-  \vspace{8mm}
-
-\Nir@StageNo~~\Nir@StageTitle
+  \Nir@TitleAndSubject
 
 (\Nir@StageType)
 
@@ -174,10 +162,61 @@
  \end{centering}
  \linespread{\Gost@LineSpread}\normalsize
 }
+%
+% The simple case when the subject of the report is the same
+% as the NIR title -- like in example 2 in ГОСТ 7.32-2001 ред. 2009 года.pdf:
+\newcommand\Nir@TitleAndSubject{\MakeUppercase{\Nir@Title}}
+%
+% Optionally, specify a different report subject:
+\newcommand*\NirSubject[1]{%
+  \renewcommand\Nir@TitleAndSubject{%
+    \Nir@Title
+    \vspace{8mm}
+    \par
+    \NirSubjectModifier{#1}%
+  }%
+}
+%
+% The default modifier is as in example 1 in ГОСТ 7.32-2001 ред. 2009 года.pdf:
+% "по теме:"
+\newcommand\NirSubjectModifier{%
+  \cyrp\cyro~\cyrt\cyre\cyrm\cyre:\\
+  \MakeUppercase%
+}
+%
+% A switch for the variant of the modifier as
+% in example 3 in ГОСТ 7.32-2001 ред. 2009 года.pdf:
+% (empty)
+\newcommand*\nirBareSubject[1]{%
+  \renewcommand\NirSubjectModifier{\MakeUppercase}%
+}
+
+% вид отчёта:
+% The default "stage type" is "intermediate" ("промежуточный")
+% (this default saves typing unless you need a modified stage type):
+\newcommand\Nir@StageType{\intermediatename}
+% "промежуточный"
+\newcommand\intermediatename{\cyrp\cyrr\cyro\cyrm\cyre\cyrzh\cyru\cyrt\cyro\cyrch\cyrn\cyrery\cyrishrt}
+% "заключительный"
+\newcommand\finalname{\cyrz\cyra\cyrk\cyrl\cyryu\cyrch\cyri\cyrt\cyre\cyrl\cyrsftsn\cyrn\cyrery\cyrishrt}
 
 %Эти команды нужно вызвать для корректного определения титульной страницы
-\newcommand*\NirStage[3]{\renewcommand\Nir@StageNo{#1}\renewcommand\Nir@StageType{#2}\renewcommand\Nir@StageTitle{#3}}%%virens added: номер госрегистрации
+
+% One of the "stage type" variants
+% (if different from the default "intermediate")
+% -- set to "final"/"заключительный" if the arg is silently omitted.
+% The second variant is not supported
+% by any example in ГОСТ 7.32-2001 ред. 2009 года.pdf,
+% but it is like in a document example I've seen elsewhere.
+\newcommand*\NirFinal[1][\finalname]{%
+  \renewcommand\Nir@StageType{#1}%
+}
+\newcommand*\NirFinalStage[2][\finalname]{%
+  \renewcommand\Nir@StageType{#1, #2}%
+} % Usage: \NirFinalStage[промежуточный]{этап~3}
+
 \newcommand*\NirIsAnnotacion[1]{\renewcommand\Nir@AnnOtchet{#1}} %%Если отчёт аннотационный
+\newcommand*\Nir[1]{\newcommand\Nir@Title{#1}}
 \newcommand*\NirOrgLongName[1]{\renewcommand\Nir@OrgLongName{#1}}
 \newcommand*\NirBoss[2]{\renewcommand\Nir@BossPost{#1}\renewcommand\Nir@BossName{#2}}
 \newcommand*\NirYear[1]{\renewcommand\Nir@Year{#1}}
@@ -185,3 +224,70 @@
 \newcommand*\NirTown[1]{\renewcommand\Nir@Town{#1}}%%virens added: указываем город написания отчёта
 \newcommand*\NirUdk[1]{\renewcommand\Nir@UdkName{#1}}%%virens added: для изменения УДК в тексте документа
 \newcommand*\NirGosNo[1]{\renewcommand\Nir@No{#1}}%%virens added: номер госрегистрации
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Compatibility macros
+% (with old versions of the style package):
+
+\newcommand*\NirTitle[1]{%
+  \Nir{#1}%
+  \NirMaketitle%
+}
+
+\RequirePackage{mfirstuc}
+\newcommand*\makefirstlc[1]{%
+  \renewcommand*\mfirstucMakeUppercase{\MakeLowercase}%
+  % switched the case-switching command for a while
+  \makefirstuc{#1}%
+  \renewcommand*\mfirstucMakeUppercase{\MakeUppercase}%
+}
+\newcommand*\xmakefirstlc[1]{%
+  \renewcommand*\mfirstucMakeUppercase{\MakeLowercase}%
+  % switched the case-switching command for a while
+  \xmakefirstuc{#1}%
+  \renewcommand*\mfirstucMakeUppercase{\MakeUppercase}%
+}
+\newcommand*\emakefirstlc[1]{%
+  \renewcommand*\mfirstucMakeUppercase{\MakeLowercase}%
+  % switched the case-switching command for a while
+  \emakefirstuc{#1}%
+  \renewcommand*\mfirstucMakeUppercase{\MakeUppercase}%
+}
+
+\newcommand*\NirStage[3]{%
+  \NirSubject{#3}%
+  \NirFinalStage[#2]{\emakefirstlc{#1}}%
+}
+% Usage example from virens
+% <http://mydebianblog.blogspot.ru/2008/09/732-2001-latex.html>:
+% 
+%     \NirStage{Этап \No 1.1}{промежуточный}{"Обзор современного состояния торсионных наногенераторов"}
+%
+% If you are using pdflatex, it might require putting the first Russian letter in braces (see
+% <http://ctan.uni-altai.ru/macros/latex/contrib/mfirstuc/mfirstuc-manual.html#sec:utf8>),
+% but if you are using xelatex, you must be OK:
+% 
+%     \NirStage{{Э}тап \No 1.1}{промежуточный}{"Обзор современного состояния торсионных наногенераторов"}
+% 
+% There, the resulting formatting violates the current standard style;
+% it can be seen at
+% http://bp0.blogger.com/_hM8AMxgJLzw/SH3c4fS0zhI/AAAAAAAAAs0/sH6kGPItCAk/s1600-h/G7-32NIRreportexample.jpg
+%
+% We use the arguments of the old macro, but format them according to
+% the current standard style. (This will allow to easily reformat old documents!)
+%
+% If you want the virens' (non-conforming) formatting, here is a
+% general switch:
+\newcommand*\nirVirensTitle{%
+  \renewcommand*\NirSubjectModifier{}%
+  \renewcommand*\NirFinalStage[2][\finalname]{%
+    \NirFinal[##1]%
+    \renewcommand*\NirSubjectModifier{\emakefirstuc{##2}~~}%
+  }%
+  % renewcommand merely to shortcut the case conversion done
+  % in \NirStage (to avoid an error):
+  \renewcommand*\NirStage[3]{%
+    \NirSubject{##3}%
+    \NirFinalStage[##2]{##1}%
+  }%
+} % It should be used before any uses of \NirFinalStage, of course.
