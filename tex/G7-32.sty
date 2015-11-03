@@ -118,6 +118,8 @@
 
 \newcommand\Nir@ManagerName{\CYRI\cyrv\cyra\cyrn\cyro\cyrv}
 
+\newcommand*\ulfill{\mbox{}\leaders\hrule depth 2pt height -1.5pt\hfill} % similar to an underline
+
 \newcommand\NirMaketitle{
  \thispagestyle{empty}
  \begin{centering}
@@ -141,8 +143,10 @@
 
     }
     \bigskip
-    \underline{~~~~~~~~~~~~~~~~~} \Nir@BossName \newline
-    <<\underline{~~~~}>>\underline{~~~~~~~~~~~~~~~~~} \Nir@Year~\cyrg.
+    \ulfill~\Nir@BossName
+
+    \bigskip
+    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~\cyrg.
   }
   
   \vfill
