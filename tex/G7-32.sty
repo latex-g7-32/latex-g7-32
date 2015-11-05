@@ -108,49 +108,32 @@
  \No~\cyrg\cyro\cyrs\cyrr\cyre\cyrg\cyri\cyrs\cyrt\cyrr\cyra\cyrc\cyri\cyri%
 }
 
-\newcommand\Nir@Confirm{%
- \CYRU\CYRT\CYRV\CYRE\CYRR\CYRZH\CYRD\CYRA\CYRYU%
+\newcommand*\confirmname{%
+ \cyru\cyrt\cyrv\cyre\cyrr\cyrzh\cyrd\cyra\cyryu%
 }
 
 \newcommand\Nir@InventarNo{
  \CYRI\cyrn\cyrv.~\No
 }
 
-\newcommand\Nir@Otchet{{%
- \CYRO\CYRT\CYRCH\CYRYO\CYRT \\
- \CYRO{} \CYRN\CYRA\CYRU\CYRCH\CYRN\CYRO-%
- \CYRI\CYRS\CYRS\CYRL\CYRE\CYRD\CYRO\CYRV\CYRA\CYRT\CYRE\CYRL\CYRSFTSN\CYRS\CYRK\CYRO\CYRISHRT{} %
- \CYRR\CYRA\CYRB\CYRO\CYRT\CYRE%
-}}
-
-\newcommand\Nir@AnnOtchet{ %отчёт аннотационный!?
+\newcommand*\otchetname{%
+ \cyro\cyrt\cyrch\cyryo\cyrt%
 }
 
 \newcommand\Nir@MainBegin{%
  \CYRR\cyru\cyrk\cyro\cyrv\cyro\cyrd\cyri\cyrt\cyre\cyrl\cyrsftsn{} %
  \CYRN\CYRI\CYRR%
 }
-
-\newcommand\Nir@OrgLongName{%
- \CYRP\cyro\cyrl\cyrn\cyro\cyre~
- \cyrn\cyra\cyrz\cyrv\cyra\cyrn\cyri\cyre~
- \cyro\cyrr\cyrg\cyra\cyrn\cyri\cyrz\cyra\cyrc\cyri\cyri%
+\newcommand*\otchetcomplement{
+ \cyro{} \cyrn\cyra\cyru\cyrch\cyrn\cyro-%
+ \cyri\cyrs\cyrs\cyrl\cyre\cyrd\cyro\cyrv\cyra\cyrt\cyre\cyrl\cyrsftsn\cyrs\cyrk\cyro\cyrishrt{} %
+ \cyrr\cyra\cyrb\cyro\cyrt\cyre%
 }
 
-\newcommand\Nir@BossPost{%
- \CYRK\cyrt\cyro \newline
- \cyru\cyrt\cyrv\cyre\cyrr\cyrzh\cyrd\cyra\cyre\cyrt%
+\newcommand\Nir@AnnOtchet{ %отчёт аннотационный!?
 }
 
-\newcommand\Nir@BossName{\CYRF.~\CYRI.~\CYRO}
 \newcommand\Nir@Year{\the\year}
-\newcommand\Nir@Town{\CYRG\cyro\cyrr\cyro\cyrd}
-\newcommand\Nir@ManagerPost{%
- \cyrb\cyro\cyrl\cyrsftsn\cyrsh\cyro\cyrishrt{}
- \cyrn\cyra\cyrch\cyra\cyrl\cyrsftsn\cyrn\cyri\cyrk%
-}
-
-\newcommand\Nir@ManagerName{\CYRI\cyrv\cyra\cyrn\cyro\cyrv}
 
 \newcommand\NirMaketitle{
  \thispagestyle{empty}
@@ -167,7 +150,7 @@
   }
   \hfill
   \parbox[t]{8cm}{
-    {\centering\Nir@Confirm
+    {\centering\MakeUppercase{\confirmname}
 
     }
     \vspace{5mm}
@@ -183,12 +166,13 @@
   
   \vfill
 
-\Nir@AnnOtchet \Nir@Otchet
+  \MakeUppercase{\Nir@AnnOtchet \otchetname}\\
+  \MakeUppercase{\otchetcomplement}
 
   \vspace{8mm}
   \Nir@TitleAndSubject
 
-(\Nir@StageType)
+  (\Nir@StageType)
 
 
 
@@ -261,11 +245,11 @@
 
 \newcommand*\NirIsAnnotacion[1]{\renewcommand\Nir@AnnOtchet{#1}} %%Если отчёт аннотационный
 \newcommand*\Nir[1]{\newcommand\Nir@Title{#1}}
-\newcommand*\NirOrgLongName[1]{\renewcommand\Nir@OrgLongName{#1}}
-\newcommand*\NirBoss[2]{\renewcommand\Nir@BossPost{#1}\renewcommand\Nir@BossName{#2}}
+\newcommand*\NirOrgLongName[1]{\newcommand\Nir@OrgLongName{#1}}
+\newcommand*\NirBoss[2]{\newcommand\Nir@BossPost{#1}\newcommand\Nir@BossName{#2}}
 \newcommand*\NirYear[1]{\renewcommand\Nir@Year{#1}}
-\newcommand*\NirManager[2]{\renewcommand\Nir@ManagerPost{#1}\renewcommand\Nir@ManagerName{#2}}
-\newcommand*\NirTown[1]{\renewcommand\Nir@Town{#1}}%%virens added: указываем город написания отчёта
+\newcommand*\NirManager[2]{\newcommand\Nir@ManagerPost{#1}\newcommand\Nir@ManagerName{#2}}
+\newcommand*\NirTown[1]{\newcommand\Nir@Town{#1}}%%virens added: указываем город написания отчёта
 \newcommand*\NirUdk[1]{\renewcommand\Nir@UdkName{#1}}%%virens added: для изменения УДК в тексте документа
 \newcommand*\NirGosNo[1]{\renewcommand\Nir@No{#1}}%%virens added: номер госрегистрации
 
