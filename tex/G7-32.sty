@@ -29,6 +29,7 @@
 % (TODO: Perhaps, this should be an option.)
 \renewcommand\Gost@MainChapterStyle{}
 
+%%%%%%%%%%%%%%%%%%
 %стандартные части
 \newcommand\Executors{%список исполнителей
  \chapter*{\CYRS\cyrp\cyri\cyrs\cyro\cyrk~%
@@ -67,6 +68,24 @@
   \cyri\cyrs\cyrt\cyro\cyrch\cyrn\cyri\cyrk\cyro\cyrv}%
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Personal names, roles and signatures
+% (for Executors and the managers on the title page)
+
+\newcommand*\personalSignature[2]{%
+  \par\noindent
+  \makebox[\textwidth]{%
+    \parbox[b]{.4\textwidth}{\raggedright #1}
+    \hfill
+    \parbox[b]{.25\textwidth}{\ulfill\mbox{}}
+    \hfill
+    \parbox[b]{.25\textwidth}{#2}
+  }
+}
+
+\newcommand*\ulfill{\mbox{}\leaders\hrule depth 2pt height -1.5pt\hfill} % similar to an underline
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Элементы оформления титульной страницы
 \newcommand\Nir@UdkName{\CYRU\CYRD\CYRK}
 
@@ -118,8 +137,6 @@
 
 \newcommand\Nir@ManagerName{\CYRI\cyrv\cyra\cyrn\cyro\cyrv}
 
-\newcommand*\ulfill{\mbox{}\leaders\hrule depth 2pt height -1.5pt\hfill} % similar to an underline
-
 \newcommand\NirMaketitle{
  \thispagestyle{empty}
  \begin{centering}
@@ -161,12 +178,12 @@
 
 
   \vfill
-  \begin{tabular}{p{80mm}p{80mm}}
-    \Nir@MainBegin, \newline
+  \personalSignature{%
+    \Nir@MainBegin,\\
     \Nir@ManagerPost
-   &
-    ~\newline\underline{~~~~~~~~~~~~~~~~~~~} \Nir@ManagerName \newline
-  \end{tabular}
+  }
+  {\Nir@ManagerName}
+
   \vfill
   \vfill
   \Nir@Town~\Nir@Year
