@@ -119,23 +119,22 @@
 \newcommand*\otchetname{%
  \cyro\cyrt\cyrch\cyryo\cyrt%
 }
-
-\newcommand\Nir@MainBegin{%
- \CYRR\cyru\cyrk\cyro\cyrv\cyro\cyrd\cyri\cyrt\cyre\cyrl\cyrsftsn{} %
- \CYRN\CYRI\CYRR%
-}
 \newcommand*\otchetcomplement{
  \cyro{} \cyrn\cyra\cyru\cyrch\cyrn\cyro-%
  \cyri\cyrs\cyrs\cyrl\cyre\cyrd\cyro\cyrv\cyra\cyrt\cyre\cyrl\cyrsftsn\cyrs\cyrk\cyro\cyrishrt{} %
  \cyrr\cyra\cyrb\cyro\cyrt\cyre%
 }
-
 \newcommand\Nir@AnnOtchet{ %отчёт аннотационный!?
 }
 
 \newcommand\Nir@Year{\the\year}
 
-\newcommand\NirMaketitle{
+\newcommand\Nir@MainBegin{%
+ \CYRR\cyru\cyrk\cyro\cyrv\cyro\cyrd\cyri\cyrt\cyre\cyrl\cyrsftsn{} %
+ \CYRN\CYRI\CYRR%
+}
+
+\newenvironment*{titlepage}{
  \thispagestyle{empty}
  \begin{centering}
   \linespread{1.1}\normalsize
@@ -177,12 +176,7 @@
 
 
   \vfill
-  \personalSignature{%
-    \Nir@MainBegin,\\
-    \Nir@ManagerPost
-  }
-  {\Nir@ManagerName}
-
+}{
   \vfill
   \vfill
   \Nir@Town~\Nir@Year
@@ -259,7 +253,13 @@
 
 \newcommand*\NirTitle[1]{%
   \Nir{#1}%
-  \NirMaketitle%
+  \begin{titlepage}
+  \personalSignature{%
+    \Nir@MainBegin,\\
+    \Nir@ManagerPost
+  }
+  {\Nir@ManagerName}
+  \end{titlepage}
 }
 
 \RequirePackage{mfirstuc}
