@@ -85,6 +85,18 @@
 
 \newcommand*\ulfill{\mbox{}\leaders\hrule depth 2pt height -1.5pt\hfill} % similar to an underline
 
+\newenvironment*{executors}{%
+  \Executors
+  % There will be subheadings like:
+  % 
+  % * perhaps -- Руководитель темы
+  % * Исполнители:
+  % * optionally -- Соисполнители
+  % 
+  % They should be printed without an indent.
+  \setlength{\parindent}{0pt}
+}{}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Элементы оформления титульной страницы
 \newcommand\Nir@UdkName{\CYRU\CYRD\CYRK}
