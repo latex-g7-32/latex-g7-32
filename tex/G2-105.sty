@@ -18,7 +18,7 @@
 %  footmisc.sty для сносок снизу и нумерации на каждой странице
 %  amssymb      для русских "меньше или равно" "больше или равно"
 %  leqno.clo    формулы правильно
-%  caption      оформление заголовков риснуков и таблиц
+%  caption      оформление заголовков рисунков и таблиц
 %  icomma       запятая в формулах
 %  longtable    многостраничные таблицы
 
@@ -29,8 +29,8 @@
 % 3) комментарии в UTF-8;
 % 4) изменены отступы после тире в description;
 % 5) добавлен \paragraph;
-% 6) уменьшены отспупы после заголовков и учеличены --- до (хотя это, возможно, и нарушает 7-32);
-% 7) сделаны отсупы в оглалвнеии (ГОСТ эту тему обходит, как мы поняли);
+% 6) уменьшены отступы после заголовков и увеличены --- до (хотя это, возможно, и нарушает 7-32);
+% 7) сделаны отступы в оглавлении (ГОСТ эту тему обходит, как мы поняли);
 % 8) \normalfont
 % 9) разные мелочи.
 
@@ -259,7 +259,7 @@
   \defaulthyphenchar=127
 
   \RequirePackage{cmap} %теперь из pdf можно копипастить русский текст
-  \RequirePackage[T2A]{fontenc} % T1 по этой же пичине, иначе акробату плохо.
+  \RequirePackage[T2A]{fontenc} % T1 по этой же причине, иначе акробату плохо.
   \RequirePackage[\Gost@encoding]{inputenc}
   \RequirePackage[english,russian]{babel}
   \RequirePackage{ucs} %теперь из pdf можно копипастить русский текст
@@ -413,7 +413,7 @@
 % Между подписью и рисунком 10pt
 \captionsetup{labelsep=emdash,aboveskip=10pt,belowskip=0pt,position=bottom}
 
-% У рисунков вырвнивание по центру
+% У рисунков выравнивание по центру
 \captionsetup[figure]{justification=centering}
 % У таблиц -- слева, зазор 5pt вместо 10
 \captionsetup[table]{position=top,aboveskip=5pt,justification=justified}
