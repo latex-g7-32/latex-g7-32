@@ -146,13 +146,13 @@
 
   \vfill
 
-  \parbox[t]{8cm}{
+  \parbox[t]{.49\linewidth}{
     \Nir@UdkName\\
     \Nir@No\\
     \Nir@InventarNo\\
   }
   \hfill
-  \parbox[t]{8cm}{
+  \parbox[t]{.49\linewidth}{
     {\centering\MakeUppercase{\confirmname}
 
     }
@@ -242,7 +242,7 @@
 } % Usage: \NirFinalStage[промежуточный]{этап~3}
 
 \newcommand*\NirIsAnnotacion[1]{\renewcommand\Nir@AnnOtchet{#1}} %%Если отчёт аннотационный
-\newcommand*\Nir[1]{\newcommand\Nir@Title{#1}}
+\newcommand*\Nir[1]{\newcommand\Nir@Title{#1}}  %Название НИР, не совместимо с \NirTitle  
 \newcommand*\NirOrgLongName[1]{\newcommand\Nir@OrgLongName{#1}}
 \newcommand*\NirBoss[2]{\newcommand\Nir@BossPost{#1}\newcommand\Nir@BossName{#2}}
 \newcommand*\NirYear[1]{\renewcommand\Nir@Year{#1}}
