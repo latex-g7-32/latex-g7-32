@@ -30,7 +30,7 @@
 \renewcommand\Gost@MainChapterStyle{}
 
 %%%%%%%%%%%%%%%%%%
-%Latex 2012 and up
+%for Latex 2012 and up
 \newcommand*{\No}{\textnumero}
 
 %стандартные части
@@ -143,12 +143,27 @@
  \CYRR\cyru\cyrk\cyro\cyrv\cyro\cyrd\cyri\cyrt\cyre\cyrl\cyrsftsn{} %
  \CYRN\CYRI\CYRR%
 }
+%fix for first time compilation
+\newcommand\Nir@Title[1]{#1}
+\newcommand*\Nir[1]{\Nir@Title{#1}}  %Название НИР, не совместимо с \NirTitle  
+\newcommand\Nir@TitleAndSubject{\MakeUppercase{\Nir@Title}}
 
 \newenvironment*{titlepage}{
  \thispagestyle{empty}
- \begin{centering}
   \linespread{1.1}\normalsize
+  \IfFileExists{ntk.pdf}{
+  \begin{flushleft}
+  \parbox[t]{.3\linewidth}{
+    \vspace{-5ex}\center{\includegraphics[width=.99\linewidth]{ntk}}\\
+  }
   {\textsc{\Nir@OrgLongName}}
+  \end{flushleft}
+  }{
+  \begin{center}
+  {\textsc{\Nir@OrgLongName}}
+  \end{center}
+  }
+ \begin{centering}
 
   \vfill
 
@@ -197,7 +212,7 @@
 %
 % The simple case when the subject of the report is the same
 % as the NIR title -- like in example 2 in ГОСТ 7.32-2001 ред. 2009 года.pdf:
-\newcommand\Nir@TitleAndSubject{\MakeUppercase{\Nir@Title}}
+
 %
 % Optionally, specify a different report subject:
 \newcommand*\NirSubject[1]{%
@@ -219,7 +234,7 @@
 % A switch for the variant of the modifier as
 % in example 3 in ГОСТ 7.32-2001 ред. 2009 года.pdf:
 % (empty)
-\newcommand*\nirBareSubject[1]{%
+\newcommand*\NirBareSubject[1]{%
   \renewcommand\NirSubjectModifier{\MakeUppercase}%
 }
 
@@ -248,7 +263,6 @@
 } % Usage: \NirFinalStage[промежуточный]{этап~3}
 
 \newcommand*\NirIsAnnotacion[1]{\renewcommand\Nir@AnnOtchet{#1}} %%Если отчёт аннотационный
-\newcommand*\Nir[1]{\newcommand\Nir@Title{#1}}  %Название НИР, не совместимо с \NirTitle  
 \newcommand*\NirOrgLongName[1]{\newcommand\Nir@OrgLongName{#1}}
 \newcommand*\NirBoss[2]{\newcommand\Nir@BossPost{#1}\newcommand\Nir@BossName{#2}}
 \newcommand*\NirYear[1]{\renewcommand\Nir@Year{#1}}
