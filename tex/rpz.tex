@@ -16,24 +16,45 @@
 % Полезные макросы листингов.
 \include{macros.inc}
 \include{00-title}
+
+
 \begin{document}
 
 \frontmatter % выключает нумерацию ВСЕГО; здесь начинаются ненумерованные главы: реферат, введение, глоссарий, сокращения и прочее.
 
+\begin{titlepage}
+
+\end{titlepage}
+
+\begin{executors}
+\personalSignature{Первый исполнитель}{ФИО}
+
+\personalSignature{Второй исполнитель}{ФИО}
+\end{executors}
+
+\tableofcontents
+
+%\listoffigures
+
+%\listoftables
+
+%\NormRefs % Нормативные ссылки 
 % Команды \breakingbeforechapters и \nonbreakingbeforechapters
 % управляют разрывом страницы перед главами.
 % По-умолчанию страница разрывается.
 
 % \nobreakingbeforechapters
 % \breakingbeforechapters
-\include{00-titlepage}
 
 \include{00-abstract}
 
 \tableofcontents
 
 \include{10-defines}
-\include{11-abbrev}
+\include{11-abbrev} %Абривиатуры вручную, зачем?
+%\renewcommand{\nomname}{Список сокращений} % строго перед \printnomenclature
+%\printnomenclature % Автоматический список сокращений
+%\nomenclature{УОСКВ}{Умственно-отсталый сферический конь в вакууме}
 
 \include{12-intro}
 
