@@ -103,6 +103,7 @@ python3.4
 [Иван Коротков](https://github.com/tw33dl3dee)
 
 #### Changelog
+```
 1. Заработали cases и tabular;
 2. Добавлена опция utf8;
 3. Комментарии в UTF-8;
@@ -116,16 +117,13 @@ python3.4
 10. Рисунки (обрезка, конвертация dia, dot, svg);
 11. Стили для листингов;
 12. Разные мелочи.
-
+```
 
 ### 3b. Добавление layouts LyX
 [Расим (Brotherofken)](http://habrahabr.ru/post/116517/)
 
-### 4. GitHub, поддержка XeLaTeX, LyX
-[Роман Инфлянскас](https://github.com/rominf)
-
-#### Благодарности
-[Ростислав Листеренко](https://github.com/kaedvann) (сообщения об ошибках)
+### 4. GitHub (поддержка XeLaTeX, LyX, ...)
+См. авторов commits и issues.
 
 ## См. также
 ### Статьи
