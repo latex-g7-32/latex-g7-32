@@ -132,7 +132,7 @@ status collapsed
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 bibfiles "rpz"
-options "gost780u"
+options "ugost2008"
 
 \end_inset
 
