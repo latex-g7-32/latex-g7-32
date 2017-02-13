@@ -1,4 +1,4 @@
-% This package designed and commented in russian koi8-r encoding.
+% This package designed and commented in Russian (utf-8 encoding).
 %
 % Лицензия GNU GPL v2 и совместимые
 %
@@ -10,11 +10,15 @@
 % Дальнейшая разработка и поддержка - Михаил Конник,
 % связаться можно по адресу mydebianblog@gmail.com
 %
+% Further tweaks and development (so that it can work together G7-32
+% and provide necessary stuff for the requirements of ГОСТ 7.32-2001
+% ред. 2009 года.pdf) -- Ivan Zakharyaschev <imz@altlinux.org>.
+%
 % Используется:
 %  footmisc.sty для сносок снизу и нумерации на каждой странице
 %  amssymb      для русских "меньше или равно" "больше или равно"
 %  leqno.clo    формулы правильно
-%  caption      оформление заголовков риснуков и таблиц
+%  caption      оформление заголовков рисунков и таблиц
 %  icomma       запятая в формулах
 %  longtable    многостраничные таблицы
 
@@ -25,12 +29,12 @@
 % 3) комментарии в UTF-8;
 % 4) изменены отступы после тире в description;
 % 5) добавлен \paragraph;
-% 6) уменьшены отспупы после заголовков и учеличены --- до (хотя это, возможно, и нарушает 7-32);
-% 7) сделаны отсупы в оглалвнеии (ГОСТ эту тему обходит, как мы поняли);
+% 6) уменьшены отступы после заголовков и увеличены --- до (хотя это, возможно, и нарушает 7-32);
+% 7) сделаны отступы в оглавлении (ГОСТ эту тему обходит, как мы поняли);
 % 8) \normalfont
 % 9) разные мелочи.
 
-\ProvidesPackage{G2-105}[2003/07/07 v1.00 General reqs. GOST 2.105-95]
+\ProvidesPackage{G2-105}[2015/11/01 v2.00 General reqs. GOST 2.105-95]
 \NeedsTeXFormat{LaTeX2e}
 
 \input{GostBase.clo}
@@ -155,14 +159,18 @@
  \addtolength\Gost@TitleDropSkip{-\GostAfterTitleSkip}
 %  стиль всех заголовков, \normalfont оставлен
 \newcommand\GostTitleStyle{\normalfont\bfseries}
-\newcommand\Gost@MainChapterStyle{}
+\newcommand\Gost@MainChapterStyle{\large}
+\newcommand\Gost@StructChapterStyle{\large\centering}
 \newcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}
 
 %  Раздел
 \newcounter{chapter}
 \renewcommand\thechapter{\@arabic\c@chapter}
+\newif\if@breakingbeforechapter\@breakingbeforechaptertrue
 \newcommand\chapter{%
- \clearpage%
+ \if@breakingbeforechapter%
+  \clearpage%
+ \fi%
  \if@figuresonchapter%
   \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
  \fi%
@@ -171,11 +179,11 @@
  \fi%
  \@startsection{chapter}{0}%
   {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  {\GostTitleStyle\large\Gost@ChapterStyle}%
+  {\GostTitleStyle\Gost@ChapterStyle}%
 }
 \newcommand*\chaptermark[1]{}
-\newcommand\apart[2]{\chapter {#2\label{#1}}}
-\newcommand\cpart[2]{\chapter*{#2\label{#1}}}
+\newcommand*\apart[2]{\chapter {#2\label{#1}}}
+\newcommand*\cpart[2]{\chapter*{#2\label{#1}}}
 
 %  Подраздел
 \newcounter{section}[chapter]
@@ -185,7 +193,7 @@
  {\GostTitleIndent}{\GostBeforTitleSkip}{\GostAfterTitleSkip}%
  {\GostTitleStyle}%
 }
-\newcommand{\asubpart}[2]{\section{#2\label{#1}}}
+\newcommand*{\asubpart}[2]{\section{#2\label{#1}}}
 
 %  Пункт
 \newcounter{subsection}[section]
@@ -196,14 +204,14 @@
  {\GostTitleIndent}{\GostBeforTitleSkip}{\GostAfterTitleSkip}%
  {\GostTitleStyle}%
 }
-\newcommand{\apara}[2]{\subsection{#2\label{#1}}}
+\newcommand*{\apara}[2]{\subsection{#2\label{#1}}}
 %  ... не попадающий в оглавление
 \newcommand\nsubsection{%
  \par\vspace{\GostBeforNoTitleSkip}%
  \refstepcounter{subsection}\thesubsection%
  \hspace{\GostHTitleSpace}%
 }
-\newcommand{\npara}[1]{\nsubsection\label{#1}}
+\newcommand*{\npara}[1]{\nsubsection\label{#1}}
 
 %  Подпункт
 \newcounter{subsubsection}[subsection]
@@ -214,16 +222,16 @@
  {\GostTitleIndent}{\GostBeforTitleSkip}{\GostAfterTitleSkip}%
  {\GostTitleStyle}%
 }
-\newcommand\asubpara[2]{\subsubsection{#2\label{#1}}}
+\newcommand*\asubpara[2]{\subsubsection{#2\label{#1}}}
 %  ... не попадающий в оглавление
 \newcommand\nsubsubsection{%
  \par\vspace{\GostBeforNoTitleSkip}%
  \refstepcounter{subsubsection}\thesubsubsection%
  \hspace{\GostHTitleSpace}%
 }
-\newcommand\nsubpara[1]{\nsubsubsection\label{#1}}
+\newcommand*\nsubpara[1]{\nsubsubsection\label{#1}}
 
-\newcommand\paragraph[1]{%
+\newcommand*\paragraph[1]{%
  \par\vspace{\GostBeforNoTitleSkip}%
  \textbf{#1}%
  \hspace{\GostHTitleSpace}%
@@ -251,7 +259,7 @@
   \defaulthyphenchar=127
 
   \RequirePackage{cmap} %теперь из pdf можно копипастить русский текст
-  \RequirePackage[T2A]{fontenc} % T1 по этой же пичине, иначе акробату плохо.
+  \RequirePackage[T2A]{fontenc} % T1 по этой же причине, иначе акробату плохо.
   \RequirePackage[\Gost@encoding]{inputenc}
   \RequirePackage[english,russian]{babel}
   \RequirePackage{ucs} %теперь из pdf можно копипастить русский текст
@@ -263,17 +271,53 @@
   % breaks
 %   \RequirePackage{unicode-math}
 
-%   \RequirePackage{xunicode}
-%   \RequirePackage{xltxtra}
   \RequirePackage{fontspec}
-  \RequirePackage{polyglossia}
   \RequirePackage{xecyr}
+   %\RequirePackage{xunicode}
+   %\RequirePackage{xltxtra}
+  \RequirePackage{polyglossia}
+  \setdefaultlanguage{russian}
   \setmainlanguage[spelling=modern]{russian}
   \setotherlanguage{english}
   \defaultfontfeatures{Mapping=tex-text}
-  \setmainfont{CMU Serif}
-  \setsansfont{CMU Sans Serif}
-  \setmonofont{CMU Typewriter Text}
+  %\setmainfont{CMU Serif}
+  \RequirePackage{polyglossia}
+  \setromanfont[
+      BoldFont = cmunbx.otf,
+      ItalicFont = cmunti.otf,
+  BoldItalicFont = cmunbi.otf]
+  {cmunrm.otf}
+
+  \setsansfont[
+      BoldFont = cmunsx.otf,
+      ItalicFont = cmunsi.otf,
+  BoldItalicFont = cmunso.otf]
+  {cmunss.otf}
+
+  \setmonofont[
+      BoldFont = cmuntb.otf,
+      ItalicFont = cmunit.otf,
+  BoldItalicFont = cmuntx.otf]
+  {cmuntt.otf}
+  %\setmainfont{cmunrm.ttf}
+  %\setsansfont{cmunss.ttf}
+  %\setmonofont{cmuntt.ttf}
+  %\setmainfont{GOST_type_A} % Ставим как основной шрифт
+  %\setsansfont{GOST_type_A}
+  %\setmonofont{GOST_type_A}
+
+  \newfontfamily{\cyrillicfont}{cmunrm.otf}[
+      BoldFont = cmunbx.otf,
+      ItalicFont = cmunti.otf,
+  BoldItalicFont = cmunbi.otf]
+  \newfontfamily{\cyrillicfontt}{cmunrm.otf}[
+      BoldFont = cmunsx.otf,
+      ItalicFont = cmunsi.otf,
+  BoldItalicFont = cmunso.otf]
+  \newfontfamily{\cyrillicfonttt}{cmunrm.otf}[
+      BoldFont = cmuntb.otf,
+      ItalicFont = cmunit.otf,
+  BoldItalicFont = cmuntx.otf]
 \fi
 \RequirePackage{flafter}
 
@@ -324,7 +368,7 @@
 \renewcommand\p@enumii{\theenumi}
 
 %  ссылка на нумерованное перечисление
-\newcommand\pref[2]{%
+\newcommand*\pref[2]{%
  \cyrp\cyre\cyrr\cyre\cyrch\cyri\cyrs\cyrl\cyre\cyrn\cyri\cyre~\ref{#2})~\ref{#1}}
 
 %перечисление типа abbreviation - для списка сокращения
@@ -337,16 +381,16 @@
 }{%
  \endlist%
 }
-\newcommand*\abbreviationlabel[1]{\hspace\labelsep \textbf{#1}~---}% убран \normalfont
+\newcommand*\abbreviationlabel[1]{\hspace\labelsep #1~---}% убран \normalfont
 
 % 4.2.15 - 4.2.19 Формулы
 
 \RequirePackage{amssymb} % для русских "меньше или равно" "больше или равно"
 \RequirePackage{amsmath} % Пусть сразу будет, какой НИР без него -- Коротков И.
-\RequirePackage{icomma}
+\RequirePackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
 \input{leqno.clo}
 
-\renewcommand\eqref[1]{\ref{#1}} %Было newcommand -- Коротков И.
+\renewcommand*\eqref[1]{\ref{#1}} %Было newcommand -- Коротков И.
 \def\@eqnnum{{\theequation}}% убран \normalfont
 
 % Убраны скобки вокруг  \arabic{equation} -- Крищенко В.
@@ -405,7 +449,7 @@
 % Между подписью и рисунком 10pt
 \captionsetup{labelsep=emdash,aboveskip=10pt,belowskip=0pt,position=bottom}
 
-% У рисунков вырвнивание по центру
+% У рисунков выравнивание по центру
 \captionsetup[figure]{justification=centering}
 % У таблиц -- слева, зазор 5pt вместо 10
 \captionsetup[table]{position=top,aboveskip=5pt,justification=justified}
@@ -455,7 +499,7 @@
 \LTleft=\z@
 \LTright=\fill
 
-\newcommand\subcaption[1]{ % Заголовок без "Таблица..." -- для заголовков на других стр.
+\newcommand*\subcaption[1]{ % Заголовок без "Таблица..." -- для заголовков на других стр.
   \multicolumn{\LT@cols}{p{1\textwidth}}{#1}
 }
 
@@ -471,7 +515,7 @@
  \EqInChapter\PicInChapter\TableInChapter%
  \gdef\@chapapp{\appendixname}%
  \gdef\thechapter{\Asbuk{chapter}}%
- \renewcommand\Gost@ChapterStyle{\appendixname~\Gost@MainChapterStyle}%
+ \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle\appendixname~\Gost@MainChapterStyle}%
  \setlength\Gost@ChapterIndent{0mm}%
 }
 
@@ -479,12 +523,13 @@
 \RequirePackage[perpage,bottom]{footmisc}
 
 % Части документа- для выбора вида заголовков и т.д.
-%  введение, обозначения
-\newcommand\frontmatter{%
+\newcommand\structmatter{% common code for the front- and back-matter
  \setcounter{secnumdepth}{-1}%
- \renewcommand\Gost@ChapterStyle{\centering}%
+ \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle}%
  \setlength\Gost@ChapterIndent{0mm}%
 }
+%  введение, обозначения
+\newcommand\frontmatter{\structmatter}
 %  основная часть
 \newcommand\mainmatter{
  \setcounter{secnumdepth}{4}
@@ -492,11 +537,7 @@
  \setlength\Gost@ChapterIndent{\Gost@MainChapterIndent}%
 }
 %  заключение, библиография
-\newcommand\backmatter{
- \setcounter{secnumdepth}{-1}
- \renewcommand\Gost@ChapterStyle{\centering}%
- \setlength\Gost@ChapterIndent{0mm}%
-}
+\newcommand\backmatter{\structmatter}
 
 %всякие оглавления
 \newcommand\tableofcontents{\chapter*{\contentsname}\@starttoc{toc}}
@@ -599,33 +640,12 @@
 
 \newcommand\nobreakingbeforechapters{
 \makeatletter
-\renewcommand\chapter{%
- \if@figuresonchapter%
-  \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
- \fi%
- \if@tablesonchapter%
-  \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
- \fi%
- \@startsection{chapter}{0}%
-  {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  {\GostTitleStyle\large\Gost@ChapterStyle}%
-}
+\@breakingbeforechapterfalse%
 \makeatother
 }
 
 \newcommand\breakingbeforechapters{
 \makeatletter
-\renewcommand\chapter{%
- \clearpage%
- \if@figuresonchapter%
-  \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
- \fi%
- \if@tablesonchapter%
-  \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
- \fi%
- \@startsection{chapter}{0}%
-  {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  {\GostTitleStyle\large\Gost@ChapterStyle}%
-}
+\@breakingbeforechaptertrue%
 \makeatother
 }

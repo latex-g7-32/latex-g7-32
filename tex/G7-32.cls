@@ -1,4 +1,4 @@
-% This package designed and commented in russian utf-8 encoding.
+% This package designed and commented in Russian (utf-8 encoding).
 %
 % Класс документов по ГОСТ 7.32-2001 "Отчёт о научно-исследовательской работе"
 % на основе ГОСТ 2.105-95
@@ -8,6 +8,10 @@
 % Все вопросы, замечания и пожелания сюда: mailto:alxt@yandex.ru
 % Дальнейшая разработка и поддержка - Михаил Конник,
 % связаться можно по адресу mydebianblog@gmail.com
+%
+% Further tweaks and development (according to the requirements of
+% ГОСТ 7.32-2001 ред. 2009 года.pdf and some other random wishes)
+% -- Ivan Zakharyaschev <imz@altlinux.org>.
 
 % Параметры:
 %  a4paper, a5paper - размер бумаги. По-умолчанию- a4paper.
@@ -38,10 +42,20 @@
 % Используются группа пакетов extsizes.
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{G7-32}[2003/07/01 v1.0 Non Standard LaTeX document class]
+\ProvidesClass{G7-32}[2015/11/01 v2.0 Non Standard LaTeX document class]
 
 \RequirePackage{G2-105}
-\RequirePackage[left=20mm,right=10mm,top=20mm,bottom=20mm,headsep=0pt]{geometry}
+% minimal values from ГОСТ 7.32-2001 ред. 2009 года.pdf item 6.1.2
+% (a4paper is already selected as the default by GostBase.clo)
+\RequirePackage[right=10mm,top=20mm,bottom=20mm,left=30mm,headsep=0pt,includefoot]{geometry}
+% includefoot or includeall should be used-- 
+% It's not very clear whether the standard allows to put the page
+% numbers (and other stuff) on the bottom margin, but it's probably safer not to do so
+% (so that the minimal bottom margin size is not violated in any
+% case).
+% 
+% TODO: drop any stuff in the head that occupies space and use includeall.
+
 \RequirePackage{G7-32}
 
 \endinput

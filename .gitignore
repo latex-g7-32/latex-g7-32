@@ -7,6 +7,9 @@ rpz*.pdf
 *.bbl
 *.blg
 *.eps
+*.fdb_latexmk
+*.fls
+*.synctex.gz
 .deps
 tex/inc
 .idea

@@ -120,8 +120,22 @@ python3.4
 ### 3b. Добавление layouts LyX
 [Расим (Brotherofken)](http://habrahabr.ru/post/116517/)
 
-### 4. GitHub (поддержка XeLaTeX, LyX, ...)
-См. авторов commits и issues.
+
+### 4. GitHub, поддержка XeLaTeX, LyX
+[Роман Инфлянскас](https://github.com/rominf)
+
+### 5. Further fixes, tweaks and development
+
+According to the requirements of
+ГОСТ 7.32-2001 ред. 2009 года.pdf and some other random wishes.
+-- Ivan Zakharyaschev <imz@altlinux.org>.
+
+(Read the git log... I tried to explain each change clearly.)
+
+
+#### Благодарности
+[Ростислав Листеренко](https://github.com/kaedvann) (сообщения об ошибках)
+
 
 ## См. также
 ### Статьи
