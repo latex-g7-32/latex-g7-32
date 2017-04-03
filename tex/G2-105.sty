@@ -517,6 +517,7 @@
  \gdef\thechapter{\Asbuk{chapter}}%
  \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle\appendixname~\Gost@MainChapterStyle}%
  \setlength\Gost@ChapterIndent{0mm}%
+ \let\@sect\Gost@old@sect%
 }
 
 % 4.5 Сноски
@@ -566,7 +567,7 @@
 %библиография
 \newdimen\bibindent
 \newenvironment{thebibliography}[1]{
- \chapter*{\bibname}\addcontentsline{toc}{chapter}{\bibname}%
+ \chapter{\bibname}%
  \list{\@biblabel{\@arabic\c@enumiv}}%
       {\settowidth\labelwidth{\@biblabel{#1}}%
        \leftmargin\labelwidth
