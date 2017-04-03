@@ -650,3 +650,14 @@
 \@breakingbeforechaptertrue%
 \makeatother
 }
+
+\newcommand\AfterHyperrefFix{
+ \makeatletter
+ \let\Gost@old@sect\@sect
+ \def\@sect##1##2##3##4##5##6[##7]##8{%
+   \Gost@old@sect{##1}{##2}{##3}{##4}{##5}{}[{##7}]{%
+     ##6{##8}%
+   }%
+ }
+ \makeatother
+}

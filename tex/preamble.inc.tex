@@ -13,14 +13,7 @@ urlcolor=black,linkcolor=black, anchorcolor=black,
 citecolor=black, menucolor=black, filecolor=black,
 ]{hyperref}
 
-\makeatletter
-\let\Gost@old@sect\@sect
-\def\@sect#1#2#3#4#5#6[#7]#8{%
-	\Gost@old@sect{#1}{#2}{#3}{#4}{#5}{}[{#7}]{%
-		#6{#8}%
-	}%
-}
-\makeatother
+\AfterHyperrefFix
 
 % Изменение начертания шрифта --- после чего выглядит таймсоподобно.
 % apt-get install scalable-cyrfonts-tex
