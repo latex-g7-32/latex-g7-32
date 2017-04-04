@@ -124,6 +124,27 @@
 \newcommand\totaltables {\ref{reftotaltables}   }
 \newcommand\totalfigures{\ref{reftotalfigures}  }
 \newcommand\totalbibs   {\ref{reftotalbibs}     }
+% Другая реализация обсчета рисунков и таблиц.
+\RequirePackage{lastpage}                   % Пакет для подсчета общего числа страниц
+\RequirePackage{etoolbox}
+\newcounter{totfigures}
+\newcounter{tottables}
+
+\providecommand\totfig{}                    % Команда для отображения числа рисунков
+\providecommand\tottab{}                    % Команда для отображения числа таблиц
+
+
+\AtEndDocument{%
+  \addtocounter{totfigures}{\value{figure}}%
+  \addtocounter{tottables}{\value{table}}%
+  \immediate\write\@mainaux{%
+    \string\gdef\string\totfig{\number\value{totfigures}}%
+    \string\gdef\string\tottab{\number\value{tottables}}%
+  }%
+}
+
+
+
 
 % 3.6 Абзацный отступ - 15..17 мм
 \setlength\parindent{15mm}
@@ -168,6 +189,8 @@
 \renewcommand\thechapter{\@arabic\c@chapter}
 \newif\if@breakingbeforechapter\@breakingbeforechaptertrue
 \newcommand\chapter{%
+  {\addtocounter{totfigures}{\value{figure}}}
+  {\addtocounter{tottables}{\value{table}}}
  \if@breakingbeforechapter%
   \clearpage%
  \fi%
