@@ -517,6 +517,7 @@
  \gdef\thechapter{\Asbuk{chapter}}%
  \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle\appendixname~\Gost@MainChapterStyle}%
  \setlength\Gost@ChapterIndent{0mm}%
+ \let\@sect\Gost@old@sect%
 }
 
 % 4.5 Сноски
@@ -566,7 +567,7 @@
 %библиография
 \newdimen\bibindent
 \newenvironment{thebibliography}[1]{
- \chapter*{\bibname}\addcontentsline{toc}{chapter}{\bibname}%
+ \chapter{\bibname}%
  \list{\@biblabel{\@arabic\c@enumiv}}%
       {\settowidth\labelwidth{\@biblabel{#1}}%
        \leftmargin\labelwidth
@@ -648,4 +649,15 @@
 \makeatletter
 \@breakingbeforechaptertrue%
 \makeatother
+}
+
+\newcommand\AfterHyperrefFix{
+ \makeatletter
+ \let\Gost@old@sect\@sect
+ \def\@sect##1##2##3##4##5##6[##7]##8{%
+   \Gost@old@sect{##1}{##2}{##3}{##4}{##5}{}[{##7}]{%
+     ##6{##8}%
+   }%
+ }
+ \makeatother
 }
