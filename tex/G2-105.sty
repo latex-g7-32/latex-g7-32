@@ -277,11 +277,9 @@
    %\RequirePackage{xltxtra}
   \RequirePackage{polyglossia}
   \setdefaultlanguage{russian}
-  \setmainlanguage[spelling=modern]{russian}
   \setotherlanguage{english}
   \defaultfontfeatures{Mapping=tex-text}
   %\setmainfont{CMU Serif}
-  \RequirePackage{polyglossia}
   \setromanfont[
       BoldFont = cmunbx.otf,
       ItalicFont = cmunti.otf,
@@ -318,6 +316,13 @@
       BoldFont = cmuntb.otf,
       ItalicFont = cmunit.otf,
   BoldItalicFont = cmuntx.otf]
+  % убирает точку после названий секций
+  \addto\russian@capsformat{
+	\def\postchapter{\@aftersepkern}
+	\def\postsection{\@aftersepkern}
+	\def\postsubsection{\@aftersepkern}
+	\def\postsubsubsection{\@aftersepkern}
+  }
 \fi
 \RequirePackage{flafter}
 
@@ -482,7 +487,7 @@
 \newenvironment{table*}{\@dblfloat{table}}{\end@dblfloat}
 
 %  Подпись к таблице
-\addto\captionsrussian{\def\tablename{{\cyr\CYRT\cyra\cyrb\cyrl\cyri\cyrc\cyra}}}
+\addto\captionsrussian{\def\tablename{{\CYRT\cyra\cyrb\cyrl\cyri\cyrc\cyra}}}
 
 % ... допускается нумерация таблиц в пределах раздела
 
