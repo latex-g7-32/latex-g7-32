@@ -94,8 +94,8 @@ python3.4
 8. [cmake](https://cmake.org/download/) — не обязательно, при использовании 
    `babun` нужно использовать `pact install cmake`, а не самостоятельную 
    установку. В любом случае необходимо либо иметь babun+make, либо babun+cmake, 
-   либо cmake, либо пытаться заморочиться с make из gnuwin32. Автор использовал 
-   babun+cmake и проверял также babun+make.
+   либо cmake, либо пытаться заморочиться с make из gnuwin32 или MSYS. Автор 
+   этой части README использовал babun+cmake и проверял также babun+make.
 
    В любом случае CMake генерирует скрипты для make, только он умеет 
    использовать разные диалекты: nmake (из Visual Studio), mingw32-make, MSYS 
@@ -109,7 +109,7 @@ python3.4
 некоторых (texlive, cmake и dwimperl) делают это сами (но, возможно, требуется 
 установка галочки), для остальных нужно редактировать реестр, либо изменять PATH 
 временно. В PATH помещаются каталоги, в которых находятся следующие файлы: 
-inkscape.exe, dia.exe, dot.exe, python.exe.
+`inkscape.exe`, `dia.exe`, `dot.exe`, `python.exe`.
 
 Ghostscript предоставляет файлы gswin32.exe и gswin32c.exe, однако для работы 
 нужно иметь файл gs.exe или gs.bat где‐то в $PATH. В случае с bat файл должен 
@@ -165,7 +165,7 @@ python без babun я не знаю, но исполняемый файл pygme
 CMake без babun должно быть можно использовать так же если вы успешно решите 
 проблему с pygmentize, только вместо команды `make` будет что‐то другое, 
 а CMake, возможно, придётся указать генератор: к примеру, `cmake -G 'MinGW 
-Makefiles' .. && mingw32-make`.
+Makefiles' ..`, затем `mingw32-make`.
 
 ## Использование LyX
 Откройте `lyx/rpz.lyx` и редактируйте.
