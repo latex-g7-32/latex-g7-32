@@ -70,12 +70,11 @@ $(INC)/svg/%.pdf : $(SVG)/%.svg
 		../../../$(PDFTRIMWHITE) $*-tmp.pdf $*.pdf && \
 		rm $*-tmp.pdf
 
-# .dot -> .pdf
 $(INC)/dot/%.pdf: $(DOT)/%.dot
 	mkdir -p $(INC)/dot
-	dot -Tpdf $< > $@
-	# dot -Tpdf $< > $@.tmp.pdf
-	# $(PDFTRIMWHITE) $@.tmp.pdf $@
+	dot -o$@-tmp.svg -Tsvg $<
+	inkscape -A $@-tmp.pdf $@-tmp.svg
+	$(PDFTRIMWHITE) $@-tmp.pdf $@
 
 $(INC)/src/%: $(SRC)/%
 	mkdir -p $(INC)/src

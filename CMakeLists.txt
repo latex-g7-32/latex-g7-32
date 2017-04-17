@@ -145,13 +145,21 @@ set(dot_pdfs)
 foreach(dot_src ${dot_sources})
     get_filename_component(dot_base ${dot_src} NAME_WE)
     set(dot_dst ${INC_DOT_TREE}/${dot_base}.pdf)
-    file(RELATIVE_PATH dot_dst_rel ${INC_DOT_TREE} ${dot_dst})
-    file(RELATIVE_PATH dot_src_rel ${INC_DOT_TREE} ${dot_src})
+    set(dot_dst_svg_tmp_rel ${dot_base}-tmp.svg)
+    set(dot_dst_pdf_tmp_rel ${dot_base}-tmp.pdf)
+    file(RELATIVE_PATH dot_dst_rel ${INC_DIA_TREE} ${dot_dst})
+    file(RELATIVE_PATH dot_src_rel ${INC_DIA_TREE} ${dot_src})
     add_custom_command(
         OUTPUT ${dot_dst}
-        WORKING_DIRECTORY ${INC_DOT_TREE}
-        COMMAND ${DOT_COMMAND} -Tpdf -o${dot_dst_rel} ${dot_src_rel}
-        DEPENDS ${dot_src}
+        WORKING_DIRECTORY ${INC_DIA_TREE}
+        COMMAND ${DOT_COMMAND} -Tsvg -o${dot_dst_svg_tmp_rel} ${dot_src_rel}
+        COMMAND
+            ${INKSCAPE_COMMAND} -A ${dot_dst_pdf_tmp_rel} ${dot_dst_svg_tmp_rel}
+        COMMAND
+            ${PERL_EXECUTABLE} ${PDFCROP} ${dot_dst_pdf_tmp_rel} ${dot_dst_rel}
+        COMMAND ${CMAKE_COMMAND} -E remove ${dot_dst_svg_tmp_rel}
+        COMMAND ${CMAKE_COMMAND} -E remove ${dot_dst_pdf_tmp_rel}
+        DEPENDS ${dot_src} ${PDFCROP}
     )
     list(APPEND dot_pdfs ${dot_dst})
 endforeach()
