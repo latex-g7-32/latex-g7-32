@@ -220,6 +220,9 @@ According to the requirements of
 
 (Read the git log... I tried to explain each change clearly.)
 
+### 6. Сборка под Windows+cygwin, CMakeLists.txt
+[Николай Павлов](https://github.com/ZyX-I)
+
 
 #### Благодарности
 [Ростислав Листеренко](https://github.com/kaedvann) (сообщения об ошибках)
