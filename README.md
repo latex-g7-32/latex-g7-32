@@ -34,7 +34,7 @@ texlive-latex texlive-iftex
 
 ##### Программы
 ```
-inkscape dia pgf context 
+inkscape dia graphviz context
 ```
 
 #### pdfLaTeX-версия
@@ -78,6 +78,94 @@ python3.4
 
 ### Редактор
 Можно использовать любой редактор, например, `Kile`. На комманду `cd .. && make` вешается горячая клавиша и создаётся проект с корректным главным документом.
+
+## Установка и использование под Windows
+
+Для работы в Windows необходимо установить следующие зависимости:
+
+1. [dwimperl](http://dwimperl.com/windows.html)
+2. [texlive](https://www.tug.org/texlive/windows.html)
+3. [inkscape](https://inkscape.org/ru/download/)
+4. [dia](http://dia-installer.de/)
+5. [graphviz](http://www.graphviz.org/Download_windows.php)
+6. [ghostscript](https://ghostscript.com/download/gsdnld.html)
+7. [babun](http://babun.github.io/) — не обязательно, но автор этой части README 
+   использовал его.
+8. [cmake](https://cmake.org/download/) — не обязательно, при использовании 
+   `babun` нужно использовать `pact install cmake`, а не самостоятельную 
+   установку. В любом случае необходимо либо иметь babun+make, либо babun+cmake, 
+   либо cmake, либо пытаться заморочиться с make из gnuwin32. Автор использовал 
+   babun+cmake и проверял также babun+make.
+
+   В любом случае CMake генерирует скрипты для make, только он умеет 
+   использовать разные диалекты: nmake (из Visual Studio), mingw32-make, MSYS 
+   make, … Поэтому что‐то из этого нужно также установить.
+9. [python](https://www.python.org/downloads/windows/) — при использовании babun 
+   не нужно, он уже установлен там.
+
+   После установки python установить его пакет pygments.
+
+После установки всех зависимостей необходимо добавить их в $PATH. Установщики 
+некоторых (texlive, cmake и dwimperl) делают это сами (но, возможно, требуется 
+установка галочки), для остальных нужно редактировать реестр, либо изменять PATH 
+временно. В PATH помещаются каталоги, в которых находятся следующие файлы: 
+inkscape.exe, dia.exe, dot.exe, python.exe.
+
+Ghostscript предоставляет файлы gswin32.exe и gswin32c.exe, однако для работы 
+нужно иметь файл gs.exe или gs.bat где‐то в $PATH. В случае с bat файл должен 
+выглядеть так:
+
+```bat
+@echo off
+P:\ath\to\ghostscript\gswin32c.exe %*
+```
+
+(ВНИМАНИЕ: именно `gswin32c.exe`, не `gswin32.exe`.) Можно просто скопировать 
+`gswin32c.exe` в `gs.exe` и добавить каталог с ними в `$PATH`.
+
+В случае использования python из babun вам дополнительно нужен в `$PATH` 
+`pygmentize.bat` следующего содержания:
+
+```bat
+@echo off
+C:\Users\{user}\.babun\cygwin\bin\python2.7.exe C:\Users\{user}\.babun\cygwin\bin\pygmentize %*
+```
+
+(замените `{user}` на своего пользователя). Что нужно в случае использования 
+python без babun я не знаю, но исполняемый файл pygmentize должен быть 
+в `$PATH`.
+
+После того, как `$PATH` станет содержать пути ко всем необходимым исполняемым 
+файлам можно будет использовать выбранную систему сборки для создания PDF‐файла. 
+В случае с babun+[c]make:
+
+1. Откройте babun.
+2. Войдите в каталог с проектом с помощью `cd /path/to/latex-g7-32`.
+3. При использовании cmake:
+
+   1. Создайте каталог build: `mkdir build`.
+   2. Войдите в него: `cd build`.
+   3. Соберите проект: `cmake .. && make`. PDF появится 
+      в `/path/to/latex-g7-32/build/rpz.pdf` (он же rpz.pdf в текущем каталоге).
+   4. При изменении tex файлов и картинок/диаграмм/… можно собирать просто 
+      с помощью `make`.
+   5. При *добавлении* файлов/картинок/диаграмм нужно опять использовать `cmake 
+      ..` перед `make`.
+   6. Для очистки от сгенерированных файлов можно просто удалить каталог 
+      `build`.
+
+   При использовании `make`:
+
+   1. Проект (пере)собирается просто `make`. PDF появится 
+      в `/path/to/latex-g7-32/rpz.pdf`.
+   2. Для очистки от сгенерированных файлов можно использовать `make clean`. 
+      Проверяйте их наличие с помощью `git status --ignored`, временные файлы не 
+      сконцентрированы в одном каталоге в этом случае.
+
+CMake без babun должно быть можно использовать так же если вы успешно решите 
+проблему с pygmentize, только вместо команды `make` будет что‐то другое, 
+а CMake, возможно, придётся указать генератор: к примеру, `cmake -G 'MinGW 
+Makefiles' .. && mingw32-make`.
 
 ## Использование LyX
 Откройте `lyx/rpz.lyx` и редактируйте.
