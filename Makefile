@@ -57,8 +57,9 @@ $(PDF): $(TEX)/$(MAINTEX).tex $(STYLES) $(BIBFILE)
 
 $(INC)/dia/%.pdf: $(DIA)/%.dia
 	mkdir -p $(INC)/dia
-	dia -e $@.tmp.pdf -t pdf $<
-	$(PDFTRIMWHITE) $@.tmp.pdf $@
+	dia -e $@-tmp.svg -t svg $<
+	inkscape -A $@-tmp.pdf $@-tmp.svg
+	$(PDFTRIMWHITE) $@-tmp.pdf $@
 
 $(INC)/svg/%.pdf : $(SVG)/%.svg
 	mkdir -p $(INC)/svg/

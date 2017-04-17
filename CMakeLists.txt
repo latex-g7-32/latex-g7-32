@@ -122,15 +122,20 @@ set(dia_pdfs)
 foreach(dia_src ${dia_sources})
     get_filename_component(dia_base ${dia_src} NAME_WE)
     set(dia_dst ${INC_DIA_TREE}/${dia_base}.pdf)
-    set(dia_dst_tmp_rel ${dia_base}-tmp.pdf)
+    set(dia_dst_svg_tmp_rel ${dia_base}-tmp.svg)
+    set(dia_dst_pdf_tmp_rel ${dia_base}-tmp.pdf)
     file(RELATIVE_PATH dia_dst_rel ${INC_DIA_TREE} ${dia_dst})
     file(RELATIVE_PATH dia_src_rel ${INC_DIA_TREE} ${dia_src})
     add_custom_command(
         OUTPUT ${dia_dst}
         WORKING_DIRECTORY ${INC_DIA_TREE}
-        COMMAND ${DIA_COMMAND} -e ${dia_dst_tmp_rel} -t pdf ${dia_src_rel}
-        COMMAND ${PERL_EXECUTABLE} ${PDFCROP} ${dia_dst_tmp_rel} ${dia_dst_rel}
-        COMMAND ${CMAKE_COMMAND} -E remove ${dia_dst_tmp_rel}
+        COMMAND ${DIA_COMMAND} -e ${dia_dst_svg_tmp_rel} -t svg ${dia_src_rel}
+        COMMAND
+            ${INKSCAPE_COMMAND} -A ${dia_dst_pdf_tmp_rel} ${dia_dst_svg_tmp_rel}
+        COMMAND
+            ${PERL_EXECUTABLE} ${PDFCROP} ${dia_dst_pdf_tmp_rel} ${dia_dst_rel}
+        COMMAND ${CMAKE_COMMAND} -E remove ${dia_dst_svg_tmp_rel}
+        COMMAND ${CMAKE_COMMAND} -E remove ${dia_dst_pdf_tmp_rel}
         DEPENDS ${dia_src} ${PDFCROP}
     )
     list(APPEND dia_pdfs ${dia_dst})
