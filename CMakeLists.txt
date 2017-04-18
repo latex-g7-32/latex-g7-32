@@ -222,16 +222,12 @@ add_custom_target(
     COMMAND ${USED_LATEX_COMPILER} ${MAIN_TEX}
     DEPENDS latex-stage2
 )
-add_custom_command(
-    OUTPUT ${TARGET_PDF}
+add_custom_target(
+    pdf
+    ALL
     WORKING_DIRECTORY ${TEX_MIRROR_TREE}
     COMMAND ${CMAKE_COMMAND} -E copy ${TARGET_PDF_BASE} ${TARGET_PDF}
     DEPENDS latex-stage3
 )
 
-add_custom_target(
-    pdf
-    ALL
-    DEPENDS ${TARGET_PDF}
-)
 # vim: foldmarker=▶,▲ cms=#%s
