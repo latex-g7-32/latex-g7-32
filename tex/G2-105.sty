@@ -300,11 +300,9 @@
    %\RequirePackage{xltxtra}
   \RequirePackage{polyglossia}
   \setdefaultlanguage{russian}
-  \setmainlanguage[spelling=modern]{russian}
   \setotherlanguage{english}
   \defaultfontfeatures{Mapping=tex-text}
   %\setmainfont{CMU Serif}
-  \RequirePackage{polyglossia}
   \setromanfont[
       BoldFont = cmunbx.otf,
       ItalicFont = cmunti.otf,
@@ -341,6 +339,13 @@
       BoldFont = cmuntb.otf,
       ItalicFont = cmunit.otf,
   BoldItalicFont = cmuntx.otf]
+  % убирает точку после названий секций
+  \addto\russian@capsformat{
+	\def\postchapter{\@aftersepkern}
+	\def\postsection{\@aftersepkern}
+	\def\postsubsection{\@aftersepkern}
+	\def\postsubsubsection{\@aftersepkern}
+  }
 \fi
 \RequirePackage{flafter}
 
@@ -392,7 +397,7 @@
 
 %  ссылка на нумерованное перечисление
 \newcommand*\pref[2]{%
- \cyrp\cyre\cyrr\cyre\cyrch\cyri\cyrs\cyrl\cyre\cyrn\cyri\cyre~\ref{#2})~\ref{#1}}
+ перечисление~\ref{#2})~\ref{#1}}
 
 %перечисление типа abbreviation - для списка сокращения
 %заменено на description для совместимости -- Коротков И.
@@ -423,7 +428,7 @@
 \newlength\Gost@@EqRemLen
 \newenvironment{eqrem}{%
  \begin{tabular}{p{\Gost@@EqRemLen}p{\Gost@EqRemLen}}
-  \cyrg\cyrd\cyre
+  где
 }{
  \end{tabular}
 }
@@ -487,7 +492,7 @@
 \newenvironment{figure*}{\@dblfloat{figure}}{\end@dblfloat}
 
 %  Подпись к рисунку
-% \addto\captionsrussian{\renewcommand{\figurename}{{\cyr\CYRR\cyri\cyrs\cyru\cyrn\cyro\cyrk}}}
+% \addto\captionsrussian{\renewcommand{\figurename}{{Рисунок}}
 \DeclareCaptionLabelFormat{figure}{Рисунок #2}
 \captionsetup[figure]{labelformat=figure}
 
@@ -505,7 +510,7 @@
 \newenvironment{table*}{\@dblfloat{table}}{\end@dblfloat}
 
 %  Подпись к таблице
-\addto\captionsrussian{\def\tablename{{\cyr\CYRT\cyra\cyrb\cyrl\cyri\cyrc\cyra}}}
+\addto\captionsrussian{\def\tablename{Таблица}}
 
 % ... допускается нумерация таблиц в пределах раздела
 
@@ -582,7 +587,7 @@
  \makeatletter%
   \setlength\Gost@EqRemLen{\textwidth}%
   \addtolength\Gost@EqRemLen{-10mm}%
-  \settowidth\Gost@@EqRemLen{\cyrg\cyrd\cyre}%
+  \settowidth\Gost@@EqRemLen{где}%
   \addtolength\Gost@EqRemLen{-\Gost@@EqRemLen}%
  \makeatother%
 }
