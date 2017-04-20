@@ -35,19 +35,19 @@
 
 %стандартные части
 \newcommand\Executors{%список исполнителей
- \chapter*{\CYRS\cyrp\cyri\cyrs\cyro\cyrk~%
-           \cyri\cyrs\cyrp\cyro\cyrl\cyrn\cyri\cyrt\cyre\cyrl\cyre\cyrishrt}%
+ \chapter*{Список~%
+           исполнителей}%
 }
 \newcommand\Referat{%реферат
- \chapter*{\CYRR\cyre\cyrf\cyre\cyrr\cyra\cyrt}%
+ \chapter*{Реферат}%
 }
 \addto\captionsrussian{%содержание
  \def\contentsname{%
-  \CYRS\cyro\cyrd\cyre\cyrr\cyrzh\cyra\cyrn\cyri\cyre}%
+  Содержание}%
 }
 \newcommand\NormRefs{%нормативные ссылки
- \chapter*{\CYRN\cyro\cyrr\cyrm\cyra\cyrt\cyri\cyrv\cyrn\cyrery\cyre~%
-           \cyrs\cyrs\cyrery\cyrl\cyrk\cyri}%
+ \chapter*{Нормативные~%
+           ссылки}%
            В настоящем отчете о НИР использованы ссылки на следующе стандарты.
            \vspace{1ex}
 }
@@ -56,26 +56,26 @@
  \Referat
 }{}
 \newcommand\Defines{%глоссарий
- \chapter*{\CYRG\cyrl\cyro\cyrs\cyrs\cyra\cyrr\cyri\cyrishrt}%
+ \chapter*{Глоссарий}%
 }
 %\newcommand\Defines{%определения
-% \chapter*{\CYRO\cyrp\cyrr\cyre\cyrd\cyre\cyrl\cyre\cyrn\cyri\cyrya}%
+% \chapter*{Определения}%
 %}
 \newcommand\Abbreviations{%обозначения и сокращения
- \chapter*{\CYRO\cyrb\cyro\cyrz\cyrn\cyra\cyrch\cyre\cyrn\cyri\cyrya~\cyri~%
-           \cyrs\cyro\cyrk\cyrr\cyra\cyrshch\cyre\cyrn\cyri\cyrya}%
+ \chapter*{Обозначения~и~%
+           сокращения}%
 }
 \newcommand\Introduction{%введение
- \chapter{\CYRV\cyrv\cyre\cyrd\cyre\cyrn\cyri\cyre}%
+ \chapter{Введение}%
 }
 \newcommand\Conclusion{%заключение
- \chapter{\CYRZ\cyra\cyrk\cyrl\cyryu\cyrch\cyre\cyrn\cyri\cyre}%
+ \chapter{Заключение}%
 }
 \addto\captionsrussian{%список использованных источников
  \def\bibname{%
-  \CYRS\cyrp\cyri\cyrs\cyro\cyrk~
-  \cyri\cyrs\cyrp\cyro\cyrl\cyrsftsn\cyrz\cyro\cyrv\cyra\cyrn\cyrn\cyrery\cyrh~
-  \cyri\cyrs\cyrt\cyro\cyrch\cyrn\cyri\cyrk\cyro\cyrv}%
+  Список~
+  использованных~
+  источников}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -112,27 +112,27 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Элементы оформления титульной страницы
-\newcommand\Nir@UdkName{\CYRU\CYRD\CYRK}
+\newcommand\Nir@UdkName{УДК}
 
 \newcommand\Nir@No{%
- \No~\cyrg\cyro\cyrs\cyrr\cyre\cyrg\cyri\cyrs\cyrt\cyrr\cyra\cyrc\cyri\cyri%
+ \No~госрегистрации%
 }
 
 \newcommand*\confirmname{%
- \CYRU\CYRT\CYRV\CYRE\CYRR\CYRZH\CYRD\CYRA\CYRYU%
+ Утверждаю%
 }
 
 \newcommand\Nir@InventarNo{
- \CYRI\cyrn\cyrv.~\No
+ Инв.~\No
 }
 
 \newcommand*\otchetname{%
- \CYRO\CYRT\CYRCH\CYRYO\CYRT%
+ Отчёт%
 }
 \newcommand*\otchetcomplement{
- \CYRO{} \CYRN\CYRA\CYRU\CYRCH\CYRN\CYRO-%
- \CYRI\CYRS\CYRS\CYRL\CYRE\CYRD\CYRO\CYRV\CYRA\CYRT\CYRE\CYRL\CYRSFTSN\CYRS\CYRK\CYRO\CYRISHRT{} %
- \CYRR\CYRA\CYRB\CYRO\CYRT\CYRE%
+ О{} НАУЧНО-%
+ ИССЛЕДОВАТЕЛЬСКОЙ{} %
+ РАБОТЕ%
 }
 \newcommand\Nir@AnnOtchet{ %отчёт аннотационный!?
 }
@@ -140,8 +140,8 @@
 \newcommand\Nir@Year{\the\year}
 
 \newcommand\Nir@MainBegin{%
- \CYRR\cyru\cyrk\cyro\cyrv\cyro\cyrd\cyri\cyrt\cyre\cyrl\cyrsftsn{} %
- \CYRN\CYRI\CYRR%
+ Руководитель{} %
+ НИР%
 }
 %fix for first time compilation
 \newcommand\Nir@Title[1]{#1}
@@ -185,7 +185,7 @@
     \ulfill~\Nir@BossName
 
     \bigskip
-    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~\cyrg.
+    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
   }
   
   \vfill
@@ -227,7 +227,7 @@
 % The default modifier is as in example 1 in ГОСТ 7.32-2001 ред. 2009 года.pdf:
 % "по теме:"
 \newcommand\NirSubjectModifier{%
-  \cyrp\cyro~\cyrt\cyre\cyrm\cyre:\\
+  по~теме:\\
   \MakeUppercase%
 }
 %
@@ -243,9 +243,9 @@
 % (this default saves typing unless you need a modified stage type):
 \newcommand\Nir@StageType{\intermediatename}
 % "промежуточный"
-\newcommand\intermediatename{\cyrp\cyrr\cyro\cyrm\cyre\cyrzh\cyru\cyrt\cyro\cyrch\cyrn\cyrery\cyrishrt}
+\newcommand\intermediatename{промежуточный}
 % "заключительный"
-\newcommand\finalname{\cyrz\cyra\cyrk\cyrl\cyryu\cyrch\cyri\cyrt\cyre\cyrl\cyrsftsn\cyrn\cyrery\cyrishrt}
+\newcommand\finalname{заключительный}
 
 %Эти команды нужно вызвать для корректного определения титульной страницы
 
