@@ -48,7 +48,7 @@
 \newcommand\NormRefs{%нормативные ссылки
  \chapter*{Нормативные~%
            ссылки}%
-           В настоящем отчете о НИР использованы ссылки на следующе стандарты.
+           В настоящем отчете о НИР использованы ссылки на следующие стандарты.
            \vspace{1ex}
 }
 
@@ -56,7 +56,8 @@
  \Referat
 }{}
 \newcommand\Defines{%глоссарий
- \chapter*{Глоссарий}%
+    \chapter*{Определения}%
+    \section*{В настоящем отчете о НИР применяют следующие термины с соответствующими определениями.}% Ugly hack(((
 }
 %\newcommand\Defines{%определения
 % \chapter*{Определения}%
@@ -346,3 +347,31 @@
     \NirFinalStage[##2]{##1}%
   }%
 } % It should be used before any uses of \NirFinalStage, of course.
+
+% Обозначения и сокращения
+\RequirePackage{nomencl}%
+
+\newcounter{abbrev}%
+\newcommand{\Define}[2]{\nomenclature[A]{#1}{#2.}}%
+\newcommand{\Abbrev}[2]{%
+    \addtocounter{abbrev}{1}%
+    \nomenclature[D{\number\value{abbrev}}]{#1}{#2.}%
+}%
+
+\renewcommand\nomname{}%
+\renewcommand\nomgroup[1]{%
+    \if#1D%
+        \Abbreviations%
+    \else%
+        \Defines%
+    \fi%
+}%
+\renewcommand\nomlabel[1]{#1~---}%
+\renewcommand\thenomenclature{%
+    \list{}{%
+        \let\makelabel\nomlabel%
+    }%
+}%
+
+\makenomenclature%
+
