@@ -51,6 +51,7 @@ $(DEPS)/%-deps.mk: $(TEX)/% Makefile
 $(PDF): $(TEX)/$(MAINTEX).tex $(STYLES) $(BIBFILE)
 	cd tex && $(LATEX) $(MAINTEX)
 	cd tex && bibtex $(MAINTEX)
+	cd tex && makeindex $(MAINTEX).nlo -s nomencl.ist -o $(MAINTEX).nls 
 	cd tex && $(LATEX) $(MAINTEX)
 	cd tex && $(LATEX) $(MAINTEX)
 	cp tex/$(PDF) .
