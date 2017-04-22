@@ -204,17 +204,17 @@ add_custom_target(
     COMMAND ${BIBTEX_COMPILER} ${MAIN_TEX}
     DEPENDS latex-stage1
 )
-#add_custom_target(
-#    makeindex
-#    WORKING_DIRECTORY ${TEX_MIRROR_TREE}
-#    COMMAND ${MAKEINDEX_COMMAND} ${NOM_NLO} -s ${NOM_IST} -o ${NOM_NLS}
-#    DEPENDS latex-stage1
-#)
+add_custom_target(
+    makeindex
+    WORKING_DIRECTORY ${TEX_MIRROR_TREE}
+    COMMAND ${MAKEINDEX_COMMAND} ${NOM_NLO} -s ${NOM_IST} -o ${NOM_NLS}
+    DEPENDS latex-stage1
+)
 add_custom_target(
     latex-stage2
     WORKING_DIRECTORY ${TEX_MIRROR_TREE}
     COMMAND ${USED_LATEX_COMPILER} ${MAIN_TEX}
-    DEPENDS bibtex #makeindex
+    DEPENDS bibtex makeindex
 )
 add_custom_target(
     latex-stage3
