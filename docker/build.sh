@@ -21,6 +21,8 @@ build() {
     (
         cd "$tmpdir"
 
+        succeeded=1
+
         if test $buildsystem = cmake ; then
             mkdir build
             (
@@ -28,24 +30,25 @@ build() {
                 eval 'cmake .. $ARGS_cmake_'$latex
                 make
                 cp rpz.pdf ..
-            )
+            ) || succeeded=0
         else
-            eval 'make $ARGS_make_'$latex || true
+            eval 'make $ARGS_make_'$latex || succeeded=0
         fi
 
-        cp rpz.pdf "$RESDIR/rpz-${buildsystem}-${latex}.pdf"
+        if test $succeeded -eq 1 ; then
+            tgt_file="$RESDIR/rpz-${buildsystem}-${latex}.pdf"
+            cp rpz.pdf "$tgt_file"
+            chmod a=rwx "$tgt_file"
+        fi
     )
     rm -rf "$tmpdir"
 }
 
 mkdir "$RESDIR"
-chmod a=rwx -R "$RESDIR"
+chmod a=rwx "$RESDIR"
 
 for buildsystem in make cmake ; do
     for latex in pdflatex xelatex ; do
         build ${buildsystem} ${latex}
-        chmod a=rwx -R "$RESDIR"
     done
 done
-
-chmod a=rwx -R "$RESDIR"
