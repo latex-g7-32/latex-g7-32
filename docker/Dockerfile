@@ -1,25 +1,18 @@
-FROM debian:8
+FROM debian:stretch
 
-RUN apt-get update
-
-RUN apt-get install -f -y cmake
-RUN apt-get install -f -y make
-RUN apt-get install -f -y inkscape
-RUN apt-get install -f -y dia
-RUN apt-get install -f -y graphviz
-RUN apt-get install -f -y python-pygments
-RUN apt-get install -f -y git
-RUN apt-get install -f -y texlive-latex-base
-RUN apt-get install -f -y texlive-lang-cyrillic
-RUN apt-get install -f -y texlive-latex-extra
-RUN apt-get install -f -y texlive-generic-extra
-RUN apt-get install -f -y texlive-xetex
-RUN apt-get install -f -y texlive-fonts-extra
-
-RUN dpkg-query --showformat '${binary:Package}\n' --show '*-doc' | xargs apt-get -y remove
-
-RUN apt-get clean
-RUN rm -r /var/lib/apt/lists /var/cache/apt/archives /usr/share/doc /usr/share/man
+RUN apt-get update \
+    && apt-get install --assume-yes cmake make \
+                                    git \
+                                    inkscape dia graphviz perl ghostscript \
+                                    python-pygments \
+                                    texlive-latex-base texlive-lang-cyrillic \
+                                    texlive-xetex texlive-latex-extra \
+                                    texlive-generic-extra texlive-fonts-extra \
+    && (dpkg-query --showformat '${binary:Package}\n' --show '*-doc' \
+        | xargs apt-get -y remove) \
+    && apt-get clean \
+    && rm -r /var/lib/apt/lists /var/cache/apt/archives /usr/share/doc \
+             /usr/share/man
 
 VOLUME ["/doc/"]
 
