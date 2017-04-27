@@ -14,6 +14,7 @@ RUN apt-get install -f -y texlive-lang-cyrillic
 RUN apt-get install -f -y texlive-latex-extra
 RUN apt-get install -f -y texlive-generic-extra
 RUN apt-get install -f -y texlive-xetex
+RUN apt-get install -f -y texlive-fonts-extra
 
 RUN dpkg-query --showformat '${binary:Package}\n' --show '*-doc' | xargs apt-get -y remove
 
