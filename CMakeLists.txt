@@ -22,10 +22,10 @@ set(PREFER_XELATEX on CACHE BOOL "Prefer XeLaTeX over PDFLaTeX")
 #▶2 Processing
 # CMake-2.8.7 actually has no XELATEX component, so it will not define 
 # XELATEX_COMPILER. Neither it will error out on unknown component above.
-if(NOT DEFINED XELATEX_COMPILER)
-    set(PREFER_XELATEX false)
-endif()
 if(PREFER_XELATEX)
+    if(NOT DEFINED XELATEX_COMPILER)
+        require_program(XELATEX_COMPILER xelatex)
+    endif()
     set(USED_LATEX_COMPILER
         "${XELATEX_COMPILER}" -interaction=nonstopmode -shell-escape)
 else()
