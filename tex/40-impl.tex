@@ -48,6 +48,9 @@ def EvaluateDiplomas():
 
 Для вставки кода есть пакет \texttt{minted}. Он хорош всем кроме: необходимости Python (есть во всех нормальных (нет, Windows, я не про тебя) ОС) и Pygments и того, что нормально работает лишь в \XeLaTeX.
 
+\ifdefined\NoMinted
+Но к сожалению, у вас, по-видимому, не установлен Python или pygmentize.
+\else
 Можно пользоваться расширенным BFN:
 
 \begin{listing}[H]
@@ -90,7 +93,7 @@ grammar = { rule } ;
 \label{lst:c}
 
 \fi
-
+\fi
 % Для вставки реального кода лучше использовать \texttt{\textbackslash lstinputlisting} (который понимает
 % UTF8) и стили \Code{realcode} либо \Code{simplecode} (в зависимости от размера куска).
 

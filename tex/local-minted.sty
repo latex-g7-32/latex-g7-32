@@ -1,5 +1,7 @@
 \ProvidesPackage{local-minted}[2014/04/27 Local minted options]
 
+\ifdefined\NoMinted
+\else
 \usepackage{minted}
 
 % Сюда вставлять общие опции
@@ -26,5 +28,5 @@
 
 \renewcommand{\listingscaption}{Листинг}
 \renewcommand{\listoflistingscaption}{Листинги} 
-
+\fi
 \endinput
