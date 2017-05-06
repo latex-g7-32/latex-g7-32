@@ -301,7 +301,8 @@
   \RequirePackage{polyglossia}
   \setdefaultlanguage{russian}
   \setotherlanguage{english}
-  \defaultfontfeatures{Mapping=tex-text}
+  \defaultfontfeatures{Ligatures=TeX, Mapping=tex-text} % стандартные лигатуры TeX, замены нескольких дефисов на тире и т. п. Настройки моноширинного шрифта должны идти до этой строки, чтобы при врезках кода программ в коде не применялись лигатуры и замены дефисов
+  \setmainlanguage[babelshorthands=true]{russian} % Язык по-умолчанию русский с поддержкой приятных команд пакета babel
   % убирает точку после названий секций
   \addto\russian@capsformat{
 	\def\postchapter{\@aftersepkern}
