@@ -1,1 +1,1 @@
-mkdir -p build && cd build && latexmkmod -r ../settings.pl ../tex/rpz.tex $@
+mkdir -p build && cd build && ../utils/latexmkmod -r ../.latexmkmodrc ../tex/rpz.tex $@
