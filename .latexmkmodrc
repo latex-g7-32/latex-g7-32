@@ -2,6 +2,15 @@ use File::Path qw(make_path);
 use File::Which;
 use File::Copy;
 
+$use_pdflatex = 0;
+
+for my $i (0 .. $#ARGV) {
+    if ($ARGV[$i] eq "-use-pdflatex"){
+        $use_pdflatex = 1;
+        splice @ARGV, $i, 1;
+        last;
+    }
+}
 $ENV{TEXINPUTS} = $ENV{BIBINPUTS} = "../tex$Config{path_sep}";
 
 $MSWin_back_slash = 0;
@@ -35,11 +44,11 @@ sub make_dir_for_file {
 }
 
 my %exists_prog;
-foreach $prog ('inkscape', 'dot', 'dia', 'pygmentize'){
+foreach $prog ('inkscape', 'dot', 'dia', 'pygmentize', 'iconv'){
     $exists_prog{$prog} = !!which($prog);
 }
 
-$pdflatex = "xelatex -interaction=nonstopmode -shell-escape %O "
+$pdflatex = (($use_pdflatex) ? "pdflatex": "xelatex")." -interaction=nonstopmode -shell-escape %O "
     .(($exists_prog{pygmentize})?"%S":"\"\\def\\NoMinted{}\\input{%S}\"");
 
 if ($exists_prog{dot}){
@@ -64,13 +73,6 @@ add_cus_dep( 'nlo', 'nls', 0, 'nlo2nls' );
 
 sub nlo2nls {
     system("makeindex -s nomencl.ist -o \"$cusdep_dest\" \"$cusdep_source\"" );
-}
-
-#for source files
-sub all_cus_dep {
-    make_dir_for_file($cusdep_dest);
-    copy($cusdep_source, $cusdep_dest);
-    return 0;
 }
 
 sub add_tmp {
@@ -104,6 +106,7 @@ $inkscape_cmd = "inkscape -A \"%s\" \"%s\"";
 $dot_cmd = "dot -o\"%s\" -Tpdf \"%s\"";
 $dia_cmd = "dia -e \"%s\" -t svg \"%s\"";
 $crop_cmd = "perl ../utils/pdfcrop \"%s\" \"%s\"";
+$iconv_cmd = "iconv -f UTF-8 -t KOI8-R \"%s\" > \"%s\"";
 
 sub exec_cmd {
     if ($_[0]){
@@ -112,11 +115,28 @@ sub exec_cmd {
     }
 }
 
+#for source files
+sub all_cus_dep {
+    make_dir_for_file($cusdep_dest);
+    if ($use_pdflatex){
+        if($exists_prog{iconv}){
+            exec_cmd(sprintf($iconv_cmd, $cusdep_source, $cusdep_dest));
+        } else {
+            open($fh, ">", $cusdep_dest) or die ("Can't open file $cusdep_dest");
+            print $fh 'No iconv => no listings!';
+            close $fh;
+        }
+    } else {
+        copy($cusdep_source, $cusdep_dest);
+    }
+    return 0;
+}
+
 sub dot2pdf {
     make_dir_for_file($cusdep_dest);
     foreach my $cmd (
         sprintf($dot_cmd, add_tmp($cusdep_dest, 1), $cusdep_source),
-        sprintf($crop_cmd, add_tmp($cusdep_dest, 1), $cusdep_dest) 
+        sprintf($crop_cmd, add_tmp($cusdep_dest, 1), $cusdep_dest)
     )
     {
         exec_cmd($cmd);
