@@ -12,6 +12,7 @@ require_program(INKSCAPE_COMMAND inkscape)
 require_program(DIA_COMMAND dia)
 require_program(DOT_COMMAND dot)
 require_program(MAKEINDEX_COMMAND makeindex)
+require_program(PDFCROP_COMMAND pdfcrop)
 find_package(LATEX
              COMPONENTS XELATEX PDFLATEX BIBTEX
              REQUIRED)
@@ -33,9 +34,6 @@ else()
     require_program(ICONV_COMMAND iconv)
 endif()
 #▶1 Variables
-set(UTILS_DIR "${CMAKE_SOURCE_DIR}/utils")
-set(PDFCROP "${UTILS_DIR}/pdfcrop")
-
 set(TEX_TREE "${CMAKE_SOURCE_DIR}/tex")
 
 set(MIRROR_TREE "${CMAKE_BINARY_DIR}/mirror")
@@ -104,11 +102,11 @@ foreach(svg_src ${svg_sources})
         COMMAND
             "${INKSCAPE_COMMAND}" -A "${svg_dst_tmp_rel}" "${svg_src_rel}"
         COMMAND
-            "${PERL_EXECUTABLE}" "${PDFCROP}" "${svg_dst_tmp_rel}"
+            "${PERL_EXECUTABLE}" "${PDFCROP_COMMAND}" "${svg_dst_tmp_rel}"
                                  "${svg_dst_rel}"
         COMMAND
             "${CMAKE_COMMAND}" -E remove "${svg_dst_tmp_rel}"
-        DEPENDS "${svg_src}" "${PDFCROP}"
+        DEPENDS "${svg_src}"
     )
     list(APPEND svg_pdfs "${svg_dst}")
 endforeach()
@@ -131,13 +129,13 @@ foreach(dia_src ${dia_sources})
             "${INKSCAPE_COMMAND}" -A "${dia_dst_pdf_tmp_rel}"
                                   "${dia_dst_svg_tmp_rel}"
         COMMAND
-            "${PERL_EXECUTABLE}" "${PDFCROP}" "${dia_dst_pdf_tmp_rel}"
+            "${PERL_EXECUTABLE}" "${PDFCROP_COMMAND}" "${dia_dst_pdf_tmp_rel}"
                                  "${dia_dst_rel}"
         COMMAND
             "${CMAKE_COMMAND}" -E remove "${dia_dst_svg_tmp_rel}"
         COMMAND
             "${CMAKE_COMMAND}" -E remove "${dia_dst_pdf_tmp_rel}"
-        DEPENDS "${dia_src}" "${PDFCROP}"
+        DEPENDS "${dia_src}"
     )
     list(APPEND dia_pdfs "${dia_dst}")
 endforeach()
@@ -160,13 +158,13 @@ foreach(dot_src ${dot_sources})
             "${INKSCAPE_COMMAND}" -A "${dot_dst_pdf_tmp_rel}"
                                   "${dot_dst_svg_tmp_rel}"
         COMMAND
-            "${PERL_EXECUTABLE}" "${PDFCROP}" "${dot_dst_pdf_tmp_rel}"
+            "${PERL_EXECUTABLE}" "${PDFCROP_COMMAND}" "${dot_dst_pdf_tmp_rel}"
                                  "${dot_dst_rel}"
         COMMAND
             "${CMAKE_COMMAND}" -E remove "${dot_dst_svg_tmp_rel}"
         COMMAND
             "${CMAKE_COMMAND}" -E remove "${dot_dst_pdf_tmp_rel}"
-        DEPENDS "${dot_src}" "${PDFCROP}"
+        DEPENDS "${dot_src}"
     )
     list(APPEND dot_pdfs "${dot_dst}")
 endforeach()
