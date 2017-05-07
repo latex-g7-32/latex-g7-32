@@ -1,17 +1,57 @@
 use File::Path qw(make_path);
 use File::Which;
 use File::Copy;
+use Cwd;
+
+$current_dir = cwd();
+$tex_dir = "$current_dir/tex";
 
 $use_pdflatex = 0;
+$build_dir = "build";
 
-for my $i (0 .. $#ARGV) {
-    if ($ARGV[$i] eq "-use-pdflatex"){
+$file_index = 0;
+sub my_option_handler {
+    my ($type, $arg, $argv) = @_;
+    if($type == 2){
+        do_after_options();
+    } elsif($type == 1){
+        $file_index++;
+        if ($file_index == 1 && !-f "$tex_dir/$arg"){
+            $build_dir = $arg;
+            return '';
+        } else {
+            return "$tex_dir/$arg";
+        }
+    } elsif ($arg eq '-use-pdflatex'){
         $use_pdflatex = 1;
-        splice @ARGV, $i, 1;
-        last;
+        return 0;
     }
+    return 1;
 }
-$ENV{TEXINPUTS} = $ENV{BIBINPUTS} = "../tex$Config{path_sep}";
+
+sub my_help_print() {
+    print
+        "\n",
+        "Additional options:\n\n",,
+        "   -use-pdflatex  - use PdfLaTeX instead of XeLaTeX\n",
+        "   First non-option argument is a build directory\n",
+        "   all other non-option arguments are LaTeX files\n"
+}
+
+$pdflatex = '';
+
+sub do_after_options {
+    make_path($build_dir);
+    chdir($build_dir);
+    $pdflatex =
+        (($use_pdflatex) ? "pdflatex": "xelatex").
+        " -interaction=nonstopmode -shell-escape %O ".
+        (($exists_prog{pygmentize})?"%S":"\"\\def\\NoMinted{}\\input{%S}\"");
+}
+
+set_cus_option_handler('my_option_handler', 'my_help_print');
+
+$ENV{TEXINPUTS} = $ENV{BIBINPUTS} = "$tex_dir$Config{path_sep}";
 
 $MSWin_back_slash = 0;
 $cleanup_includes_cusdep_generated = 1;
@@ -47,9 +87,6 @@ my %exists_prog;
 foreach $prog ('inkscape', 'dot', 'dia', 'pygmentize', 'iconv'){
     $exists_prog{$prog} = !!which($prog);
 }
-
-$pdflatex = (($use_pdflatex) ? "pdflatex": "xelatex")." -interaction=nonstopmode -shell-escape %O "
-    .(($exists_prog{pygmentize})?"%S":"\"\\def\\NoMinted{}\\input{%S}\"");
 
 if ($exists_prog{dot}){
     add_cus_dep('dot', 'pdf', 0, 'dot2pdf');
