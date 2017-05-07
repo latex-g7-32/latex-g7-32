@@ -9,22 +9,23 @@ $tex_dir = "$current_dir/tex";
 $use_pdflatex = 0;
 $build_dir = "build";
 
-$file_index = 0;
 sub my_option_handler {
     my ($type, $arg, $argv) = @_;
     if($type == 2){
         do_after_options();
     } elsif($type == 1){
-        $file_index++;
-        if ($file_index == 1 && !-f "$tex_dir/$arg"){
-            $build_dir = $arg;
-            return '';
-        } else {
-            return "$tex_dir/$arg";
+        return "$tex_dir/$arg";
+    } elsif($type == 0){
+        if ($arg eq '-use-pdflatex' || $arg eq '-up'){
+            $use_pdflatex = 1;
+            return 0;
+        } elsif ($arg eq '-build-dir' || $arg eq '-bd'){
+            if ($#$argv == -1){
+                die("Specify build directory after $arg!");
+            }
+            $build_dir = shift(@$argv);
+            return 0;
         }
-    } elsif ($arg eq '-use-pdflatex'){
-        $use_pdflatex = 1;
-        return 0;
     }
     return 1;
 }
@@ -33,9 +34,9 @@ sub my_help_print() {
     print
         "\n",
         "Additional options:\n\n",,
-        "   -use-pdflatex  - use PdfLaTeX instead of XeLaTeX\n",
-        "   First non-option argument is a build directory\n",
-        "   all other non-option arguments are LaTeX files\n"
+        "   -up, -use-pdflatex      - use PdfLaTeX instead of XeLaTeX\n",
+        "   -bd, -build-dir <path>  - change build directory\n",
+        "                             (default is 'build')\n"
 }
 
 $pdflatex = '';

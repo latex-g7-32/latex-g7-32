@@ -1,1 +1,1 @@
-latexmkmod -r .latexmkmodrc %* rpz.tex
+latexmkmod -r .latexmkmodrc rpz.tex %*
