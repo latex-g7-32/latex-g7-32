@@ -314,12 +314,54 @@
   \setotherlanguage{english}
   \defaultfontfeatures{Ligatures=TeX, Mapping=tex-text} % стандартные лигатуры TeX, замены нескольких дефисов на тире и т. п. Настройки моноширинного шрифта должны идти до этой строки, чтобы при врезках кода программ в коде не применялись лигатуры и замены дефисов
   \setmainlanguage[babelshorthands=true]{russian} % Язык по-умолчанию русский с поддержкой приятных команд пакета babel
-  \setmonofont{Liberation Mono} % моноширинный шрифт
-  \newfontfamily\cyrillicfonttt{Liberation Mono}[Script = Cyrillic] % Моноширинный шрифт для кириллицы
-  \setmainfont{PT Astra Serif} % Основной шрифт
-  \newfontfamily\cyrillicfont{PT Astra Serif}[Script = Cyrillic] % Основной шрифт для кириллицы
-  \setsansfont{PT Astra Sans} % Шрифт без засечек
-  \newfontfamily\cyrillicfontsf{PT Astra Sans}[Script = Cyrillic] % Шрифт без засечек для кириллицы
+
+  % Моноширинный шрифт
+  \IfNoFont{Liberation Mono}{
+    \setmonofont[
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+    {cmuntt.otf}
+    \newfontfamily{\cyrillicfonttt}{cmunrm.otf}[ % для кириллицы
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+  }{
+    \setmonofont{Liberation Mono}
+    \newfontfamily\cyrillicfonttt{Liberation Mono}[Script = Cyrillic] % для кириллицы
+  }
+
+  % Основной шрифт
+  \IfNoFont{PT Astra Serif}{
+    \setromanfont[
+    BoldFont = cmunbx.otf,
+    ItalicFont = cmunti.otf,
+    BoldItalicFont = cmunbi.otf]
+    {cmunrm.otf}
+    \newfontfamily\cyrillicfont{cmunrm.otf}[ % для кириллицы
+    BoldFont = cmunbx.otf,
+    ItalicFont = cmunti.otf,
+    BoldItalicFont = cmunbi.otf]
+  }{
+    \setmainfont{PT Astra Serif}
+    \newfontfamily\cyrillicfont{PT Astra Serif}[Script = Cyrillic] % для кириллицы
+  }
+
+  % Шрифт без засечек
+  \IfNoFont{PT Astra Serif}{
+    \setsansfont[
+    BoldFont = cmunsx.otf,
+    ItalicFont = cmunsi.otf,
+    BoldItalicFont = cmunso.otf]
+    {cmunss.otf}
+    \newfontfamily{\cyrillicfontt}{cmunrm.otf}[ % для кириллицы
+    BoldFont = cmunsx.otf,
+    ItalicFont = cmunsi.otf,
+    BoldItalicFont = cmunso.otf]
+  }{
+    \setsansfont{PT Astra Sans}
+    \newfontfamily\cyrillicfontsf{PT Astra Sans}[Script = Cyrillic] % для кириллицы
+  }
 
   % убирает точку после названий секций
   \addto\russian@capsformat{
