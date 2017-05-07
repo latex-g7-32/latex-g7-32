@@ -51,7 +51,12 @@ sub do_after_options {
 
 set_cus_option_handler('my_option_handler', 'my_help_print');
 
-$ENV{TEXINPUTS} = $ENV{BIBINPUTS} = "$tex_dir$Config{path_sep}";
+$ENV{TEXINPUTS} =
+    (defined($ENV{TEXINPUTS}) ? "$ENV{TEXINPUTS}$Config{path_sep}" : '').
+    "$tex_dir$Config{path_sep}";
+$ENV{BIBINPUTS} =
+    (defined($ENV{BIBINPUTS}) ? "$ENV{BIBINPUTS}$Config{path_sep}" : '').
+    "$tex_dir$Config{path_sep}";
 
 $MSWin_back_slash = 0;
 $cleanup_includes_cusdep_generated = 1;
