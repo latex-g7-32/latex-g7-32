@@ -294,6 +294,17 @@
   % breaks
 %   \RequirePackage{unicode-math}
 
+   % проверка наличия шрифта в системе
+   \def\IfNoFont#1#2#3{
+   \count255=\interactionmode
+   \suppressfontnotfounderror1
+   \batchmode
+   \def\myfont{#1}
+   \font\foo="\myfont"\space at 10pt
+   \interactionmode=\count255
+   \ifx\foo\nullfont#2\else#3\fi
+   }
+
   \RequirePackage{fontspec}
   \RequirePackage{xecyr}
    %\RequirePackage{xunicode}
