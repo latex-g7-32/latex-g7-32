@@ -142,7 +142,7 @@ sub error_pdf {
 $inkscape_cmd = "inkscape -A \"%s\" \"%s\"";
 $dot_cmd = "dot -o\"%s\" -Tpdf \"%s\"";
 $dia_cmd = "dia -e \"%s\" -t svg \"%s\"";
-$crop_cmd = "perl ../utils/pdfcrop \"%s\" \"%s\"";
+$crop_cmd = "pdfcrop \"%s\" \"%s\"";
 $iconv_cmd = "iconv -f UTF-8 -t KOI8-R \"%s\" > \"%s\"";
 
 sub exec_cmd {
