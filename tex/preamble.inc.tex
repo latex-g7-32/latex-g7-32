@@ -18,6 +18,7 @@ citecolor=black, menucolor=black, filecolor=black,
 % Изменение начертания шрифта --- после чего выглядит таймсоподобно.
 % apt-get install scalable-cyrfonts-tex
 
+\ifPDFTeX
 \IfFileExists{cyrtimes.sty}
     {
         \usepackage{cyrtimespatched}
@@ -25,6 +26,7 @@ citecolor=black, menucolor=black, filecolor=black,
     {
         % А если Times нету, то будет CM...
     }
+\fi
 
 \usepackage{graphicx}   % Пакет для включения рисунков
 
