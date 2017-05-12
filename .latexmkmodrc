@@ -116,10 +116,6 @@ if ($exists_prog{dia} && $exists_prog{inkscape}){
 
 add_cus_dep( 'nlo', 'nls', 0, 'nlo2nls' );
 
-sub nlo2nls {
-    system("makeindex -s nomencl.ist -o \"$cusdep_dest\" \"$cusdep_source\"" );
-}
-
 sub add_tmp {
     my ($name, $num) = @_;
     my ($base_name, $path, $ext)=fileparse($name, qr/\.[^.]*/);
@@ -152,12 +148,17 @@ $dot_cmd = "dot -o\"%s\" -Tpdf \"%s\"";
 $dia_cmd = "dia -e \"%s\" -t svg \"%s\"";
 $crop_cmd = "pdfcrop \"%s\" \"%s\"";
 $iconv_cmd = "iconv -f UTF-8 -t KOI8-R \"%s\" > \"%s\"";
+$nomencl_cmd = "makeindex -s nomencl.ist -o \"%s\" \"%s\"";
 
 sub exec_cmd {
     if ($_[0]){
         print "Executing $_[0]\n";
         system($_[0]);
     }
+}
+
+sub nlo2nls {
+    exec_cmd(sprintf($nomencl_cmd, $cusdep_dest, $cusdep_source));
 }
 
 #for source files
