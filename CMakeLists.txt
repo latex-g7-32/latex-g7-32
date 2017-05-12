@@ -178,6 +178,7 @@ foreach(listing_src ${listing_sources})
             OUTPUT "${listing_dst}"
             VERBATIM
             COMMAND "${CMAKE_COMMAND}" -E copy "${listing_src}" "${listing_dst}"
+            DEPENDS "${listing_src}"
         )
     else()
         add_custom_command(
@@ -191,6 +192,7 @@ foreach(listing_src ${listing_sources})
                     -DSRC_ENCODING=utf-8
                     -DDST_ENCODING=koi8-r
                     -P "${CMAKE_SOURCE_DIR}/cmake/CopyConverted.cmake"
+            DEPENDS "${listing_src}"
         )
     endif()
     list(APPEND mirror_listing_sources "${listing_dst}")
