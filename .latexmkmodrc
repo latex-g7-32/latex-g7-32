@@ -5,6 +5,8 @@ use Cwd;
 
 $current_dir = cwd();
 $tex_dir = "$current_dir/tex";
+$graphics_dir = "$current_dir/graphics";
+$src_dir = "$current_dir/src";
 
 $use_pdflatex = 0;
 $build_dir = "build";
@@ -70,21 +72,21 @@ $bibtex_use = 2;
 $pdf_mode = 1;
 $recorder = 1;
 
-$graphics_dir = "../graphics";
-$inc_dir = "inc";
-$src_dir = "src";
-$error_basename = "$inc_dir/error";
+$file_inc_dir  = "inc";
+$file_graphics_dir = "$file_inc_dir";
+$file_src_dir = "$file_inc_dir/src";
+$error_basename = "$file_inc_dir/error";
 
 sub custom_transform_cus_dep {
     my ($name, $all) = @_;
     if ($all){
-        if ($name =~ /^$inc_dir\/$src_dir/) {
-            $name =~ s!^$inc_dir(?=/)!..!;
+        if ($name =~ /^\Q$file_src_dir\E/) {
+            $name =~ s!^$file_src_dir!$src_dir!;
         } else {
             $name = '';
         }
     } else {
-        $name =~ s!^$inc_dir(?=/)!$graphics_dir!;
+        $name =~ s!^$file_graphics_dir!$graphics_dir!;
     }
     return $name;
 }
