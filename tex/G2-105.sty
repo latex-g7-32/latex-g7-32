@@ -290,6 +290,10 @@
   \if@usepscyr
     \RequirePackage[math]{pscyr}
   \fi
+  % аналоги команд из XeLaTeX
+  \def\cyrillicfonttt{\fontfamily{\ttdefault}\selectfont}
+  \def\cyrillicfont{\fontfamily{\rmdefault}\selectfont}
+  \def\cyrillicfontsf{\fontfamily{\sfdefault}\selectfont}
 \else
   % breaks
 %   \RequirePackage{unicode-math}
@@ -311,28 +315,12 @@
    %\RequirePackage{xltxtra}
   \RequirePackage{polyglossia}
   \setotherlanguage{english}
-  \defaultfontfeatures{Ligatures=TeX, Mapping=tex-text} % стандартные лигатуры TeX, замены нескольких дефисов на тире и т. п. Настройки моноширинного шрифта должны идти до этой строки, чтобы при врезках кода программ в коде не применялись лигатуры и замены дефисов
+  \defaultfontfeatures{Ligatures=TeX, Mapping=tex-text} % стандартные лигатуры TeX, замены нескольких дефисов на тире и т. п.
   \setmainlanguage[babelshorthands=true]{russian} % Язык по-умолчанию русский с поддержкой приятных команд пакета babel
-
-  % Моноширинный шрифт
-  \IfNoFont{Liberation Mono}{
-    \setmonofont[
-    BoldFont = cmuntb.otf,
-    ItalicFont = cmunit.otf,
-    BoldItalicFont = cmuntx.otf]
-    {cmuntt.otf}
-    \newfontfamily{\cyrillicfonttt}{cmunrm.otf}[ % для кириллицы
-    BoldFont = cmuntb.otf,
-    ItalicFont = cmunit.otf,
-    BoldItalicFont = cmuntx.otf]
-  }{
-    \setmonofont{Liberation Mono}
-    \newfontfamily\cyrillicfonttt{Liberation Mono}[Script = Cyrillic] % для кириллицы
-  }
 
   % Основной шрифт
   \IfNoFont{PT Astra Serif}{
-    \setromanfont[
+    \setmainfont[
     BoldFont = cmunbx.otf,
     ItalicFont = cmunti.otf,
     BoldItalicFont = cmunbi.otf]
@@ -353,13 +341,42 @@
     ItalicFont = cmunsi.otf,
     BoldItalicFont = cmunso.otf]
     {cmunss.otf}
-    \newfontfamily{\cyrillicfontt}{cmunrm.otf}[ % для кириллицы
+    \newfontfamily{\cyrillicfontsf}{cmunss.otf}[ % для кириллицы
     BoldFont = cmunsx.otf,
     ItalicFont = cmunsi.otf,
     BoldItalicFont = cmunso.otf]
   }{
     \setsansfont{PT Astra Sans}
     \newfontfamily\cyrillicfontsf{PT Astra Sans}[Script = Cyrillic] % для кириллицы
+  }
+
+  % Моноширинный шрифт
+  \IfNoFont{Liberation Mono}{
+    \setmonofont[
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+    {cmuntt.otf}
+    \newfontfamily{\cyrillicfonttt}{cmunrm.otf}[ % для кириллицы
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+    % Шрифт для minted
+    \defaultfontfeatures{}
+    \newfontfamily\cyrillicfontttnoftr{cmunrm.otf}[
+    NFSSFamily = cyrillicfontttnoftr,
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+  }{
+    \setmonofont{Liberation Mono}
+    \newfontfamily\cyrillicfonttt{Liberation Mono}[Script = Cyrillic] % для кириллицы
+    % Шрифт для minted
+    \defaultfontfeatures{}
+    \newfontfamily\cyrillicfontttnoftr{Liberation Mono}[
+    Script = Cyrillic,
+    NFSSFamily = cyrillicfontttnoftr
+    ]
   }
 
   % убирает точку после названий секций
