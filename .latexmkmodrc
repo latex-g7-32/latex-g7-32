@@ -39,6 +39,11 @@ sub my_help_print() {
         "                             (default is 'build')\n"
 }
 
+my %exists_prog;
+foreach $prog ('inkscape', 'dot', 'dia', 'pygmentize', 'iconv'){
+    $exists_prog{$prog} = !!which($prog);
+}
+
 $pdflatex = '';
 
 sub do_after_options {
@@ -87,11 +92,6 @@ sub custom_transform_cus_dep {
 sub make_dir_for_file {
     my $path = (fileparse($_[0]))[1];
     make_path($path);
-}
-
-my %exists_prog;
-foreach $prog ('inkscape', 'dot', 'dia', 'pygmentize', 'iconv'){
-    $exists_prog{$prog} = !!which($prog);
 }
 
 if ($exists_prog{dot}){
