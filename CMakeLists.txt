@@ -102,8 +102,7 @@ foreach(svg_src ${svg_sources})
         COMMAND
             "${INKSCAPE_COMMAND}" -A "${svg_dst_tmp_rel}" "${svg_src_rel}"
         COMMAND
-            "${PERL_EXECUTABLE}" "${PDFCROP_COMMAND}" "${svg_dst_tmp_rel}"
-                                 "${svg_dst_rel}"
+            "${PDFCROP_COMMAND}" "${svg_dst_tmp_rel}" "${svg_dst_rel}"
         COMMAND
             "${CMAKE_COMMAND}" -E remove "${svg_dst_tmp_rel}"
         DEPENDS "${svg_src}"
@@ -129,8 +128,7 @@ foreach(dia_src ${dia_sources})
             "${INKSCAPE_COMMAND}" -A "${dia_dst_pdf_tmp_rel}"
                                   "${dia_dst_svg_tmp_rel}"
         COMMAND
-            "${PERL_EXECUTABLE}" "${PDFCROP_COMMAND}" "${dia_dst_pdf_tmp_rel}"
-                                 "${dia_dst_rel}"
+            "${PDFCROP_COMMAND}" "${dia_dst_pdf_tmp_rel}" "${dia_dst_rel}"
         COMMAND
             "${CMAKE_COMMAND}" -E remove "${dia_dst_svg_tmp_rel}"
         COMMAND
@@ -158,8 +156,7 @@ foreach(dot_src ${dot_sources})
             "${INKSCAPE_COMMAND}" -A "${dot_dst_pdf_tmp_rel}"
                                   "${dot_dst_svg_tmp_rel}"
         COMMAND
-            "${PERL_EXECUTABLE}" "${PDFCROP_COMMAND}" "${dot_dst_pdf_tmp_rel}"
-                                 "${dot_dst_rel}"
+            "${PDFCROP_COMMAND}" "${dot_dst_pdf_tmp_rel}" "${dot_dst_rel}"
         COMMAND
             "${CMAKE_COMMAND}" -E remove "${dot_dst_svg_tmp_rel}"
         COMMAND
