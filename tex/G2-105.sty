@@ -735,7 +735,11 @@
   \makeatletter
   \let\Gost@old@cyrdash\cyrdash
   \def\cyrdash{%
-    \clipbox{0pt}{\hbox to .8em{\textbf{\Gost@old@cyrdash\hss}}}%
+    \ifdim\f@size pt>13pt%
+       \clipbox{0pt}{\hbox to .8em{\textbf{\Gost@old@cyrdash\hss}}}%
+    \else%
+       \Gost@old@cyrdash%
+    \fi%
   }
   \let\Gost@old@thebibliography\thebibliography
   \renewenvironment{thebibliography}[1]{%
