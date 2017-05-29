@@ -13,6 +13,7 @@ PDF=rpz.pdf
 DIA=graphics/dia
 DOT=graphics/dot
 SVG=graphics/svg
+IMG=graphics/img
 TEX=tex
 DEPS=.deps
 SRC=src
@@ -70,6 +71,10 @@ $(INC)/svg/%.pdf : $(SVG)/%.svg
 	cd $(INC)/svg && \
 		$(PDFTRIMWHITE) $*-tmp.pdf $*.pdf && \
 		rm $*-tmp.pdf
+
+$(INC)/img/%.pdf: $(IMG)/*
+	mkdir -p $(INC)/img
+	convert $< -quality 100 $@
 
 $(INC)/dot/%.pdf: $(DOT)/%.dot
 	mkdir -p $(INC)/dot
