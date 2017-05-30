@@ -335,7 +335,7 @@
   }
 
   % Шрифт без засечек
-  \IfNoFont{PT Astra Serif}{
+  \IfNoFont{PT Astra Sans}{
     \setsansfont[
     BoldFont = cmunsx.otf,
     ItalicFont = cmunsi.otf,
@@ -385,6 +385,11 @@
 	\def\postsection{\@aftersepkern}
 	\def\postsubsection{\@aftersepkern}
 	\def\postsubsubsection{\@aftersepkern}
+  }
+
+  \usepackage{trimclip}
+  \def\cyrdash{%
+    \clipbox{0pt}{\hbox to .8em{---\hss}}%
   }
 \fi
 \RequirePackage{flafter}
@@ -730,6 +735,19 @@
  \makeatother
 }
 
+%Чтобы избежать переопределения \cyrdash в bbl файле
+\def\FixBibliographyCyrdash{
+  \let\Gost@old@thebibliography\thebibliography
+  \renewenvironment{thebibliography}[1]{%
+    \let\Gost@old@ProvideTextCommandDefault\ProvideTextCommandDefault%
+    \let\ProvideTextCommandDefault\@gobbletwo%
+    \begin{Gost@old@thebibliography}{##1}%
+  }{
+    \end{Gost@old@thebibliography}%
+    \let\ProvideTextCommandDefault\Gost@old@ProvideTextCommandDefault%
+  }
+}
+
 \newcommand\MakeDashesBold{
   \usepackage{trimclip}
   \makeatletter
@@ -741,15 +759,9 @@
        \Gost@old@cyrdash%
     \fi%
   }
-  \let\Gost@old@thebibliography\thebibliography
-  \renewenvironment{thebibliography}[1]{%
-    %Чтобы избежать переопределения \cyrdash в bbl файле
-    \let\Gost@old@ProvideTextCommandDefault\ProvideTextCommandDefault%
-    \let\ProvideTextCommandDefault\@gobbletwo%
-    \begin{Gost@old@thebibliography}{##1}%
-  }{
-    \end{Gost@old@thebibliography}%
-    \let\ProvideTextCommandDefault\Gost@old@ProvideTextCommandDefault%
-  }
+  \FixBibliographyCyrdash
   \makeatother
 }
+\ifXeTeX
+\FixBibliographyCyrdash
+\fi
