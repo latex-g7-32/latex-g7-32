@@ -119,8 +119,12 @@
  \No~госрегистрации%
 }
 
+\newcommand\Nir@Ekz{%
+Экз. \No\makebox[1em]{\ulfill}%
+}
+
 \newcommand*\confirmname{%
- Утверждаю%
+<<Утверждаю>>%
 }
 
 \newcommand\Nir@InventarNo{
@@ -130,13 +134,15 @@
 \newcommand*\otchetname{%
  Отчёт%
 }
-\newcommand*\otchetcomplement{
+\newcommand*\otchet@about{
  О{} НАУЧНО-%
  ИССЛЕДОВАТЕЛЬСКОЙ{} %
  РАБОТЕ%
 }
 \newcommand\Nir@AnnOtchet{ %отчёт аннотационный!?
 }
+
+\newcommand\Nir@PartNum{Часть 1}     % Part name and number 
 
 \newcommand\Nir@Year{\the\year}
 
@@ -149,77 +155,16 @@
 \newcommand*\Nir[1]{\Nir@Title{#1}}  %Название НИР, не совместимо с \NirTitle  
 \newcommand\Nir@TitleAndSubject{\MakeUppercase{\Nir@Title}}
 
-\newenvironment*{titlepage}{
- \thispagestyle{empty}
-  \linespread{1.1}\normalsize
-  \IfFileExists{logo.pdf}{
-  \begin{flushleft}
-  \parbox[t]{.3\linewidth}{
-    \vspace{-5ex}\center{\includegraphics[width=.99\linewidth]{logo}}\\
-  }
-  {\MakeUppercase{\Nir@OrgLongName}}
-  \end{flushleft}
-  }{
-  \begin{center}
-  {\MakeUppercase{\Nir@OrgLongName}}
-  \end{center}
-  }
- \begin{centering}
-
-  \vfill
-
-  \parbox[t]{.49\linewidth}{
-    \Nir@UdkName\\
-    \Nir@No\\
-    \Nir@InventarNo\\
-  }
-  \hfill
-  \parbox[t]{.49\linewidth}{
-    {\centering\MakeUppercase{\confirmname}
-
-    }
-    \vspace{5mm}
-    {\raggedright\Nir@BossPost
-
-    }
-    \bigskip
-    \ulfill~\Nir@BossName
-
-    \bigskip
-    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
-  }
-  
-  \vfill
-
-  \MakeUppercase{\Nir@AnnOtchet \otchetname}\\
-  \MakeUppercase{\otchetcomplement}
-
-  \vspace{8mm}
-  \Nir@TitleAndSubject
-
-  (\Nir@StageType)
-
-
-
-  \vfill
-}{
-  \vfill
-  \vfill
-  \Nir@Town~\Nir@Year
-
- \end{centering}
- \linespread{\Gost@LineSpread}\normalsize
-}
 %
 % The simple case when the subject of the report is the same
 % as the NIR title -- like in example 2 in ГОСТ 7.32-2001 ред. 2009 года.pdf:
 
 %
 % Optionally, specify a different report subject:
-\newcommand*\NirSubject[1]{%
+\newcommand\NirSubject[1]{%
   \renewcommand\Nir@TitleAndSubject{%
     \Nir@Title
-    \vspace{8mm}
+    \vspace{1ex}
     \par
     \NirSubjectModifier{#1}%
   }%
@@ -229,24 +174,24 @@
 % "по теме:"
 \newcommand\NirSubjectModifier{%
   по~теме:\\
-  \MakeUppercase%
+  %\MakeUppercase%
 }
 %
 % A switch for the variant of the modifier as
 % in example 3 in ГОСТ 7.32-2001 ред. 2009 года.pdf:
 % (empty)
 \newcommand*\NirBareSubject[1]{%
-  \renewcommand\NirSubjectModifier{\MakeUppercase}%
+  \renewcommand\NirSubjectModifier{}%
 }
 
 % вид отчёта:
 % The default "stage type" is "intermediate" ("промежуточный")
 % (this default saves typing unless you need a modified stage type):
-\newcommand\Nir@StageType{\intermediatename}
 % "промежуточный"
 \newcommand\intermediatename{промежуточный}
+\newcommand\Nir@StageType{\intermediatename}
 % "заключительный"
-\newcommand\finalname{заключительный}
+\newcommand\@finalname{заключительный}
 
 %Эти команды нужно вызвать для корректного определения титульной страницы
 
@@ -256,22 +201,111 @@
 % The second variant is not supported
 % by any example in ГОСТ 7.32-2001 ред. 2009 года.pdf,
 % but it is like in a document example I've seen elsewhere.
-\newcommand*\NirFinal[1][\finalname]{%
+\newcommand*\NirFinal[1][\@finalname]{%
   \renewcommand\Nir@StageType{#1}%
 }
-\newcommand*\NirFinalStage[2][\finalname]{%
+\newcommand*\NirFinalStage[2][\@finalname]{%
   \renewcommand\Nir@StageType{#1, #2}%
 } % Usage: \NirFinalStage[промежуточный]{этап~3}
 
+% Following allows to change command arguments
 \newcommand*\NirIsAnnotacion[1]{\renewcommand\Nir@AnnOtchet{#1}} %%Если отчёт аннотационный
-\newcommand*\NirOrgLongName[1]{\newcommand\Nir@OrgLongName{#1}}
-\newcommand*\NirBoss[2]{\newcommand\Nir@BossPost{#1}\newcommand\Nir@BossName{#2}}
+\newcommand\NirOrgLongName[1]{\newcommand\Nir@OrgLongName{#1}}
+\newcommand*\NirBoss[2]{\newcommand\Nir@BossPost{#1}\newcommand\Nir@BossName{#2}} % ID of Director
 \newcommand*\NirYear[1]{\renewcommand\Nir@Year{#1}}
-\newcommand*\NirManager[2]{\newcommand\Nir@ManagerPost{#1}\newcommand\Nir@ManagerName{#2}}
+\newcommand*\NirManager[2]{\newcommand\Nir@ManagerPost{#1}\newcommand\Nir@ManagerName{#2}} % ID of head of research
 \newcommand*\NirTown[1]{\newcommand\Nir@Town{#1}}%%virens added: указываем город написания отчёта
 \newcommand*\NirUdk[1]{\renewcommand\Nir@UdkName{#1}}%%virens added: для изменения УДК в тексте документа
+\newcommand*\NirEkz[1]{\renewcommand\Nir@Ekz{#1}}%%virens added: для изменения УДК в тексте документа
 \newcommand*\NirGosNo[1]{\renewcommand\Nir@No{#1}}%%virens added: номер госрегистрации
-\newcommand*\NirInventarNo[1]{\renewcommand\Nir@InventarNo{#1}}
+\newcommand*\NirInventarNo[1]{\renewcommand\Nir@InventarNo{#1}}% to change Inv number
+\newcommand\otchetabout[1]{\renewcommand\otchet@about{#1}}% to change otchet about text
+\newcommand\finalname[1]{\renewcommand\@finalname{#1}}% to change finalname  text
+\newcommand\NirPartNum[1]{\renewcommand\Nir@PartNum{#1}}% to change finalname  text
+
+
+%Title page 
+\newenvironment*{titlepage}{
+ \thispagestyle{empty}
+  \linespread{1.1}\normalsize
+  \hfill \Nir@Ekz
+  \vspace{-3ex}
+
+  \IfFileExists{logo.pdf}{      % logo for first page (no compatible with GOST)
+  \begin{flushleft}
+  \parbox[t]{.3\linewidth}{
+    \vspace{-5ex}\center{\includegraphics[width=.99\linewidth]{logo}}\\
+  }
+  {{\Nir@OrgLongName}}  % name of Institute
+
+  \end{flushleft}
+  }{
+  \begin{center}
+  {{\Nir@OrgLongName}} % name of Institute
+  \end{center}
+  }
+ \begin{centering}
+
+  \vspace{3ex}
+
+  \parbox[t]{.49\linewidth}{
+    \Nir@UdkName\\ % UDK name and number
+    \Nir@No\\       %Reg name and number
+    \Nir@InventarNo\\ %Inventory name and number
+  }
+  \hfill
+  \parbox[t]{.33\linewidth}{
+    {\centering\MakeUppercase{\confirmname} % Confirmation name 
+
+    }
+    \vspace{5mm}
+    {\raggedright\Nir@BossPost          % Director job
+
+    }
+    \bigskip
+    \ulfill~\Nir@BossName               % Director name
+
+    \bigskip
+    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г. % Signature
+  }
+  
+  \vspace{3ex}
+
+  \MakeUppercase{\Nir@AnnOtchet \otchetname}\\ % Annotated and Report name
+  \MakeUppercase{\otchet@about}         % Report about
+
+  %\vspace{2ex}
+  \Nir@TitleAndSubject          % Report Subject
+
+  (\Nir@StageType)              % Stage type
+
+  \vspace{2ex}
+  \Nir@PartNum
+
+  \vfill
+
+  \hfill
+  \parbox[t]{.33\linewidth}{
+    {\raggedright\Nir@ManagerPost
+
+    }
+    \bigskip
+    \ulfill~\Nir@ManagerName
+
+    \bigskip
+    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
+  }
+
+
+  \vfill
+
+  \vfill
+
+  \Nir@Town~\Nir@Year
+
+ \end{centering}
+ \linespread{\Gost@LineSpread}\normalsize
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % Compatibility macros
