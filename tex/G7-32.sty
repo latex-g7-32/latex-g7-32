@@ -113,48 +113,147 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Элементы оформления титульной страницы
-\newcommand\Nir@UdkName{УДК}
-
-\newcommand\Nir@No{%
- \No~госрегистрации%
+% UDK number
+\newcommand\Nir@UdkName{УДК \makebox[3em]{\ulfill}%
 }
+\newcommand*\NirUdk[1]{\renewcommand\Nir@UdkName{#1}}%%virens added: для изменения УДК в тексте документа
 
+% Government registration number
+\newcommand\Nir@No{%
+ \No~госрегистрации \makebox[3em]{\ulfill}%
+}
+\newcommand*\NirGosNo[1]{\renewcommand\Nir@No{#1}}%%virens added: номер госрегистрации
+
+% Examples number
 \newcommand\Nir@Ekz{%
 Экз. \No\makebox[1em]{\ulfill}%                 % Number examples
 }
-\newcommand\Nir@Grif{\vspace{-2ex}}                          % Top secret if needed, default blank
+\newcommand*\NirEkz[1]{\renewcommand\Nir@Ekz{#1}}               %%  To change exemples num
 
+% Grif
+\newcommand\Nir@Grif{\vspace{-2ex}}                          % Top secret if needed, default blank
+\newcommand*\NirGrif[1]{\renewcommand\Nir@Grif{#1}}             %%  To change grif 
+
+% Confirm text
 \newcommand*\Nir@Confirm{%
 <<Утверждаю>>%
 }
+\newcommand*\NirConfirm[1]{\renewcommand\Nir@Confirm{#1}}       %%  To change confirm
 
+% Inventory number
 \newcommand\Nir@InventarNo{
- Инв.~\No
+ Инв.~\No \makebox[3em]{\ulfill}%
 }
+\newcommand*\NirInventarNo[1]{\renewcommand\Nir@InventarNo{#1}} % to change Inv number
 
+% Organization name
+\newcommand\Nir@OrgLongName{
+    \vspace{1ex}
+
+\hrule
+\vspace{1ex}
+
+{\footnotesize предприятие (организация)}
+}
+\newcommand\NirOrgLongName[1]{\renewcommand\Nir@OrgLongName{#1}}
+
+
+% Report Name
 \newcommand*\Nir@ReportName{%
  Отчёт%
 }
+\newcommand\NirReportName[1]{\renewcommand\Nir@ReportName{#1}}        % to change otchet name text
+
+% Report about text
 \newcommand*\Nir@About{
  О{} НАУЧНО-%
  ИССЛЕДОВАТЕЛЬСКОЙ{} %
  РАБОТЕ%
 }
+\newcommand\NirAbout[1]{\renewcommand\Nir@About{#1}}      % to change otchet about text
+
+% Annotated report
 \newcommand\Nir@AnnOtchet{ %отчёт аннотационный!?
 }
+\newcommand*\NirIsAnnotacion[1]{\renewcommand\Nir@AnnOtchet{#1}} %%Если отчёт аннотационный
 
-\newcommand*\Nir@PartNum[2]{#1 #2}     % Part name and number 
+% Report part 
+\newcommand*\Nir@PartNum{}     % Part name and number 
+\newcommand\NirPartNum[2]{\renewcommand\Nir@PartNum{#1 #2}}     % to change finalname  text
 
+% Report Year
 \newcommand\Nir@Year{\the\year}
+\newcommand*\NirYear[1]{\renewcommand\Nir@Year{#1}} % Year of report changeable
 
-\newcommand\Nir@MainBegin{%
- Руководитель{} %
- НИР%
+\newcommand\Nir@Town{}
+\newcommand*\NirTown[1]{\renewcommand\Nir@Town{#1}}%%virens added: указываем город написания отчёта
+
+
+
+\newcommand\Nir@BossPost{
+    \vspace{3ex}
+    \hrule\par \vspace{1ex}
+    \centering\footnotesize головной исполнитель НИР
 }
+\newcommand\Nir@BossName{\makebox[5em]{\ulfill}}
+
+\newcommand*\NirBoss[2]{\renewcommand\Nir@BossPost{#1}\renewcommand\Nir@BossName{#2}} % ID of Director
+
+% Head manager stamp
+\newcommand\Nir@ManagerStamp[1]{
+  \parbox[t]{.33\linewidth}{
+    {\raggedright\Nir@ManagerPost
+
+    }
+    \bigskip
+    \ulfill~\Nir@ManagerName
+
+    \bigskip
+    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
+  }
+}
+\newcommand\Nir@ManagerPost{
+    \vspace{3ex}
+    \hrule\par \vspace{1ex}
+    \centering\footnotesize научный руководитель НИР
+}
+\newcommand\Nir@ManagerName{\makebox[5em]{\ulfill}}
+
+\newcommand*\NirManager[2]{\renewcommand\Nir@ManagerPost{#1}\renewcommand\Nir@ManagerName{#2}} % ID of head of research
+\newcommand*\NirManagerStamp[1]{\renewcommand\Nir@ManagerStamp{#1}} % Changeable ID Manager stamp
+
+% Head executor of research
+\newcommand\Nir@IspStamp[1]{
+  \parbox[t]{.33\linewidth}{
+    {\raggedright\Nir@IspPost
+
+    }
+    \bigskip
+    \ulfill~\Nir@IspName
+
+    \bigskip
+    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
+  }
+}
+\newcommand\Nir@IspPost{
+    \vspace{3ex}
+\hrule\par
+\vspace{1ex}
+\centering\footnotesize ответственный исполнитель
+}
+\newcommand\Nir@IspName{\makebox[5em]{\ulfill}}
+\newcommand*\NirIsp[2]{\renewcommand\Nir@IspPost{#1}\renewcommand\Nir@IspName{#2}} % ID of head executor of research
+\newcommand*\NirIspStamp[1]{\renewcommand\Nir@IspStamp{#1}}     % Changeable head executor stamp
+
 %fix for first time compilation
 \newcommand\Nir@Title[1]{#1}
-\newcommand*\Nir[1]{\Nir@Title{#1}}  %Название НИР, не совместимо с \NirTitle  
-\newcommand\Nir@TitleAndSubject{\MakeUppercase{\Nir@Title}}
+%\newcommand*\Nir[1]{\Nir@Title{#1}}  %Название НИР, не совместимо с \NirTitle  
+\newcommand\Nir@TitleAndSubject{
+    \vspace{5ex}
+\hrule\par\vspace{1ex}
+\centering\footnotesize наименование и шифр НИР\par\vspace{5ex}
+\hrule
+}
 
 %
 % The simple case when the subject of the report is the same
@@ -170,33 +269,6 @@
     \NirSubjectModifier{#1}%
   }%
 }
-
-\newcommand\Nir@ManagerStamp[1]{
-  \parbox[t]{.33\linewidth}{
-    {\raggedright\Nir@ManagerPost
-
-    }
-    \bigskip
-    \ulfill~\Nir@ManagerName
-
-    \bigskip
-    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
-  }
-}
-
-\newcommand\Nir@IspStamp[1]{
-  \parbox[t]{.33\linewidth}{
-    {\raggedright\Nir@IspPost
-
-    }
-    \bigskip
-    \ulfill~\Nir@IspName
-
-    \bigskip
-    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
-  }
-}
-
 
 %
 % The default modifier is as in example 1 in ГОСТ 7.32-2001 ред. 2009 года.pdf:
@@ -238,28 +310,7 @@
 } % Usage: \NirFinalStage[промежуточный]{этап~3}
 
 % Following allows to change command arguments
-\newcommand*\NirIsAnnotacion[1]{\renewcommand\Nir@AnnOtchet{#1}} %%Если отчёт аннотационный
-\newcommand\NirOrgLongName[1]{\newcommand\Nir@OrgLongName{#1}}
-\newcommand*\NirBoss[2]{\newcommand\Nir@BossPost{#1}\newcommand\Nir@BossName{#2}} % ID of Director
-\newcommand*\NirYear[1]{\renewcommand\Nir@Year{#1}} % Year of report changeable
-
-\newcommand*\NirManager[2]{\newcommand\Nir@ManagerPost{#1}\newcommand\Nir@ManagerName{#2}} % ID of head of research
-\newcommand*\NirManagerStamp[1]{\renewcommand\Nir@ManagerStamp{#1}} % Changeable ID Manager stamp
-
-\newcommand*\NirIsp[2]{\newcommand\Nir@IspPost{#1}\newcommand\Nir@IspName{#2}} % ID of head executor of research
-\newcommand*\NirIspStamp[1]{\renewcommand\Nir@IspStamp{#1}}     % Changeable head executor stamp
-
-\newcommand*\NirTown[1]{\newcommand\Nir@Town{#1}}%%virens added: указываем город написания отчёта
-\newcommand*\NirUdk[1]{\renewcommand\Nir@UdkName{#1}}%%virens added: для изменения УДК в тексте документа
-\newcommand*\NirEkz[1]{\renewcommand\Nir@Ekz{#1}}               %%  To change exemples num
-\newcommand*\NirGrif[1]{\renewcommand\Nir@Grif{#1}}             %%  To change grif 
-\newcommand*\NirGosNo[1]{\renewcommand\Nir@No{#1}}%%virens added: номер госрегистрации
-\newcommand*\NirInventarNo[1]{\renewcommand\Nir@InventarNo{#1}} % to change Inv number
-\newcommand\NirAbout[1]{\renewcommand\Nir@About{#1}}      % to change otchet about text
-\newcommand\NirReportName[1]{\renewcommand\Nir@ReportName{#1}}        % to change otchet name text
 \newcommand\finalname[1]{\renewcommand\@finalname{#1}}          % to change finalname  text
-\newcommand\NirPartNum[2]{\renewcommand\Nir@PartNum{#1 #2}}     % to change finalname  text
-\newcommand*\NirConfirm[1]{\renewcommand\Nir@Confirm{#1}}       %%  To change confirm
 
 
 \def\beamer@calltheme#1#2#3{%
@@ -279,19 +330,6 @@
 % Compatibility macros
 % (with old versions of the style package):
 
-\newcommand*\NirTitle[1]{%
-  \Nir{#1}%
-  \begin{titlepage}
-  \personalSignature{%
-    \Nir@MainBegin,\\
-    \Nir@ManagerPost
-  }
-  {\Nir@ManagerName}
-  \end{titlepage}
-}
-
-\newcommand\NirOtchet[1]{\renewcommand\Nir@Otchet{#1}}%%einhander added: название отчета
-\newcommand\NirMainBegin[1]{\renewcommand\Nir@MainBegin{#1}}%%einhander added: что руководит
 
 \RequirePackage{mfirstuc}
 \newcommand*\makefirstlc[1]{%
