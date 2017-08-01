@@ -126,7 +126,7 @@
 
 % Examples number
 \newcommand\Nir@Ekz{%
-Экз. \No\makebox[1em]{\ulfill}%                 % Number examples
+    \vspace{-2ex}                 % Number examples
 }
 \newcommand*\NirEkz[1]{\renewcommand\Nir@Ekz{#1}}               %%  To change exemples num
 
@@ -188,6 +188,23 @@
 \newcommand\Nir@Town{}
 \newcommand*\NirTown[1]{\renewcommand\Nir@Town{#1}}%%virens added: указываем город написания отчёта
 
+\newcommand\Nir@BossStamp{
+    \parbox[t]{.49\linewidth}{
+        {\centering\MakeUppercase{\Nir@Confirm} % Confirmation name 
+
+        }
+        \vspace{5mm}
+        {\raggedright\Nir@BossPost          % Director job
+
+        }
+        \bigskip
+        \ulfill~\Nir@BossName               % Director name
+
+        \bigskip
+        <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г. % Signature
+    }
+}
+\newcommand*\NirBossStamp[1]{\renewcommand\Nir@BossStamp{#1}} % Changeable ID Boss stamp
 
 
 \newcommand\Nir@BossPost{
@@ -197,7 +214,25 @@
 }
 \newcommand\Nir@BossName{\makebox[5em]{\ulfill}}
 
-\newcommand*\NirBoss[2]{\renewcommand\Nir@BossPost{#1}\renewcommand\Nir@BossName{#2}} % ID of Director
+\newcommand*\NirBoss[3][0.49]{
+    \renewcommand\Nir@BossPost{#2}\renewcommand\Nir@BossName{#3}
+    \renewcommand\Nir@BossStamp{
+        \parbox[t]{#1\linewidth}{
+            {\centering\MakeUppercase{\Nir@Confirm} % Confirmation name 
+
+            }
+            \vspace{5mm}
+            {\raggedright\Nir@BossPost          % Director job
+
+            }
+            \bigskip
+            \ulfill~\Nir@BossName               % Director name
+
+            \bigskip
+            <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г. % Signature
+        }
+    }
+} % ID of Director
 
 % Head manager stamp
 \newcommand\Nir@ManagerStamp{\vspace{-2ex}}

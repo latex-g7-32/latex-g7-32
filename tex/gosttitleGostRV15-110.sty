@@ -24,28 +24,15 @@
 
   \vspace{3ex}
 
-  \parbox[t]{.49\linewidth}{
+  \parbox[t]{.33\linewidth}{
     \Nir@UdkName\\ % UDK name and number
     \Nir@No\\       %Reg name and number
     \Nir@InventarNo\\ %Inventory name and number
   }
-  \hfill
-  \parbox[t]{.49\linewidth}{
-    {\centering\MakeUppercase{\Nir@Confirm} % Confirmation name 
-
-    }
-    \vspace{5mm}
-    {\raggedright\Nir@BossPost          % Director job
-
-    }
-    \bigskip
-    \ulfill~\Nir@BossName               % Director name
-
-    \bigskip
-    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г. % Signature
-  }
+  \hfill\Nir@BossStamp
   
-  \vspace{3ex}
+  %\vspace{3ex}
+  \vfill
 
   \MakeUppercase{\Nir@AnnOtchet \Nir@ReportName}\\ % Annotated and Report name
   \MakeUppercase{\Nir@About}         % Report about
