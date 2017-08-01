@@ -2,6 +2,8 @@
 \newenvironment*{titlepage}{
  \thispagestyle{empty}
   \linespread{1.1}\normalsize
+  \hfill \Nir@Grif
+
   \hfill \Nir@Ekz
   \vspace{-3ex}
 
@@ -29,7 +31,7 @@
   }
   \hfill
   \parbox[t]{.33\linewidth}{
-    {\centering\MakeUppercase{\confirmname} % Confirmation name 
+    {\centering\MakeUppercase{\Nir@Confirm} % Confirmation name 
 
     }
     \vspace{5mm}
@@ -45,8 +47,8 @@
   
   \vspace{3ex}
 
-  \MakeUppercase{\Nir@AnnOtchet \otchetname}\\ % Annotated and Report name
-  \MakeUppercase{\otchet@about}         % Report about
+  \MakeUppercase{\Nir@AnnOtchet \Nir@ReportName}\\ % Annotated and Report name
+  \MakeUppercase{\Nir@About}         % Report about
 
   %\vspace{2ex}
   \Nir@TitleAndSubject          % Report Subject
@@ -58,17 +60,11 @@
 
   \vfill
 
-  \hfill
-  \parbox[t]{.33\linewidth}{
-    {\raggedright\Nir@ManagerPost
+  \hfill\Nir@ManagerStamp
 
-    }
-    \bigskip
-    \ulfill~\Nir@ManagerName
+  \vspace{2ex}
 
-    \bigskip
-    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
-  }
+  \hfill\Nir@IspStamp
 
 
   \vfill

@@ -120,10 +120,11 @@
 }
 
 \newcommand\Nir@Ekz{%
-Экз. \No\makebox[1em]{\ulfill}%
+Экз. \No\makebox[1em]{\ulfill}%                 % Number examples
 }
+\newcommand\Nir@Grif{\vspace{-2ex}}                          % Top secret if needed, default blank
 
-\newcommand*\confirmname{%
+\newcommand*\Nir@Confirm{%
 <<Утверждаю>>%
 }
 
@@ -131,10 +132,10 @@
  Инв.~\No
 }
 
-\newcommand*\otchetname{%
+\newcommand*\Nir@ReportName{%
  Отчёт%
 }
-\newcommand*\otchet@about{
+\newcommand*\Nir@About{
  О{} НАУЧНО-%
  ИССЛЕДОВАТЕЛЬСКОЙ{} %
  РАБОТЕ%
@@ -142,7 +143,7 @@
 \newcommand\Nir@AnnOtchet{ %отчёт аннотационный!?
 }
 
-\newcommand\Nir@PartNum{Часть 1}     % Part name and number 
+\newcommand*\Nir@PartNum[2]{#1 #2}     % Part name and number 
 
 \newcommand\Nir@Year{\the\year}
 
@@ -169,6 +170,34 @@
     \NirSubjectModifier{#1}%
   }%
 }
+
+\newcommand\Nir@ManagerStamp[1]{
+  \parbox[t]{.33\linewidth}{
+    {\raggedright\Nir@ManagerPost
+
+    }
+    \bigskip
+    \ulfill~\Nir@ManagerName
+
+    \bigskip
+    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
+  }
+}
+
+\newcommand\Nir@IspStamp[1]{
+  \parbox[t]{.33\linewidth}{
+    {\raggedright\Nir@IspPost
+
+    }
+    \bigskip
+    \ulfill~\Nir@IspName
+
+    \bigskip
+    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
+  }
+}
+
+
 %
 % The default modifier is as in example 1 in ГОСТ 7.32-2001 ред. 2009 года.pdf:
 % "по теме:"
@@ -212,16 +241,25 @@
 \newcommand*\NirIsAnnotacion[1]{\renewcommand\Nir@AnnOtchet{#1}} %%Если отчёт аннотационный
 \newcommand\NirOrgLongName[1]{\newcommand\Nir@OrgLongName{#1}}
 \newcommand*\NirBoss[2]{\newcommand\Nir@BossPost{#1}\newcommand\Nir@BossName{#2}} % ID of Director
-\newcommand*\NirYear[1]{\renewcommand\Nir@Year{#1}}
+\newcommand*\NirYear[1]{\renewcommand\Nir@Year{#1}} % Year of report changeable
+
 \newcommand*\NirManager[2]{\newcommand\Nir@ManagerPost{#1}\newcommand\Nir@ManagerName{#2}} % ID of head of research
+\newcommand*\NirManagerStamp[1]{\renewcommand\Nir@ManagerStamp{#1}} % Changeable ID Manager stamp
+
+\newcommand*\NirIsp[2]{\newcommand\Nir@IspPost{#1}\newcommand\Nir@IspName{#2}} % ID of head executor of research
+\newcommand*\NirIspStamp[1]{\renewcommand\Nir@IspStamp{#1}}     % Changeable head executor stamp
+
 \newcommand*\NirTown[1]{\newcommand\Nir@Town{#1}}%%virens added: указываем город написания отчёта
 \newcommand*\NirUdk[1]{\renewcommand\Nir@UdkName{#1}}%%virens added: для изменения УДК в тексте документа
-\newcommand*\NirEkz[1]{\renewcommand\Nir@Ekz{#1}}%%virens added: для изменения УДК в тексте документа
+\newcommand*\NirEkz[1]{\renewcommand\Nir@Ekz{#1}}               %%  To change exemples num
+\newcommand*\NirGrif[1]{\renewcommand\Nir@Grif{#1}}             %%  To change grif 
 \newcommand*\NirGosNo[1]{\renewcommand\Nir@No{#1}}%%virens added: номер госрегистрации
-\newcommand*\NirInventarNo[1]{\renewcommand\Nir@InventarNo{#1}}% to change Inv number
-\newcommand\otchetabout[1]{\renewcommand\otchet@about{#1}}% to change otchet about text
-\newcommand\finalname[1]{\renewcommand\@finalname{#1}}% to change finalname  text
-\newcommand\NirPartNum[1]{\renewcommand\Nir@PartNum{#1}}% to change finalname  text
+\newcommand*\NirInventarNo[1]{\renewcommand\Nir@InventarNo{#1}} % to change Inv number
+\newcommand\NirAbout[1]{\renewcommand\Nir@About{#1}}      % to change otchet about text
+\newcommand\NirReportName[1]{\renewcommand\Nir@ReportName{#1}}        % to change otchet name text
+\newcommand\finalname[1]{\renewcommand\@finalname{#1}}          % to change finalname  text
+\newcommand\NirPartNum[2]{\renewcommand\Nir@PartNum{#1 #2}}     % to change finalname  text
+\newcommand*\NirConfirm[1]{\renewcommand\Nir@Confirm{#1}}       %%  To change confirm
 
 
 \def\beamer@calltheme#1#2#3{%

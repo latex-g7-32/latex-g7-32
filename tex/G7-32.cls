@@ -58,5 +58,8 @@
 
 \RequirePackage{G7-32}
 
+
+\gosttitle{GostRV15-110}
+
 \endinput
 % End of file `G7-32.cls'.
