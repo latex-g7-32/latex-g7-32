@@ -224,88 +224,18 @@
 \newcommand\NirPartNum[1]{\renewcommand\Nir@PartNum{#1}}% to change finalname  text
 
 
+\def\beamer@calltheme#1#2#3{%
+    \def\beamer@themelist{#2}%
+    \@for\beamer@themename:=\beamer@themelist\do
+    {\usepackage[{#1}]{#3\beamer@themename}}}
+
+  \newrobustcmd*\gosttitle[2][]{\beamer@calltheme{#1}{#2}{gosttitle}}
+
+\def\maketitle{\titlepage}
+
+
+
 %Title page 
-\newenvironment*{titlepage}{
- \thispagestyle{empty}
-  \linespread{1.1}\normalsize
-  \hfill \Nir@Ekz
-  \vspace{-3ex}
-
-  \IfFileExists{logo.pdf}{      % logo for first page (no compatible with GOST)
-  \begin{flushleft}
-  \parbox[t]{.3\linewidth}{
-    \vspace{-5ex}\center{\includegraphics[width=.99\linewidth]{logo}}\\
-  }
-  {{\Nir@OrgLongName}}  % name of Institute
-
-  \end{flushleft}
-  }{
-  \begin{center}
-  {{\Nir@OrgLongName}} % name of Institute
-  \end{center}
-  }
- \begin{centering}
-
-  \vspace{3ex}
-
-  \parbox[t]{.49\linewidth}{
-    \Nir@UdkName\\ % UDK name and number
-    \Nir@No\\       %Reg name and number
-    \Nir@InventarNo\\ %Inventory name and number
-  }
-  \hfill
-  \parbox[t]{.33\linewidth}{
-    {\centering\MakeUppercase{\confirmname} % Confirmation name 
-
-    }
-    \vspace{5mm}
-    {\raggedright\Nir@BossPost          % Director job
-
-    }
-    \bigskip
-    \ulfill~\Nir@BossName               % Director name
-
-    \bigskip
-    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г. % Signature
-  }
-  
-  \vspace{3ex}
-
-  \MakeUppercase{\Nir@AnnOtchet \otchetname}\\ % Annotated and Report name
-  \MakeUppercase{\otchet@about}         % Report about
-
-  %\vspace{2ex}
-  \Nir@TitleAndSubject          % Report Subject
-
-  (\Nir@StageType)              % Stage type
-
-  \vspace{2ex}
-  \Nir@PartNum
-
-  \vfill
-
-  \hfill
-  \parbox[t]{.33\linewidth}{
-    {\raggedright\Nir@ManagerPost
-
-    }
-    \bigskip
-    \ulfill~\Nir@ManagerName
-
-    \bigskip
-    <<\makebox[3em]{\ulfill}>>~\ulfill~\Nir@Year~г.
-  }
-
-
-  \vfill
-
-  \vfill
-
-  \Nir@Town~\Nir@Year
-
- \end{centering}
- \linespread{\Gost@LineSpread}\normalsize
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % Compatibility macros
