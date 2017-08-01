@@ -353,7 +353,7 @@
   }
 
   % Моноширинный шрифт
-  \IfNoFont{Liberation Mono}{
+  \IfNoFont{Times New Roman}{
     \setmonofont[
     BoldFont = cmuntb.otf,
     ItalicFont = cmunit.otf,
@@ -371,11 +371,11 @@
     ItalicFont = cmunit.otf,
     BoldItalicFont = cmuntx.otf]
   }{
-    \setmonofont{Liberation Mono}
-    \newfontfamily\cyrillicfonttt{Liberation Mono}[Script = Cyrillic] % для кириллицы
+    \setmonofont{Times New Roman}
+    \newfontfamily\cyrillicfonttt{Times New Roman}[Script = Cyrillic] % для кириллицы
     % Шрифт для minted
     \defaultfontfeatures{}
-    \newfontfamily\cyrillicfontttnoftr{Liberation Mono}[
+    \newfontfamily\cyrillicfontttnoftr{Times New Roman}[
     Script = Cyrillic,
     NFSSFamily = cyrillicfontttnoftr
     ]
