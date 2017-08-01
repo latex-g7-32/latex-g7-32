@@ -318,6 +318,70 @@
   \setmainlanguage[spelling=modern,babelshorthands=true]{russian} % Язык по-умолчанию русский с поддержкой приятных команд пакета babel
   \setotherlanguage{english}
 
+
+\if@usetimes
+  % Основной шрифт
+  \IfNoFont{Times New Roman}{
+    \setmainfont[
+    BoldFont = cmunbx.otf,
+    ItalicFont = cmunti.otf,
+    BoldItalicFont = cmunbi.otf]
+    {cmunrm.otf}
+    \newfontfamily\cyrillicfont{cmunrm.otf}[ % для кириллицы
+    BoldFont = cmunbx.otf,
+    ItalicFont = cmunti.otf,
+    BoldItalicFont = cmunbi.otf]
+  }{
+    \setmainfont{Times New Roman}
+    \newfontfamily\cyrillicfont{Times New Roman}[Script = Cyrillic] % для кириллицы
+  }
+
+  % Шрифт без засечек
+  \IfNoFont{Arial}{
+    \setsansfont[
+    BoldFont = cmunsx.otf,
+    ItalicFont = cmunsi.otf,
+    BoldItalicFont = cmunso.otf]
+    {cmunss.otf}
+    \newfontfamily{\cyrillicfontsf}{cmunss.otf}[ % для кириллицы
+    BoldFont = cmunsx.otf,
+    ItalicFont = cmunsi.otf,
+    BoldItalicFont = cmunso.otf]
+  }{
+    \setsansfont{Arial}
+    \newfontfamily\cyrillicfontsf{Arial}[Script = Cyrillic] % для кириллицы
+  }
+
+  % Моноширинный шрифт
+  \IfNoFont{Liberation Mono}{
+    \setmonofont[
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+    {cmuntt.otf}
+    \newfontfamily{\cyrillicfonttt}{cmunrm.otf}[ % для кириллицы
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+    % Шрифт для minted
+    \defaultfontfeatures{}
+    \newfontfamily\cyrillicfontttnoftr{cmunrm.otf}[
+    NFSSFamily = cyrillicfontttnoftr,
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+  }{
+    \setmonofont{Liberation Mono}
+    \newfontfamily\cyrillicfonttt{Liberation Mono}[Script = Cyrillic] % для кириллицы
+    % Шрифт для minted
+    \defaultfontfeatures{}
+    \newfontfamily\cyrillicfontttnoftr{Liberation Mono}[
+    Script = Cyrillic,
+    NFSSFamily = cyrillicfontttnoftr
+    ]
+  }
+\else
+
   % Основной шрифт
   \IfNoFont{PT Astra Serif}{
     \setmainfont[
@@ -378,6 +442,11 @@
     NFSSFamily = cyrillicfontttnoftr
     ]
   }
+
+
+\fi
+
+
 
   % убирает точку после названий секций
   \addto\russian@capsformat{
