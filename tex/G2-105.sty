@@ -129,22 +129,22 @@
 \newcommand\totaltables {\ref{reftotaltables}   }
 \newcommand\totalfigures{\ref{reftotalfigures}  }
 \newcommand\totalbibs   {\ref{reftotalbibs}     }
+
 % Другая реализация обсчета рисунков и таблиц.
 \RequirePackage{lastpage}                   % Пакет для подсчета общего числа страниц
-\RequirePackage{etoolbox}
 \newcounter{totfigures}
 \newcounter{tottables}
-
-\providecommand\totfig{}                    % Команда для отображения числа рисунков
-\providecommand\tottab{}                    % Команда для отображения числа таблиц
+\newcounter{totappendices}
 
 
 \AtEndDocument{%
   \addtocounter{totfigures}{\value{figure}}%
   \addtocounter{tottables}{\value{table}}%
+  \addtocounter{totappendices}{\value{chapter}}%
   \immediate\write\@mainaux{%
     \string\gdef\string\totfig{\number\value{totfigures}}%
     \string\gdef\string\tottab{\number\value{tottables}}%
+    \string\gdef\string\totapp{\number\value{totappendices}}%
   }%
 }
 
@@ -247,22 +247,19 @@
     \@afterindentfalse
 \secdef\@chapter\@schapter}
 \def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
-                         \refstepcounter{chapter}%
-                         \typeout{\@chapapp\space\thechapter.}%
-                         \addcontentsline{toc}{chapter}%
-                         {\protect\numberline{\thechapter}#1}%
-                    \else
-                      \addcontentsline{toc}{chapter}{#1}%
-                    \fi
-                    \chaptermark{#1}%
-                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
-                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
-                      \@makechapterhead{#2}%
-                      \@afterheading
-
-  %{\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  %{\GostTitleStyle\Gost@ChapterStyle}%
-                    }
+    \refstepcounter{chapter}%
+    \typeout{\@chapapp\space\thechapter.}%
+    \addcontentsline{toc}{chapter}%
+    {\protect\numberline{\thechapter}#1}%
+    \else
+    \addcontentsline{toc}{chapter}{#1}%
+    \fi
+    \chaptermark{#1}%
+    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+    \@makechapterhead{#2}%
+    \@afterheading
+}
 \newcommand\@makechapterhead[1]{%
   {\parindent \z@ \raggedright \normalfont
     \ifnum \c@secnumdepth >\m@ne
@@ -283,25 +280,8 @@
     \par
 
   }}
-\def\@chapapp{}
+\def\@chapapp{} % blank chapter prefix
 
-%\newcommand\chapter{%
-  %{\addtocounter{totfigures}{\value{figure}}}
-  %{\addtocounter{tottables}{\value{table}}}
- %\if@breakingbeforechapter%
-  %\clearpage%
- %\fi%
- %\if@figuresonchapter%
-  %\addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
- %\fi%
- %\if@tablesonchapter%
-  %\addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
- %\fi%
- %\@startsection{chapter}{0}%
-  %{\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  %{\GostTitleStyle\Gost@ChapterStyle}%
-%%\addcontentsline{toc}{chapter}{\chaptername~\thechapter\hspace{1em}#1}%
-%}
 \newcommand*\chaptermark[1]{}
 \newcommand*\apart[2]{\chapter {#2\label{#1}}}
 \newcommand*\cpart[2]{\chapter*{#2\label{#1}}}
@@ -587,6 +567,18 @@
     \setlength{\labelsep}{2\GostItemGap}%     от метки до текста
 }
 
+% GOST 7.32 p. 6.4.6 excluded letters ё, з, й, о, ч, ъ, ы, ь. 
+\renewcommand*{\Asbuk}[1]{\@Ralph{\@nameuse{c@#1}}}
+\newcommand*{\@Ralph}[1]%
+{\ifcase #1\or А\or Б\or В\or Г\or Д\or Е\or Ж\or И\or К\or Л\or М\or Н%
+\or П\or Р\or С\or Т\or У\or Ф\or Х\or Ц\or Ш\or Щ\or Э\or Ю\or Я%
+\else\@ctrerr \fi}
+
+\renewcommand*{\asbuk}[1]{\@ralph{\@nameuse{c@#1}}} % если создать новую команду, почему-то не работает
+\newcommand*{\@ralph}[1]%
+{\ifcase #1\or а\or б\or в\or г\or д\or е\or ж\or и\or к\or л\or м\or н%
+\or п\or р\or с\or т\or у\or ф\or х\or ц\or ш\or щ\or э\or ю\or я%
+\else\@ctrerr \fi}
 
 \renewcommand{\@listI} {\Gost@List}
 \renewcommand{\@listii}{\Gost@NestedList}
@@ -812,35 +804,8 @@
 \newcommand\@dotsep{4.5}      %между точками в оглавлении в em
 \linespread{\Gost@LineSpread} %полуторный межстрочный интервал
 
-%\def\setChapterprefix#1{\gdef\@Prefix{#1}}
-%\setChapterprefix{}
-%\newcommand*\l@chapter[2]{%
-    %\ifnum \c@tocdepth >\m@ne
-    %\addpenalty{-\@highpenalty}%
-    %\vskip 1.0em \@plus\p@
-    %\setlength\@tempdima{1.5em}%
-    %\begingroup
-    %\parindent \z@ \rightskip \@pnumwidth
-    %\parfillskip -\@pnumwidth
-    %\leavevmode \bfseries
-    %\advance\leftskip\@tempdima
-    %\hskip -\leftskip
-    %\@Prefix 
-    %#1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
-    %\penalty\@highpenalty
-    %\endgroup
-    %\fi
-%}
 
 %  4.3.4 - 4.1.14 Приложения
-%\newcommand\appendix{\par
-  %\setcounter{chapter}{0}%
-  %\setcounter{section}{0}%
-  %\gdef\@chapapp{\appendixname}%
-  %\gdef\thechapter{\@Alph\c@chapter}}
-
-%\RequirePackage[titletoc]{appendix}
-
 
 \newcommand\appendix{\par
     \setcounter{secnumdepth}{4}
@@ -878,37 +843,6 @@
                       \@afterheading
                     }
 }
-    %\renewcommand\chapter{
-    %\clearpage}
-        %\thispagestyle{plain}%
-        %\null\vfil
-    %\secdef\@chapter\@schapter}
-
-    %\def\@chapter[#1]#2{%
-        %\ifnum \c@secnumdepth >-2\relax
-        %\refstepcounter{chapter}%
-        %\addcontentsline{toc}{chapter}{\chaptername~\thechapter\hspace{1em}#1}%
-        %\else
-        %\addcontentsline{toc}{chapter}{#1}%
-        %\fi
-        %\markboth{}{}%
-        %{\centering
-            %\interlinepenalty \@M
-            %\normalfont
-            %\ifnum \c@secnumdepth >-2\relax
-            %\huge\bfseries \chapter\nobreakspace\thepart
-            %\par
-            %\vskip 20\p@
-            %\fi
-        %\Huge \bfseries #2\par}%
-    %\@endpart}
-    %\def\@schapter#1{%
-        %{\centering
-            %\normalfont
-        %\Huge \bfseries #1\par}%
-    %\@endchapter}
-    %\def\@endchapter{\vfil\newpage}
-%}
 
 \AtBeginDocument{%
  \makeatletter%
