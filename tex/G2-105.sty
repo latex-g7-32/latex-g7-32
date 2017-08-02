@@ -54,11 +54,11 @@
 %нечто
 \newcommand\@pnumwidth{1.55em}
 \renewcommand\baselinestretch{}
-\@lowpenalty   51                     %
-\@medpenalty  151                     %
-\@highpenalty 301                     %
-\renewcommand\topfraction{.7}         %
-\renewcommand\bottomfraction{.3}      %
+\@lowpenalty   51                     % default for report class
+\@medpenalty  151                     % default for report class
+\@highpenalty 301                     % default for report class
+\renewcommand\topfraction{.7}         % default for report class
+\renewcommand\bottomfraction{.3}      % default for report class
 \renewcommand\textfraction{.2}        %
 \renewcommand\floatpagefraction{.5}   %
 \renewcommand\dbltopfraction{.7}      %
@@ -189,6 +189,7 @@
 \newcommand\Gost@StructChapterStyle{\large\centering}
 \newcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}
 
+% Part definition
 \newcounter{part}
 \newcommand\part{%
     \clearpage
@@ -228,8 +229,7 @@
 \renewcommand\thechapter{\@arabic\c@chapter}
 \newif\if@breakingbeforechapter\@breakingbeforechaptertrue
 
-%\newcommand\@chapapp{\chaptername}
-
+% Chapter definition, see report class as reference
 \newcommand\chapter{
     {\addtocounter{totfigures}{\value{figure}}}
     {\addtocounter{tottables}{\value{table}}}
