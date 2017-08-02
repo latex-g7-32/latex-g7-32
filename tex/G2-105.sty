@@ -835,7 +835,7 @@
   %\gdef\@chapapp{\appendixname}%
   %\gdef\thechapter{\@Alph\c@chapter}}
 
-\RequirePackage[titletoc]{appendix}
+%\RequirePackage[titletoc]{appendix}
 
 
 \newcommand\appendix{\par
@@ -843,7 +843,7 @@
     \setcounter{chapter}{0}%
     \setcounter{section}{0}%
     \EqInChapter\PicInChapter\TableInChapter%
-    \gdef\@chapapp{\appendixname}%
+    \renewcommand\@chapapp{\appendixname}%
     \gdef\thechapter{\Asbuk{chapter}}%
     \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle}%
     \setlength\Gost@ChapterIndent{0mm}%
@@ -863,7 +863,7 @@
                          \refstepcounter{chapter}%
                          \typeout{\@chapapp\space\thechapter.}%
                          \addcontentsline{toc}{chapter}%
-                         {\protect\numberline{\thechapter}##1}%
+                         {\@chapapp\space\protect\numberline{\thechapter}##1}%
                     \else
                       \addcontentsline{toc}{chapter}{##1}%
                     \fi
