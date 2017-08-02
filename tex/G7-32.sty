@@ -69,7 +69,9 @@
  \Referat
 }{}
 \newcommand\Defines{%глоссарий
-    \chapter*{Определения}%
+    \newpage
+    \section*{\centering ОПРЕДЕЛЕНИЯ}%Ugly hack((( FIXME
+    % суть в том что Defines находится внутри nomencl и только section выкидывает в нужное место
     \section*{В настоящем отчете о НИР применяют следующие термины с соответствующими определениями.}% Ugly hack(((
 }
 %\newcommand\Defines{%определения

@@ -72,14 +72,17 @@
 
 \include{80-conclusion}
 
-%\addtocontents{toc}{\protect\setChapterprefix{Приложение }} %смена названия главы в оглавлении
 \include{81-biblio}
 
-\appendix   % Тут идут приложения
 
-\part{123}
-\include{90-appendix1}
-\include{91-appendix2}
+\begin{appendices}
+    \appendix   % Тут идут приложения
+    \renewcommand\thechapter{\Asbuk{chapter}}%
+
+    \include{90-appendix1}
+
+    \include{91-appendix2}
+\end{appendices}
 
 \end{document}
 
