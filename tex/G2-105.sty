@@ -135,16 +135,23 @@
 \newcounter{totfigures}
 \newcounter{tottables}
 \newcounter{totappendices}
+\newcounter{totbiblio}
 
+\providecommand\totfig{}
+\providecommand\tottab{}
+\providecommand\totapp{}
+\providecommand\totbib{}
 
 \AtEndDocument{%
   \addtocounter{totfigures}{\value{figure}}%
   \addtocounter{tottables}{\value{table}}%
   \addtocounter{totappendices}{\value{chapter}}%
+  \addtocounter{totbiblio}{\value{biblio}}%
   \immediate\write\@mainaux{%
     \string\gdef\string\totfig{\number\value{totfigures}}%
     \string\gdef\string\tottab{\number\value{tottables}}%
     \string\gdef\string\totapp{\number\value{totappendices}}%
+    \string\gdef\string\totbib{\number\value{totbiblio}}%
   }%
 }
 
@@ -854,21 +861,23 @@
 }
 
 %библиография
+\newcounter{biblio}
+\setcounter{biblio}{0}
 \newdimen\bibindent
 \newenvironment{thebibliography}[1]{
  \chapter{\bibsname}%
- \list{\@biblabel{\@arabic\c@enumiv}}%
+ \list{\@biblabel{\@arabic\c@biblio}}%
       {\settowidth\labelwidth{\@biblabel{#1}}%
        \leftmargin\labelwidth
        \advance\leftmargin\labelsep
        \@openbib@code
-       \usecounter{enumiv}%
+       \usecounter{biblio}%
        \let\p@enumiv\@empty
-       \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+       \renewcommand\thebiblio{\@arabic\c@biblio}}%
  \sloppy\clubpenalty4000\widowpenalty4000%
  \sfcode`\.\@m
 }{
- \setcounter{totalbib}{\c@enumiv}%
+%\setcounter{totbiblio}{\value{\c@biblio}}%
  \def\@noitemerr
  {\@latex@warning{Empty `thebibliography' environment}}%
  \endlist
@@ -877,9 +886,8 @@
 \setlength\bibindent{1.5em}
 
 % Точки после номеров в библиографии. Несовместимо с natbib! -- Коротков И.
-%\makeatletter
 \renewcommand*{\@biblabel}[1]{\hfill#1.}
-%\makeatother
+
 
 %индекс
 \newenvironment{theindex}{

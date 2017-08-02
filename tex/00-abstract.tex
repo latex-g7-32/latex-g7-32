@@ -1,10 +1,33 @@
 % Также можно использовать \Referat, как в оригинале
 \begin{abstract}
 
-    Отчет содержит \pageref{LastPage}\,стр. \totfig{}\,рис. \tottab{}\,таблиц. Приложений --- \totapp{}.
+    Отчет содержит \pageref{LastPage}\,стр.
+    \ifnum \totfig >0
+    , \totfig~рис.%
+\fi
+\ifnum \tottab >0
+    , \tottab~табл.%
+\fi
+%
+\ifnum \totbib =1
+    , \totbib~источник%
+\else
+    \ifnum \totbib >1
+        \ifnum \totbib <5
+            , \totbib~источника%
+        \else
+            , \totbib~источников%
+        \fi
+    \fi
+\fi
+%
+\ifnum \totapp >0
+    , \totapp~прил.%
+\fi
+
 
 Это пример каркаса расчётно-пояснительной записки, желательный к использованию в РПЗ проекта по курсу РСОИ
-\cite{Pup09}.
+\nocite{*}.
 
 Данный опус, как и более новые версии этого документа, можно взять по адресу (\url{https://github.com/rominf/latex-g7-32}).
 
