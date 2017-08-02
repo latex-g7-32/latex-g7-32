@@ -91,7 +91,6 @@
 \setlength\tabbingsep{\labelsep}
 \setlength\fboxsep{3\p@}
 \setlength\fboxrule{.4\p@}
-\newcommand\appendix{}
 
 % Счётчики общего числа страниц, таблиц, рисунков и источников
 \newcounter{totalpage}
@@ -184,10 +183,106 @@
 \newcommand\Gost@StructChapterStyle{\large\centering}
 \newcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}
 
+\newcounter{part}
+\newcommand\part{%
+    \clearpage
+  \thispagestyle{plain}%
+  \null\vfil
+  \secdef\@part\@spart}
+
+\def\@part[#1]#2{%
+    \ifnum \c@secnumdepth >-2\relax
+      \refstepcounter{part}%
+      \addcontentsline{toc}{part}{\partname~\thepart\hspace{1em}#1}%
+    \else
+      \addcontentsline{toc}{part}{#1}%
+    \fi
+    \markboth{}{}%
+    {\centering
+     \interlinepenalty \@M
+     \normalfont
+     \ifnum \c@secnumdepth >-2\relax
+       \huge\bfseries \partname\nobreakspace\thepart
+       \par
+       \vskip 20\p@
+     \fi
+     \Huge \bfseries #2\par}%
+    \@endpart}
+\def\@spart#1{%
+    {\centering
+     \interlinepenalty \@M
+     \normalfont
+     \Huge \bfseries #1\par}%
+    \@endpart}
+\def\@endpart{\vfil\newpage}
+
+
 %  Раздел
 \newcounter{chapter}
 \renewcommand\thechapter{\@arabic\c@chapter}
 \newif\if@breakingbeforechapter\@breakingbeforechaptertrue
+
+%\newcommand\@chapapp{\chaptername}
+
+%\newcommand\chapter{
+    %{\addtocounter{totfigures}{\value{figure}}}
+    %{\addtocounter{tottables}{\value{table}}}
+    %\if@breakingbeforechapter%
+    %\clearpage%
+    %\fi%
+    %\if@figuresonchapter%
+    %\addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
+    %\fi%
+    %\if@tablesonchapter%
+    %\addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
+    %\fi%
+    %\thispagestyle{plain}%
+    %\global\@topnum\z@
+    %\@afterindentfalse
+%\secdef\@chapter\@schapter}
+%\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+                         %\refstepcounter{chapter}%
+                         %\typeout{\@chapapp\space\thechapter.}%
+                         %\addcontentsline{toc}{chapter}%
+                                   %{\protect\numberline{\thechapter}#1}%
+                    %\else
+                      %\addcontentsline{toc}{chapter}{#1}%
+                    %\fi
+                    %\chaptermark{#1}%
+                    %\addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    %\addtocontents{lot}{\protect\addvspace{10\p@}}%
+                      %\@makechapterhead{#2}%
+                      %\@afterheading
+
+  %%{\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
+  %%{\GostTitleStyle\Gost@ChapterStyle}%
+                    %}
+%\def\@makechapterhead#1{%
+  %\vspace*{50\p@}%
+  %{\parindent \z@ \raggedright \normalfont
+    %\ifnum \c@secnumdepth >\m@ne
+        %%\huge\bfseries
+        %\GostTitleStyle\Gost@ChapterStyle \@chapapp\space \thechapter
+    %\fi
+    %\interlinepenalty\@M
+    %%\Huge \bfseries 
+    %#1\par\nobreak
+    %\vskip 40\p@
+  %}}
+%\def\@schapter#1{
+                   %\@makeschapterhead{#1}%
+                   %\@afterheading
+                 %}
+%\def\@makeschapterhead#1{%
+  %\vspace*{50\p@}%
+  %{\parindent \z@ \raggedright
+    %\normalfont
+    %\interlinepenalty\@M
+    %\Huge \bfseries  #1\par\nobreak
+    %\vskip 40\p@
+  %}}
+\def\@chapapp{}
+
 \newcommand\chapter{%
   {\addtocounter{totfigures}{\value{figure}}}
   {\addtocounter{tottables}{\value{table}}}
@@ -203,6 +298,7 @@
  \@startsection{chapter}{0}%
   {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
   {\GostTitleStyle\Gost@ChapterStyle}%
+%\addcontentsline{toc}{chapter}{\chaptername~\thechapter\hspace{1em}#1}%
 }
 \newcommand*\chaptermark[1]{}
 \newcommand*\apart[2]{\chapter {#2\label{#1}}}
@@ -618,9 +714,9 @@
 
 % ... допускается нумерация рисунков в пределах раздела
 \newcommand\PicInChapter{%
- \@addtoreset{figure}{chapter}%
- \@figuresonchaptertrue%
- \renewcommand{\thefigure}{\thechapter.\arabic{figure}}%
+    \@addtoreset{figure}{chapter}%
+    \@figuresonchaptertrue%
+    \renewcommand{\thefigure}{\thechapter.\arabic{figure}}%
 }
 
 % 4.4 - таблицы
@@ -637,9 +733,9 @@
 % НЕ добавлена точка после таблицы. Крищенко
 
 \newcommand\TableInChapter{%
- \@addtoreset{table}{chapter}%
- \@tablesonchaptertrue%
- \renewcommand{\thetable}{\thechapter.\arabic{table}}%
+    \@addtoreset{table}{chapter}%
+    \@tablesonchaptertrue%
+    \renewcommand{\thetable}{\thechapter.\arabic{table}}%
 }
 
 \RequirePackage{longtable} % многостраничные таблицы
@@ -648,7 +744,7 @@
 \LTright=\fill
 
 \newcommand*\subcaption[1]{ % Заголовок без "Таблица..." -- для заголовков на других стр.
-  \multicolumn{\LT@cols}{p{1\textwidth}}{#1}
+    \multicolumn{\LT@cols}{p{1\textwidth}}{#1}
 }
 
 \def\fps@table{bph}
@@ -656,52 +752,137 @@
 \def\ext@table{lot}
 \def\fnum@table{\tablename~\thetable}
 
-%  4.3.4 - 4.1.14 Приложения
-\renewcommand\appendix{\par
- \setcounter{secnumdepth}{4}
- \setcounter{chapter}{0}%
- \EqInChapter\PicInChapter\TableInChapter%
- \gdef\@chapapp{\appendixname}%
- \gdef\thechapter{\Asbuk{chapter}}%
- \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle\appendixname~\Gost@MainChapterStyle}%
- \setlength\Gost@ChapterIndent{0mm}%
- \let\@sect\Gost@old@sect%
-}
 
 % 4.5 Сноски
 \RequirePackage[perpage,bottom]{footmisc}
 
 % Части документа- для выбора вида заголовков и т.д.
 \newcommand\structmatter{% common code for the front- and back-matter
- \setcounter{secnumdepth}{-1}%
- \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle}%
- \setlength\Gost@ChapterIndent{0mm}%
+    \setcounter{secnumdepth}{-1}%
+    \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle}%
+    \setlength\Gost@ChapterIndent{0mm}%
 }
 %  введение, обозначения
 \newcommand\frontmatter{\structmatter}
 %  основная часть
 \newcommand\mainmatter{
- \setcounter{secnumdepth}{4}
- \renewcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}%
- \setlength\Gost@ChapterIndent{\Gost@MainChapterIndent}%
+    \setcounter{secnumdepth}{4}
+    \renewcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}%
+    \setlength\Gost@ChapterIndent{\Gost@MainChapterIndent}%
 }
 %  заключение, библиография
 \newcommand\backmatter{\structmatter}
 
 %всякие оглавления
-\newcommand\tableofcontents{\chapter*{\contentsname}\@starttoc{toc}}
+\newcommand\tableofcontents{\chapter*{\contentsname}\@starttoc{toc}}           % FIXME \contentname is NOT standart command name so no language switch supported 
+
+
 \newcommand\listoffigures{\chapter*{\listfigurename}\@starttoc{lof}}
 \newcommand\listoftables{\chapter*{\listtablename}\@starttoc{lot}}
 
-\newcommand{\l@chapter}   {\@dottedtocline{1}{0mm}{1.6em}}
+\newcommand{\l@part}   {\@dottedtocline{0}{0mm}{1.6em}}
+%\newcommand{\l@chapter}   {\@dottedtocline{1}{0mm}{1.6em}}
+\newcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode %\bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      \@chapapp\hspace{.5em} #1\nobreak\dotfill \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+
+
 \newcommand{\l@section}{\@dottedtocline{2}{10mm}{2.8em}}
 \newcommand{\l@subsection}   {\@dottedtocline{3}{20mm}{4.0em}}
 \newcommand{\l@subsubsection}{\@dottedtocline{4}{30mm}{5.2em}}
+\newcommand{\l@paragraph}{\@dottedtocline{5}{30mm}{5.2em}}
+\newcommand{\l@subparagraph}{\@dottedtocline{6}{30mm}{5.2em}}
 \newcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
 \newcommand*\l@table {\@dottedtocline{1}{1.5em}{2.3em}}
 \newcommand\@tocrmarg{2.55em} %отступ правого края оглавления перенесённых строк
 \newcommand\@dotsep{4.5}      %между точками в оглавлении в em
 \linespread{\Gost@LineSpread} %полуторный межстрочный интервал
+
+%\def\setChapterprefix#1{\gdef\@Prefix{#1}}
+%\setChapterprefix{}
+%\newcommand*\l@chapter[2]{%
+    %\ifnum \c@tocdepth >\m@ne
+    %\addpenalty{-\@highpenalty}%
+    %\vskip 1.0em \@plus\p@
+    %\setlength\@tempdima{1.5em}%
+    %\begingroup
+    %\parindent \z@ \rightskip \@pnumwidth
+    %\parfillskip -\@pnumwidth
+    %\leavevmode \bfseries
+    %\advance\leftskip\@tempdima
+    %\hskip -\leftskip
+    %\@Prefix 
+    %#1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+    %\penalty\@highpenalty
+    %\endgroup
+    %\fi
+%}
+
+%  4.3.4 - 4.1.14 Приложения
+%\newcommand\appendix{\par
+  %\setcounter{chapter}{0}%
+  %\setcounter{section}{0}%
+  %\gdef\@chapapp{\appendixname}%
+  %\gdef\thechapter{\@Alph\c@chapter}}
+
+\def\setChapterprefix#1{\gdef\@chapapp{#1}}
+\setChapterprefix{}
+
+
+\newcommand\appendix{\par
+    \setcounter{secnumdepth}{4}
+    \setcounter{chapter}{0}%
+    \setcounter{section}{0}%
+    \EqInChapter\PicInChapter\TableInChapter%
+    \gdef\@chapapp{\appendixname}%
+    \gdef\thechapter{\Asbuk{chapter}}%
+    \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle\appendixname~\Gost@MainChapterStyle}%
+    \setlength\Gost@ChapterIndent{0mm}%
+    \let\@sect\Gost@old@sect%
+}
+    %\renewcommand\chapter{
+    %\clearpage}
+        %\thispagestyle{plain}%
+        %\null\vfil
+    %\secdef\@chapter\@schapter}
+
+    %\def\@chapter[#1]#2{%
+        %\ifnum \c@secnumdepth >-2\relax
+        %\refstepcounter{chapter}%
+        %\addcontentsline{toc}{chapter}{\chaptername~\thechapter\hspace{1em}#1}%
+        %\else
+        %\addcontentsline{toc}{chapter}{#1}%
+        %\fi
+        %\markboth{}{}%
+        %{\centering
+            %\interlinepenalty \@M
+            %\normalfont
+            %\ifnum \c@secnumdepth >-2\relax
+            %\huge\bfseries \chapter\nobreakspace\thepart
+            %\par
+            %\vskip 20\p@
+            %\fi
+        %\Huge \bfseries #2\par}%
+    %\@endpart}
+    %\def\@schapter#1{%
+        %{\centering
+            %\normalfont
+        %\Huge \bfseries #1\par}%
+    %\@endchapter}
+    %\def\@endchapter{\vfil\newpage}
+%}
 
 \AtBeginDocument{%
  \makeatletter%
@@ -715,7 +896,7 @@
 %библиография
 \newdimen\bibindent
 \newenvironment{thebibliography}[1]{
- \chapter{\bibname}%
+ \chapter{\bibsname}%
  \list{\@biblabel{\@arabic\c@enumiv}}%
       {\settowidth\labelwidth{\@biblabel{#1}}%
        \leftmargin\labelwidth

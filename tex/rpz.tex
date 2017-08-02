@@ -1,4 +1,3 @@
-% !TeX program = xelatex
 %% Преамбула TeX-файла
 
 % 1. Стиль и язык
@@ -21,7 +20,6 @@
 \include{00-title}
 
 
-
 \begin{document}
 
 \frontmatter % выключает нумерацию ВСЕГО; здесь начинаются ненумерованные главы: реферат, введение, глоссарий, сокращения и прочее.
@@ -31,6 +29,7 @@
 %\end{titlepage}
 \maketitle
 
+\part{123}
 
 \begin{executors}
 \personalSignature{Первый исполнитель}{ФИО}
@@ -73,10 +72,12 @@
 
 \include{80-conclusion}
 
+%\addtocontents{toc}{\protect\setChapterprefix{Приложение }} %смена названия главы в оглавлении
 \include{81-biblio}
 
 \appendix   % Тут идут приложения
 
+\part{123}
 \include{90-appendix1}
 \include{91-appendix2}
 

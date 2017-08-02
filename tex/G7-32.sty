@@ -41,9 +41,22 @@
 \newcommand\Referat{%реферат
  \chapter*{Реферат}%
 }
-\addto\captionsrussian{%содержание
+
+% FIXME russian name hardcoded
+\def\contentname{%
+Содержание}%
+\def\bibsname{%
+    Список~
+    использованных~
+источников}%
+
+\addto\captionsrussian{%содержание FIXME not work at all
  \def\contentsname{%
   Содержание}%
+ \def\bibname{%
+  Список~
+  использованных~
+  источников}%
 }
 \newcommand\NormRefs{%нормативные ссылки
  \chapter*{Нормативные~%
@@ -71,12 +84,6 @@
 }
 \newcommand\Conclusion{%заключение
  \chapter{Заключение}%
-}
-\addto\captionsrussian{%список использованных источников
- \def\bibname{%
-  Список~
-  использованных~
-  источников}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
