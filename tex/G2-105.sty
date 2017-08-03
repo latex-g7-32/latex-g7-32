@@ -454,6 +454,21 @@
     \setmainfont{Times New Roman}
     \newfontfamily\cyrillicfont{Times New Roman}
   }
+  % Шрифт с засечками
+  \IfNoFont{Times New Roman}{
+    \setromanfont[
+    BoldFont = cmunbx.otf,
+    ItalicFont = cmunti.otf,
+    BoldItalicFont = cmunbi.otf]
+    {cmunrm.otf}
+    \newfontfamily\cyrillicfontrm{cmunrm.otf}[ % для кириллицы
+    BoldFont = cmunbx.otf,
+    ItalicFont = cmunti.otf,
+    BoldItalicFont = cmunbi.otf]
+  }{
+    \setmainfont{Times New Roman}
+    \newfontfamily\cyrillicfontrm{Times New Roman}
+  }
 
   % Шрифт без засечек
   \IfNoFont{Arial}{
@@ -495,7 +510,6 @@
     % Шрифт для minted
     \defaultfontfeatures{}
     \newfontfamily\cyrillicfontttnoftr{Times New Roman}[
-    Script = Cyrillic,
     NFSSFamily = cyrillicfontttnoftr
     ]
   }
@@ -844,11 +858,11 @@
 
 
 \newcommand{\l@chapter}        {\@dottedtocline{1}{0mm}{1.2em}}
-\newcommand{\l@section}        {\@dottedtocline{2}{0mm}{2.4em}}
-\newcommand{\l@subsection}     {\@dottedtocline{3}{00mm}{3.6em}}
-\newcommand{\l@subsubsection}  {\@dottedtocline{4}{00mm}{4.8em}}
-\newcommand{\l@paragraph}      {\@dottedtocline{5}{00mm}{4.8em}}
-\newcommand{\l@subparagraph}   {\@dottedtocline{6}{00mm}{4.8em}}
+\newcommand{\l@section}        {\@dottedtocline{2}{-3pt}{2.4em}}
+\newcommand{\l@subsection}     {\@dottedtocline{3}{-3pt}{3.6em}}
+\newcommand{\l@subsubsection}  {\@dottedtocline{4}{-3pt}{4.8em}}
+\newcommand{\l@paragraph}      {\@dottedtocline{5}{-3pt}{4.8em}}
+\newcommand{\l@subparagraph}   {\@dottedtocline{6}{-3pt}{4.8em}}
 \newcommand*{\l@figure}        {\@dottedtocline{1}{1.5em}{2.3em}}
 \newcommand*{\l@table}         {\@dottedtocline{1}{1.5em}{2.3em}}
 \newcommand\@tocrmarg{2.55em} %отступ правого края оглавления перенесённых строк
@@ -1017,13 +1031,31 @@
   }
 }
 
+\RequirePackage{color}
+\newlength{\emdashlenght}
+\settowidth{\emdashlenght}{---}
+\newcommand\MakeDashes{
+  \usepackage{trimclip}
+  \makeatletter
+  \let\Gost@old@cyrdash\cyrdash
+  \def\cyrdash{%
+    \ifdim\f@size pt>13pt%
+    \clipbox{0pt}{\hbox to .8em{\textcolor{white}{---}\hskip
+    -\emdashlenght \rule[.45ex]{\emdashlenght}{1pt}\hss}}%
+    \else%
+       \Gost@old@cyrdash%
+    \fi%
+  }
+  \FixBibliographyCyrdash
+  \makeatother
+}
+
 \newcommand\MakeDashesBold{
   \usepackage{trimclip}
   \makeatletter
   \let\Gost@old@cyrdash\cyrdash
   \def\cyrdash{%
     \ifdim\f@size pt>13pt%
-       %\clipbox{0pt}{\hbox to .8em{\textbf{\Gost@old@cyrdash\hss}}}%
        \clipbox{0pt}{\hbox to .8em{\textbf{\Gost@old@cyrdash\hss}}}%
     \else%
        \Gost@old@cyrdash%
