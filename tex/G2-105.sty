@@ -298,6 +298,7 @@
   }}
 \def\@chapapp{} % blank chapter prefix
 
+
 \newcommand*\chaptermark[1]{}
 \newcommand*\apart[2]{\chapter {#2\label{#1}}}
 \newcommand*\cpart[2]{\chapter*{#2\label{#1}}}
@@ -305,9 +306,9 @@
 %  Подраздел
 \newcounter{section}[chapter]
 \renewcommand\thesection{
-    \if@usebold
-    \bfseries
-    \fi
+    %\if@usebold
+    %\bfseries
+    %\fi
     \thechapter.\@arabic\c@section
 }
 \newcommand\section{%
@@ -355,13 +356,29 @@
 }
 \newcommand*\nsubpara[1]{\nsubsubsection\label{#1}}
 
-\newcommand*\paragraph[1]{%
- \par\vspace{\GostBeforNoTitleSkip}%
- \textbf{#1}%
- \hspace{\GostHTitleSpace}%
-}
+\newcounter {paragraph}[subsubsection]
+\newcounter {subparagraph}[paragraph]
+\renewcommand\theparagraph    {\thesubsubsection.\@arabic\c@paragraph}
+\renewcommand\thesubparagraph {\theparagraph.\@arabic\c@subparagraph}
 
 
+%\renewcommand*\paragraph[1]{%
+ %\par\vspace{\GostBeforNoTitleSkip}%
+ %\textbf{#1}%
+ %\hspace{\GostHTitleSpace}%
+%}
+
+\newcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {3.25ex \@plus1ex \@minus.2ex}%
+                                    {-1em}%
+                                    {\normalfont\normalsize\bfseries}}
+\newcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                       {3.25ex \@plus1ex \@minus .2ex}%
+                                       {-1em}%
+                                      {\normalfont\normalsize\bfseries}}
+
+
+\RequirePackage{titlesec}
 
 \newlength{\NirTitleDropSkip}
 %  Эта команда должна вставлятся между двумя заголовками
@@ -878,6 +895,7 @@
                     }
 }
 
+
 \AtBeginDocument{%
  \makeatletter%
   \setlength\Gost@EqRemLen{\textwidth}%
@@ -1005,6 +1023,7 @@
   \let\Gost@old@cyrdash\cyrdash
   \def\cyrdash{%
     \ifdim\f@size pt>13pt%
+       %\clipbox{0pt}{\hbox to .8em{\textbf{\Gost@old@cyrdash\hss}}}%
        \clipbox{0pt}{\hbox to .8em{\textbf{\Gost@old@cyrdash\hss}}}%
     \else%
        \Gost@old@cyrdash%
