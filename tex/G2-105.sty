@@ -304,13 +304,20 @@
 
 %  Подраздел
 \newcounter{section}[chapter]
-\renewcommand\thesection{\thechapter.\@arabic\c@section}
+\renewcommand\thesection{
+    \if@usebold
+    \bfseries
+    \fi
+    \thechapter.\@arabic\c@section
+}
 \newcommand\section{%
  \@startsection{section}{1}%
  {\GostTitleIndent}{\GostBeforTitleSkip}{\GostAfterTitleSkip}%
  {\GostTitleStyle}%
 }
 \newcommand*{\asubpart}[2]{\section{#2\label{#1}}}
+
+
 
 %  Пункт
 \newcounter{subsection}[section]
