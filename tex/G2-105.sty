@@ -795,30 +795,38 @@
 
 \newcommand{\l@part}   {\@dottedtocline{0}{0mm}{1.6em}}
 %\newcommand{\l@chapter}   {\@dottedtocline{1}{0mm}{1.6em}}
-\newcommand*\l@chapter[2]{%
-  \ifnum \c@tocdepth >\m@ne
+
+\renewcommand*\@dottedtocline[5]{
+    \ifnum #1 > \c@tocdepth \else
     \addpenalty{-\@highpenalty}%
-    \vskip 1.0em \@plus\p@
-    \setlength\@tempdima{1.5em}%
+    \vskip \z@ \@plus.2\p@
+    \leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
+    \parindent #2\relax\@afterindenttrue
+    \interlinepenalty\@M
+    \leavevmode
+    \setlength\@tempdima{#3}%
     \begingroup
-      \parindent \z@ \rightskip \@pnumwidth
-      \parfillskip -\@pnumwidth
-      \leavevmode %\bfseries
-      \advance\leftskip\@tempdima
-      \hskip -\leftskip
-      \@chapapp\hspace{.5em} #1\nobreak\dotfill \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
-      \penalty\@highpenalty
+    \parindent \z@ \rightskip \@pnumwidth
+    \parfillskip -\@pnumwidth
+    \leavevmode %\bfseries
+    \advance\leftskip\@tempdima
+    \hskip -\leftskip
+    \@chapapp\hspace{.5em} #4\nobreak\dotfill \nobreak\hb@xt@\@pnumwidth{\hss #5}\par
+    \penalty\@highpenalty
     \endgroup
-  \fi}
+    \fi
+}
 
 
-\newcommand{\l@section}{\@dottedtocline{2}{10mm}{2.8em}}
-\newcommand{\l@subsection}   {\@dottedtocline{3}{20mm}{4.0em}}
-\newcommand{\l@subsubsection}{\@dottedtocline{4}{30mm}{5.2em}}
-\newcommand{\l@paragraph}{\@dottedtocline{5}{30mm}{5.2em}}
-\newcommand{\l@subparagraph}{\@dottedtocline{6}{30mm}{5.2em}}
-\newcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
-\newcommand*\l@table {\@dottedtocline{1}{1.5em}{2.3em}}
+
+\newcommand{\l@chapter}        {\@dottedtocline{1}{0mm}{1.2em}}
+\newcommand{\l@section}        {\@dottedtocline{2}{0mm}{2.4em}}
+\newcommand{\l@subsection}     {\@dottedtocline{3}{00mm}{3.6em}}
+\newcommand{\l@subsubsection}  {\@dottedtocline{4}{00mm}{4.8em}}
+\newcommand{\l@paragraph}      {\@dottedtocline{5}{00mm}{4.8em}}
+\newcommand{\l@subparagraph}   {\@dottedtocline{6}{00mm}{4.8em}}
+\newcommand*{\l@figure}        {\@dottedtocline{1}{1.5em}{2.3em}}
+\newcommand*{\l@table}         {\@dottedtocline{1}{1.5em}{2.3em}}
 \newcommand\@tocrmarg{2.55em} %отступ правого края оглавления перенесённых строк
 \newcommand\@dotsep{4.5}      %между точками в оглавлении в em
 \linespread{\Gost@LineSpread} %полуторный межстрочный интервал
