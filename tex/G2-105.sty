@@ -683,7 +683,7 @@
 \RequirePackage{amssymb} % для русских "меньше или равно" "больше или равно"
 \RequirePackage{amsmath} % Пусть сразу будет, какой НИР без него -- Коротков И.
 \RequirePackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
-\input{leqno.clo}
+\input{leqno.clo}       % Equation numeration
 
 \renewcommand*\eqref[1]{\ref{#1}} %Было newcommand -- Коротков И.
 \def\@eqnnum{{\theequation}}% убран \normalfont
@@ -1007,7 +1007,7 @@
 \makeatother
 }
 
-\newcommand\AfterHyperrefFix{
+\newcommand\AfterHyperrefFix{% Some Hyperreffix, who cares?
  \makeatletter
  \let\Gost@old@sect\@sect
  \def\@sect##1##2##3##4##5##6[##7]##8{%
@@ -1031,6 +1031,7 @@
   }
 }
 
+%Fix xelatex invisible emdash on CMU, an ugly way
 \RequirePackage{color}
 \newlength{\emdashlenght}
 \settowidth{\emdashlenght}{---}
@@ -1050,7 +1051,7 @@
   \makeatother
 }
 
-\newcommand\MakeDashesBold{
+\newcommand\MakeDashesBold{% Fix invisible emdash on xelatex CMU, but not for 100 percent
   \usepackage{trimclip}
   \makeatletter
   \let\Gost@old@cyrdash\cyrdash

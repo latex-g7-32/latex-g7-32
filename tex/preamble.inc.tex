@@ -15,7 +15,7 @@ citecolor=black, menucolor=black, filecolor=black,
 
 \AfterHyperrefFix
 
-\usepackage{microtype}
+\usepackage{microtype}% полезный пакет для микротипографии, увы под xelatex мало чего умеет, но под pdflatex хорошо улучшает читаемость
 
 % Изменение начертания шрифта --- после чего выглядит таймсоподобно.
 % apt-get install scalable-cyrfonts-tex
@@ -36,11 +36,12 @@ citecolor=black, menucolor=black, filecolor=black,
 \usepackage{graphicx}   % Пакет для включения рисунков
 
 % С такими оно полями оно работает по-умолчанию:
-% \RequirePackage[left=20mm,right=10mm,top=20mm,bottom=20mm,headsep=0pt]{geometry}
+% \RequirePackage[left=20mm,right=10mm,top=20mm,bottom=20mm,headsep=0pt,includefoot]{geometry}
 % Если вас тошнит от поля в 10мм --- увеличивайте до 20-ти, ну и про переплёт не забывайте:
 \geometry{right=20mm}
 \geometry{left=30mm}
 \geometry{bottom=20mm}
+\geometry{ignorefoot}% считать от нижней границы текста
 
 
 % Пакет Tikz
