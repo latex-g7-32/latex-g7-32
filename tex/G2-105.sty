@@ -358,8 +358,10 @@
 
 \newcounter {paragraph}[subsubsection]
 \newcounter {subparagraph}[paragraph]
-\renewcommand\theparagraph    {\thesubsubsection.\@arabic\c@paragraph}
-\renewcommand\thesubparagraph {\theparagraph.\@arabic\c@subparagraph}
+%\renewcommand\theparagraph    {\thesubsubsection.\@arabic\c@paragraph} % by default
+\renewcommand\theparagraph    {}
+%\renewcommand\thesubparagraph {\theparagraph.\@arabic\c@subparagraph} % by default
+\renewcommand\thesubparagraph {}
 
 
 %\renewcommand*\paragraph[1]{%
@@ -587,6 +589,8 @@
 	\def\postsection{\@aftersepkern}
 	\def\postsubsection{\@aftersepkern}
 	\def\postsubsubsection{\@aftersepkern}
+	\def\postparagraph{\@aftersepkern}
+	\def\postsubparagraph{\@aftersepkern}
   }
 
   \usepackage{trimclip}
@@ -834,6 +838,7 @@
 \newcommand{\l@part}   {\@dottedtocline{0}{0mm}{1.6em}}
 %\newcommand{\l@chapter}   {\@dottedtocline{1}{0mm}{1.6em}}
 
+% style for toc item
 \renewcommand*\@dottedtocline[5]{
     \ifnum #1 > \c@tocdepth \else
     \addpenalty{-\@highpenalty}%
