@@ -1,0 +1,69 @@
+
+\renewenvironment*{titlepage}{
+ \thispagestyle{empty}
+  \linespread{1.1}\normalsize
+  \hfill \Nir@Grif
+
+  \hfill \Nir@Ekz
+  \vspace{-3ex}
+
+  \IfFileExists{logo.pdf}{      % logo for first page (no compatible with GOST)
+  \begin{flushleft}
+  \parbox[t]{.3\linewidth}{
+    \vspace{-5ex}\center{\includegraphics[width=.99\linewidth]{logo}}\\
+  }
+  {{\Nir@OrgLongName}}  % name of Institute
+
+  \end{flushleft}
+  }{
+  \begin{center}
+  {{\Nir@OrgLongName}} % name of Institute
+  \end{center}
+  }
+ \begin{centering}
+
+  \vspace{3ex}
+
+  \parbox[t]{.33\linewidth}{
+    \Nir@UdkName\\ % UDK name and number
+    \Nir@No\\       %Reg name and number
+    \Nir@InventarNo\\ %Inventory name and number
+  }
+  \hfill\Nir@BossStamp
+  
+  %\vspace{3ex}
+  \vfill
+
+  \MakeUppercase{\Nir@AnnOtchet \Nir@ReportName}\\ % Annotated and Report name
+  \MakeUppercase{\Nir@About}         % Report about
+
+  %\vspace{2ex}
+  \Nir@TitleAndSubject          % Report Subject
+
+  \Nir@Code
+
+  (\Nir@StageType)              % Stage type
+
+  \vspace{2ex}
+  \Nir@PartNum
+
+  \vfill
+
+  \hfill\Nir@ManagerStamp
+
+  \vspace{2ex}
+
+  \hfill\Nir@IspStamp
+
+
+  \vfill
+
+  \vfill
+
+  \Nir@Town~\Nir@Year
+
+ \end{centering}
+ \linespread{\Gost@LineSpread}\normalsize
+}
+
+

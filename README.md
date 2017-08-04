@@ -1,9 +1,9 @@
-Стиль LaTeX для расчётно-пояснительной записки к курсовым и дипломным работам (ГОСТ 7.32-2001)
+Стиль LaTeX для оформления отчетов о НИР, расчётно-пояснительной записки к курсовым и дипломным работам (ГОСТ 7.32-2001 и ГОСТ РВ 15.110-2003)
 ===========
 
-Ориентирован на студентов IT специальностей.
+Ориентирован на студентов IT специальностей, научных работников и др. кому необходимо составлять документы по ГОСТ 7.32-2001 или ГОСТ РВ 15.110-2003.
 
-Изначально был написан в расчёте на `pdfLaTeX`, с коммита `23b1612` добавлена поддержка `XeLaTeX`. Помимо стилей содержит "рыбу" РПЗ (в той же папке `tex`). Его можно собрать используя make.
+Изначально был написан в расчёте на `pdfLaTeX`, с коммита `23b1612` добавлена поддержка `XeLaTeX`. Помимо стилей содержит "рыбу" РПЗ (в той же папке `tex`). 
 
 Также имеются необходимые макеты (layout) для [LyX](http://ru.wikipedia.org/wiki/LyX) (редактор, редактирование в котором больше похоже на работу в `Microsoft Word`, чем на написание `LaTeX` кода, но результат получается такой же хороший, как в `LaTeX`). Для использования `LyX` также нужно скопировать стили LaTeX (из папки `tex`).
 
@@ -19,23 +19,41 @@
 
 ## Установка
 
+Скачать последнюю версию.
+
+C помощью git:
+```
+git clone https://github.com/latex-g7-32/latex-g7-32
+```
+Или скачать zip:
+```
+https://github.com/latex-g7-32/latex-g7-32/archive/master.zip:
+```
+
+Или взять из [релизов](https://github.com/rominf/latex-g7-32/releases).
+Однако, релизы формируются с течением времени и могут содержать существенно устаревшую версию.
+
+Скопировать файлы: 
+`G2-105.sty  G7-32.cls  G7-32.sty  GostBase.clo  gosttitleGostRV15-110mipt.sty  gosttitleGostRV15-110.sty  local-minted.sty` в локальный texmf.
+Для линукс это будет `$HOME/texmf/`.
+Для Виндовс `C:\Users\USERNAME\texmf\`.
+Проверить это можно командой `kpsewhich -var-value=TEXMFHOME`.
+Относительно texmf путь будет `texmf/tex/latex/latex-g7-32/`.
+
+
 ### Зависимости
 
-#### Основные
+#### Основные для стилевого файла
 
 ##### LaTeX пакеты
 ```
-amssymb amsmath caption flafter footmisc hyperref icomma iftex graphicx longtable underscore
+amssymb amsmath caption flafter footmisc hyperref icomma iftex graphicx longtable underscore etoolbox lastpage titlesec flafter amssymb amsmath color mfirstuc nomencl 
 ```
 ###### openSUSE
 ```
 texlive-latex texlive-iftex 
 ```
 
-##### Программы
-```
-inkscape dia graphviz context
-```
 
 #### pdfLaTeX-версия
 ##### LaTeX пакеты
@@ -58,7 +76,7 @@ cm-unicode-fonts texlive-minted texlive-polyglossia texlive-xecyr
 
 ##### Программы
 ```
-python pygments
+inkscape dia graphviz python pygments
 ```
 
 #### LyX
@@ -70,10 +88,13 @@ lyx
 ```
 python3.4
 ```
+На текущий момент не работает см. [#26](https://github.com/rominf/latex-g7-32/issues/11).
 
 Копирует (или перемещает) файлы со стилями в общую `texmf` папку, макеты `LyX` в папку с настройками `LyX`. Для получения помощи вызовите `install.py --help`.
 
-## Использование LaTeX
+## Использование РПЗ
+После изменения РПЗ создайте директорию build в корне проекта, затем `cd ./build & cmake .. && make`. В ней появится файл РПЗ - rpz.pdf. Cmake по умолчанию собирает с xelatex.
+
 После изменения РПЗ запустите `make` в корне. Результатом будет `rpz.pdf`. Если требуется использование `pdfLaTeX` то в `Makefile` надо поменять в третье строке `xelatex` на `pdflatex`.
 
 ### Редактор
@@ -232,6 +253,14 @@ docker run --volume /path/to/latex-g7-32/:/doc/ somename
 
 Настроки -> Обработка файлов -> Конверторы -> LaTeX (XeTeX) -> PDF (XeTeX) -> Изменить -> Преобразователь: `xelatex -shell-escape $$i`.
 
+## Шрифты
+
+По умолчанию используются шрифт СMU для pdfLaTeX и XeLaTeX, но можно использовать свободный аналог Times New Roman - PT Astra, они находятся в репозитории в каталоге fonts. При установке в системе будут использоваться они.
+На линуксе устанавливаются в `$HOME/.fonts/` затем выполнить команды `fc-cache -f -v` и `luaotfload-tool -u -f`.
+
+Если у вас подписан лицензионный договор с правообладателем шрифта Times New Roman – компанией Monotype Imaging Inc, то возможно использовать его указав опцию `times`.
+
+
 ## Авторы
 
 ### 1. Первая версия
@@ -278,13 +307,16 @@ According to the requirements of
 
 (Read the git log... I tried to explain each change clearly.)
 
-### 6. Сборка под Windows+cygwin, CMakeLists.txt, а также сборка с docker
+### 6a. Сборка под при помощи Сmake, Windows+cygwin, CMakeLists.txt, а также сборка с docker
 [Николай Павлов](https://github.com/ZyX-I)
+### 6b. Сборка при помощи [latexmkmod](https://github.com/dvarubla/latexmkmod), Windows+Linux,
+[dvarubla](https://github.com/dvarubla)
 
 
-#### Благодарности
+## Благодарности
 [Ростислав Листеренко](https://github.com/kaedvann) (сообщения об ошибках)
 
+Стиль разрабатывается при поддержке ["Дизайн-центр МФТИ"](http://miptdesigncenter.tilda.ws), [НТКТеХЛАБ](http://ntktechlab.org). 
 
 ## См. также
 ### Статьи
@@ -294,3 +326,8 @@ According to the requirements of
 [@qrilka: порт второй версии на `XeLaTeX`](https://github.com/qrilka/G7-32)
 
 [@petethepig: порт урезанной третьей версии ("под себя") на `XeLaTeX`](https://github.com/petethepig/diploma)
+
+### Классы LaTeX для написания диссертаций
+[Russian-Phd-LaTeX-Dissertation-Template](https://github.com/AndreyAkinshin/Russian-Phd-LaTeX-Dissertation-Template)
+
+[Класс для диссертаций disser](https://github.com/polariton/disser)

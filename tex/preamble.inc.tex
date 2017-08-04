@@ -15,6 +15,8 @@ citecolor=black, menucolor=black, filecolor=black,
 
 \AfterHyperrefFix
 
+\usepackage{microtype}% полезный пакет для микротипографии, увы под xelatex мало чего умеет, но под pdflatex хорошо улучшает читаемость
+
 % Изменение начертания шрифта --- после чего выглядит таймсоподобно.
 % apt-get install scalable-cyrfonts-tex
 
@@ -29,14 +31,17 @@ citecolor=black, menucolor=black, filecolor=black,
         \MakeDashesBold
     }
 \fi
+        \MakeDashes
 
 \usepackage{graphicx}   % Пакет для включения рисунков
 
 % С такими оно полями оно работает по-умолчанию:
-% \RequirePackage[left=20mm,right=10mm,top=20mm,bottom=20mm,headsep=0pt]{geometry}
+% \RequirePackage[left=20mm,right=10mm,top=20mm,bottom=20mm,headsep=0pt,includefoot]{geometry}
 % Если вас тошнит от поля в 10мм --- увеличивайте до 20-ти, ну и про переплёт не забывайте:
 \geometry{right=20mm}
 \geometry{left=30mm}
+\geometry{bottom=20mm}
+\geometry{ignorefoot}% считать от нижней границы текста
 
 
 % Пакет Tikz
@@ -52,5 +57,9 @@ citecolor=black, menucolor=black, filecolor=black,
 % itemize внутри tabular
 \usepackage{paralist,array}
 
+%\setlength{\parskip}{1ex plus0.5ex minus0.5ex} % разрыв между абзацами
+\setlength{\parskip}{1ex} % разрыв между абзацами
+\usepackage{blindtext}
+
 % Центрирование подписей к плавающим окружениям
-\usepackage[justification=centering]{caption}
+%\usepackage[justification=centering]{caption}

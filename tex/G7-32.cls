@@ -58,5 +58,8 @@
 
 \RequirePackage{G7-32}
 
+
+\gosttitle{Gost7-32}% use GOST7.32-2001 title by default
+
 \endinput
 % End of file `G7-32.cls'.

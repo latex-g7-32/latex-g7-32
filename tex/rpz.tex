@@ -1,7 +1,7 @@
 %% Преамбула TeX-файла
 
 % 1. Стиль и язык
-\documentclass[utf8x, 12pt]{G7-32} % Стиль (по умолчанию будет 14pt)
+\documentclass[utf8x, 14pt]{G7-32} % Стиль (по умолчанию будет 14pt)
 
 % Остальные стандартные настройки убраны в preamble.inc.tex.
 \include{preamble.inc}
@@ -15,6 +15,8 @@
 
 % Полезные макросы листингов.
 \include{macros.inc}
+
+% Стиль титульного листа и заголовки
 \include{00-title}
 
 
@@ -22,9 +24,8 @@
 
 \frontmatter % выключает нумерацию ВСЕГО; здесь начинаются ненумерованные главы: реферат, введение, глоссарий, сокращения и прочее.
 
-\begin{titlepage}                               
+\maketitle %создает титульную страницу
 
-\end{titlepage}
 
 \begin{executors}
 \personalSignature{Первый исполнитель}{ФИО}
@@ -63,15 +64,17 @@
 \include{70-bzd}
 
 \backmatter %% Здесь заканчивается нумерованная часть документа и начинаются ссылки и
-            %% заключение
+            
+\include{80-conclusion}%% заключение
 
-\include{80-conclusion}
 
 \include{81-biblio}
+
 
 \appendix   % Тут идут приложения
 
 \include{90-appendix1}
+
 \include{91-appendix2}
 
 \end{document}

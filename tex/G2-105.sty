@@ -14,6 +14,10 @@
 % and provide necessary stuff for the requirements of ГОСТ 7.32-2001
 % ред. 2009 года.pdf) -- Ivan Zakharyaschev <imz@altlinux.org>.
 %
+% 
+% Поддержка сменяемых титульных страниц, приложений и некоторая 
+% общая доработка -- Андрей Спицын <spitsyn.andrey@gmail.com>
+%
 % Используется:
 %  footmisc.sty для сносок снизу и нумерации на каждой странице
 %  amssymb      для русских "меньше или равно" "больше или равно"
@@ -33,6 +37,8 @@
 % 7) сделаны отступы в оглавлении (ГОСТ эту тему обходит, как мы поняли);
 % 8) \normalfont
 % 9) разные мелочи.
+% Что почитать если кто-то захочет здесь что-то исправлять:
+% https://tex.stackexchange.com/questions/36609/formatting-section-titles
 
 \ProvidesPackage{G2-105}[2015/11/01 v2.00 General reqs. GOST 2.105-95]
 \NeedsTeXFormat{LaTeX2e}
@@ -48,11 +54,11 @@
 %нечто
 \newcommand\@pnumwidth{1.55em}
 \renewcommand\baselinestretch{}
-\@lowpenalty   51                     %
-\@medpenalty  151                     %
-\@highpenalty 301                     %
-\renewcommand\topfraction{.7}         %
-\renewcommand\bottomfraction{.3}      %
+\@lowpenalty   51                     % default for report class
+\@medpenalty  151                     % default for report class
+\@highpenalty 301                     % default for report class
+\renewcommand\topfraction{.7}         % default for report class
+\renewcommand\bottomfraction{.3}      % default for report class
 \renewcommand\textfraction{.2}        %
 \renewcommand\floatpagefraction{.5}   %
 \renewcommand\dbltopfraction{.7}      %
@@ -79,7 +85,10 @@
 \setlength\columnseprule{0\p@}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
+
 \setlength\parskip{0\p@ \@plus \p@}
+
+
 \setlength\leftmargini {2.5em}
 \setlength\leftmarginii{2.2em}
 \setlength\labelsep  {.5em}
@@ -91,7 +100,6 @@
 \setlength\tabbingsep{\labelsep}
 \setlength\fboxsep{3\p@}
 \setlength\fboxrule{.4\p@}
-\newcommand\appendix{}
 
 % Счётчики общего числа страниц, таблиц, рисунков и источников
 \newcounter{totalpage}
@@ -124,22 +132,35 @@
 \newcommand\totaltables {\ref{reftotaltables}   }
 \newcommand\totalfigures{\ref{reftotalfigures}  }
 \newcommand\totalbibs   {\ref{reftotalbibs}     }
+
 % Другая реализация обсчета рисунков и таблиц.
 \RequirePackage{lastpage}                   % Пакет для подсчета общего числа страниц
-\RequirePackage{etoolbox}
 \newcounter{totfigures}
 \newcounter{tottables}
+\newcounter{totappendices}
+\newcounter{totbiblio}
 
-\providecommand\totfig{}                    % Команда для отображения числа рисунков
-\providecommand\tottab{}                    % Команда для отображения числа таблиц
+\setcounter{totfigures}{0}
+\setcounter{tottables}{0}
+\setcounter{totappendices}{0}
+\setcounter{totbiblio}{0}
 
+
+\providecommand\totfig{\number\value{totfigures}}%
+\providecommand\tottab{\number\value{tottables}}%
+\providecommand\totapp{\number\value{totappendices}}%
+\providecommand\totbib{\number\value{totbiblio}}%
 
 \AtEndDocument{%
   \addtocounter{totfigures}{\value{figure}}%
   \addtocounter{tottables}{\value{table}}%
+  \addtocounter{totappendices}{\value{chapter}}%
+  \addtocounter{totbiblio}{\value{biblio}}%
   \immediate\write\@mainaux{%
     \string\gdef\string\totfig{\number\value{totfigures}}%
     \string\gdef\string\tottab{\number\value{tottables}}%
+    \string\gdef\string\totapp{\number\value{totappendices}}%
+    \string\gdef\string\totbib{\number\value{totbiblio}}%
   }%
 }
 
@@ -184,39 +205,120 @@
 \newcommand\Gost@StructChapterStyle{\large\centering}
 \newcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}
 
+% Part definition
+\newcounter{part}
+\newcommand\part{%
+    \clearpage
+  \thispagestyle{plain}%
+  \null\vfil
+  \secdef\@part\@spart}
+
+\def\@part[#1]#2{%
+    \ifnum \c@secnumdepth >-2\relax
+      \refstepcounter{part}%
+      \addcontentsline{toc}{part}{\partname~\thepart\hspace{1em}#1}%
+    \else
+      \addcontentsline{toc}{part}{#1}%
+    \fi
+    \markboth{}{}%
+    {\centering
+     \interlinepenalty \@M
+     \normalfont
+     \ifnum \c@secnumdepth >-2\relax
+       \huge\bfseries \partname\nobreakspace\thepart
+       \par
+       \vskip 20\p@
+     \fi
+     \Huge \bfseries #2\par}%
+    \@endpart}
+\def\@spart#1{%
+    {\centering
+     \interlinepenalty \@M
+     \normalfont
+     \Huge \bfseries #1\par}%
+    \@endpart}
+\def\@endpart{\vfil\newpage}
+
+
 %  Раздел
 \newcounter{chapter}
 \renewcommand\thechapter{\@arabic\c@chapter}
 \newif\if@breakingbeforechapter\@breakingbeforechaptertrue
-\newcommand\chapter{%
-  {\addtocounter{totfigures}{\value{figure}}}
-  {\addtocounter{tottables}{\value{table}}}
- \if@breakingbeforechapter%
-  \clearpage%
- \fi%
- \if@figuresonchapter%
-  \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
- \fi%
- \if@tablesonchapter%
-  \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
- \fi%
- \@startsection{chapter}{0}%
-  {\Gost@ChapterIndent}{0mm}{\GostAfterTitleSkip}%
-  {\GostTitleStyle\Gost@ChapterStyle}%
+
+% Chapter definition, see report class as reference
+\newcommand\chapter{
+    {\addtocounter{totfigures}{\value{figure}}}
+    {\addtocounter{tottables}{\value{table}}}
+    \if@breakingbeforechapter%
+    \clearpage%
+    \fi%
+    \if@figuresonchapter%
+    \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
+    \fi%
+    \if@tablesonchapter%
+    \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
+    \fi%
+    \thispagestyle{plain}%
+    \global\@topnum\z@
+    \@afterindentfalse
+\secdef\@chapter\@schapter}
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+    \refstepcounter{chapter}%
+    \typeout{\@chapapp\space\thechapter.}%
+    \addcontentsline{toc}{chapter}%
+    {\protect\numberline{\thechapter}#1}%
+    \else
+    \addcontentsline{toc}{chapter}{#1}%
+    \fi
+    \chaptermark{#1}%
+    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+    \@makechapterhead{#2}%
+    \@afterheading
 }
+\newcommand\@makechapterhead[1]{%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+    \hspace{\Gost@ChapterIndent}\GostTitleStyle\Gost@ChapterStyle \@chapapp\space \thechapter\hskip 5\p@
+    \fi
+    \interlinepenalty\@M
+    \Gost@ChapterStyle{#1}\par\nobreak
+    \vspace{\GostAfterTitleSkip}
+  }}
+\def\@schapter#1{
+                   \@makeschapterhead{#1}%
+                   \@afterheading
+                 }
+\def\@makeschapterhead#1{%
+  {\parindent \z@ \raggedright
+    \hspace{\Gost@ChapterIndent}\GostTitleStyle\Gost@ChapterStyle \@chapapp\space 
+    \Gost@ChapterStyle{#1}
+    \par
+
+  }}
+\def\@chapapp{} % blank chapter prefix
+
+
 \newcommand*\chaptermark[1]{}
 \newcommand*\apart[2]{\chapter {#2\label{#1}}}
 \newcommand*\cpart[2]{\chapter*{#2\label{#1}}}
 
 %  Подраздел
 \newcounter{section}[chapter]
-\renewcommand\thesection{\thechapter.\@arabic\c@section}
+\renewcommand\thesection{
+    %\if@usebold
+    %\bfseries
+    %\fi
+    \thechapter.\@arabic\c@section
+}
 \newcommand\section{%
  \@startsection{section}{1}%
  {\GostTitleIndent}{\GostBeforTitleSkip}{\GostAfterTitleSkip}%
  {\GostTitleStyle}%
 }
 \newcommand*{\asubpart}[2]{\section{#2\label{#1}}}
+
+
 
 %  Пункт
 \newcounter{subsection}[section]
@@ -254,13 +356,31 @@
 }
 \newcommand*\nsubpara[1]{\nsubsubsection\label{#1}}
 
-\newcommand*\paragraph[1]{%
- \par\vspace{\GostBeforNoTitleSkip}%
- \textbf{#1}%
- \hspace{\GostHTitleSpace}%
-}
+\newcounter {paragraph}[subsubsection]
+\newcounter {subparagraph}[paragraph]
+%\renewcommand\theparagraph    {\thesubsubsection.\@arabic\c@paragraph} % by default
+\renewcommand\theparagraph    {}
+%\renewcommand\thesubparagraph {\theparagraph.\@arabic\c@subparagraph} % by default
+\renewcommand\thesubparagraph {}
 
 
+%\renewcommand*\paragraph[1]{%
+ %\par\vspace{\GostBeforNoTitleSkip}%
+ %\textbf{#1}%
+ %\hspace{\GostHTitleSpace}%
+%}
+
+\newcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {3.25ex \@plus1ex \@minus.2ex}%
+                                    {-1em}%
+                                    {\normalfont\normalsize\bfseries}}
+\newcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                       {3.25ex \@plus1ex \@minus .2ex}%
+                                       {-1em}%
+                                      {\normalfont\normalsize\bfseries}}
+
+
+\RequirePackage{titlesec}
 
 \newlength{\NirTitleDropSkip}
 %  Эта команда должна вставлятся между двумя заголовками
@@ -314,9 +434,88 @@
    %\RequirePackage{xunicode}
    %\RequirePackage{xltxtra}
   \RequirePackage{polyglossia}
+  \defaultfontfeatures{Scale=MatchLowercase, Ligatures=TeX, Mapping=tex-text} % стандартные лигатуры TeX, замены нескольких дефисов на тире и т. п.
+  \setmainlanguage[spelling=modern,babelshorthands=true]{russian} % Язык по-умолчанию русский с поддержкой приятных команд пакета babel
+  \PolyglossiaSetup{russian}{indentfirst=true}
   \setotherlanguage{english}
-  \defaultfontfeatures{Ligatures=TeX, Mapping=tex-text} % стандартные лигатуры TeX, замены нескольких дефисов на тире и т. п.
-  \setmainlanguage[babelshorthands=true]{russian} % Язык по-умолчанию русский с поддержкой приятных команд пакета babel
+
+
+\if@usetimes                % If times we have option 
+  % Основной шрифт
+  \IfNoFont{Times New Roman}{
+    \setmainfont[
+    BoldFont = cmunbx.otf,
+    ItalicFont = cmunti.otf,
+    BoldItalicFont = cmunbi.otf]
+    {cmunrm.otf}
+    \newfontfamily\cyrillicfont{cmunrm.otf}[ % для кириллицы
+    BoldFont = cmunbx.otf,
+    ItalicFont = cmunti.otf,
+    BoldItalicFont = cmunbi.otf]
+  }{
+    \setmainfont{Times New Roman}
+    \newfontfamily\cyrillicfont{Times New Roman}
+  }
+  % Шрифт с засечками
+  \IfNoFont{Times New Roman}{
+    \setromanfont[
+    BoldFont = cmunbx.otf,
+    ItalicFont = cmunti.otf,
+    BoldItalicFont = cmunbi.otf]
+    {cmunrm.otf}
+    \newfontfamily\cyrillicfontrm{cmunrm.otf}[ % для кириллицы
+    BoldFont = cmunbx.otf,
+    ItalicFont = cmunti.otf,
+    BoldItalicFont = cmunbi.otf]
+  }{
+    \setmainfont{Times New Roman}
+    \newfontfamily\cyrillicfontrm{Times New Roman}
+  }
+
+  % Шрифт без засечек
+  \IfNoFont{Arial}{
+    \setsansfont[
+    BoldFont = cmunsx.otf,
+    ItalicFont = cmunsi.otf,
+    BoldItalicFont = cmunso.otf]
+    {cmunss.otf}
+    \newfontfamily{\cyrillicfontsf}{cmunss.otf}[ % для кириллицы
+    BoldFont = cmunsx.otf,
+    ItalicFont = cmunsi.otf,
+    BoldItalicFont = cmunso.otf]
+  }{
+    \setsansfont{Arial}
+    \newfontfamily\cyrillicfontsf{Arial}
+  }
+
+  % Моноширинный шрифт
+  \IfNoFont{Times New Roman}{
+    \setmonofont[
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+    {cmuntt.otf}
+    \newfontfamily{\cyrillicfonttt}{cmunrm.otf}[ % для кириллицы
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+    % Шрифт для minted
+    \defaultfontfeatures{}
+    \newfontfamily\cyrillicfontttnoftr{cmunrm.otf}[
+    NFSSFamily = cyrillicfontttnoftr,
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+  }{
+    \setmonofont{Times New Roman}
+    \newfontfamily\cyrillicfonttt{Times New Roman}[Script = Cyrillic] % для кириллицы
+    % Шрифт для minted
+    \defaultfontfeatures{}
+    \newfontfamily\cyrillicfontttnoftr{Times New Roman}[
+    NFSSFamily = cyrillicfontttnoftr
+    ]
+  }
+\else               % no times option
 
   % Основной шрифт
   \IfNoFont{PT Astra Serif}{
@@ -379,12 +578,19 @@
     ]
   }
 
+
+\fi
+
+
+
   % убирает точку после названий секций
   \addto\russian@capsformat{
 	\def\postchapter{\@aftersepkern}
 	\def\postsection{\@aftersepkern}
 	\def\postsubsection{\@aftersepkern}
 	\def\postsubsubsection{\@aftersepkern}
+	\def\postparagraph{\@aftersepkern}
+	\def\postsubparagraph{\@aftersepkern}
   }
 
   \usepackage{trimclip}
@@ -401,43 +607,63 @@
 \newlength{\GostItemNestedIndent}
 
 \newcommand\Gost@List{%
- \setlength{\itemsep}{0mm}%                пробел между последовательными элементами
- \setlength{\topsep}{3mm}%                 отступ от текста до перечня (и от перечня до текста)
- \setlength{\partopsep}{0mm}%              дополнительный отступ,  если начали абзац
- \setlength{\parsep}{0mm}%                 расстояние между абзацами внутри пункта
- \setlength{\leftmargin}{0mm}% левый отступ до текста
- \setlength{\itemindent}{\GostItemIndent}%             дополнительный левый отступ первой строчки
- \setlength{\labelsep}{2\GostItemGap}%     от метки до текста
+    \setlength{\itemsep}{.5\parskip}%                пробел между последовательными элементами
+    \setlength{\topsep}{0mm}%                 отступ от текста до перечня (и от перечня до текста)
+    \setlength{\partopsep}{0mm}%              дополнительный отступ,  если начали абзац
+    \setlength{\listparindent}{\parindent}%   Красная строка
+    \setlength{\parsep}{\parskip}%                 расстояние между абзацами внутри пункта
+    \setlength{\leftmargin}{0mm}% левый отступ до текста
+    \setlength{\itemindent}{\GostItemIndent}%             дополнительный левый отступ первой строчки
+    \setlength{\labelsep}{2\GostItemGap}%     от метки до текста
 }
 
 \newcommand\Gost@NestedList{%
- \setlength{\itemsep}{0mm}%                пробел между последовательными элементами
- \setlength{\topsep}{0mm}%                 отступ от текста до перечня (и от перечня до текста)
- \setlength{\partopsep}{0mm}%              дополнительный отступ,  если начали абзац
- \setlength{\parsep}{0mm}%                 расстояние между абзацами внутри пункта
- \setlength{\leftmargin}{\GostItemNestedIndent}% левый отступ до текста
- \setlength{\itemindent}{0mm}%             дополнительный левый отступ первой строчки
- \setlength{\labelsep}{2\GostItemGap}%     от метки до текста
+    \setlength{\itemsep}{.5\parskip}%                пробел между последовательными элементами
+    \setlength{\topsep}{0mm}%                 отступ от текста до перечня (и от перечня до текста)
+    \setlength{\partopsep}{\parskip}%              дополнительный отступ,  если начали абзац
+    \setlength{\listparindent}{1.5em}%   Красная строка
+    \setlength{\parsep}{\parskip}%                 расстояние между абзацами внутри пункта
+    \setlength{\leftmargin}{\GostItemNestedIndent}% левый отступ до текста
+    \setlength{\itemindent}{0mm}%             дополнительный левый отступ первой строчки
+    \setlength{\labelsep}{2\GostItemGap}%     от метки до текста
 }
 
+% GOST 7.32 p. 6.4.6 excluded letters ё, з, й, о, ч, ъ, ы, ь. 
+\renewcommand*{\Asbuk}[1]{\@Ralph{\@nameuse{c@#1}}}
+\newcommand*{\@Ralph}[1]%
+{\ifcase #1\or А\or Б\or В\or Г\or Д\or Е\or Ж\or И\or К\or Л\or М\or Н%
+\or П\or Р\or С\or Т\or У\or Ф\or Х\or Ц\or Ш\or Щ\or Э\or Ю\or Я%
+\else\@ctrerr \fi}
+
+\renewcommand*{\asbuk}[1]{\@ralph{\@nameuse{c@#1}}} % если создать новую команду, почему-то не работает
+\newcommand*{\@ralph}[1]%
+{\ifcase #1\or а\or б\or в\or г\or д\or е\or ж\or и\or к\or л\or м\or н%
+\or п\or р\or с\or т\or у\or ф\or х\or ц\or ш\or щ\or э\or ю\or я%
+\else\@ctrerr \fi}
 
 \renewcommand{\@listI} {\Gost@List}
 \renewcommand{\@listii}{\Gost@NestedList}
+\renewcommand{\@listiii}{\Gost@NestedList}
+\renewcommand{\@listiv}{\Gost@NestedList}
 
 \setlength\GostItemGap{1mm} % небольшие отступы для пунктов перечисления
 \setlength\leftmarginii{0mm}
 \setlength\GostItemIndent{\parindent}
 \setlength\GostItemNestedIndent{\parindent}
-\addtolength\GostItemNestedIndent{6mm}
+\addtolength\GostItemNestedIndent{0mm}
 
 %  ненумерованные перечисления
 \newcommand{\labelitemi}{\cdash---}
+\newcommand{\labelitemii}{\cdash---}
+\newcommand{\labelitemiii}{\cdash---}
+\newcommand{\labelitemiv}{\cdash---}
 
 %  нумерованные перечисления
 \renewcommand\theenumi {\asbuk{enumi}}
 \renewcommand\theenumii{\arabic{enumii}}
 \newcommand\labelenumi{\theenumi)}
 \newcommand\labelenumii{\theenumii)}
+\newcommand\labelenumiii{\cdash---}
 \renewcommand\p@enumii{\theenumi}
 
 %  ссылка на нумерованное перечисление
@@ -461,7 +687,7 @@
 \RequirePackage{amssymb} % для русских "меньше или равно" "больше или равно"
 \RequirePackage{amsmath} % Пусть сразу будет, какой НИР без него -- Коротков И.
 \RequirePackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
-\input{leqno.clo}
+\input{leqno.clo}       % Equation numeration
 
 \renewcommand*\eqref[1]{\ref{#1}} %Было newcommand -- Коротков И.
 \def\@eqnnum{{\theequation}}% убран \normalfont
@@ -543,9 +769,9 @@
 
 % ... допускается нумерация рисунков в пределах раздела
 \newcommand\PicInChapter{%
- \@addtoreset{figure}{chapter}%
- \@figuresonchaptertrue%
- \renewcommand{\thefigure}{\thechapter.\arabic{figure}}%
+    \@addtoreset{figure}{chapter}%
+    \@figuresonchaptertrue%
+    \renewcommand{\thefigure}{\thechapter.\arabic{figure}}%
 }
 
 % 4.4 - таблицы
@@ -562,9 +788,9 @@
 % НЕ добавлена точка после таблицы. Крищенко
 
 \newcommand\TableInChapter{%
- \@addtoreset{table}{chapter}%
- \@tablesonchaptertrue%
- \renewcommand{\thetable}{\thechapter.\arabic{table}}%
+    \@addtoreset{table}{chapter}%
+    \@tablesonchaptertrue%
+    \renewcommand{\thetable}{\thechapter.\arabic{table}}%
 }
 
 \RequirePackage{longtable} % многостраничные таблицы
@@ -573,7 +799,7 @@
 \LTright=\fill
 
 \newcommand*\subcaption[1]{ % Заголовок без "Таблица..." -- для заголовков на других стр.
-  \multicolumn{\LT@cols}{p{1\textwidth}}{#1}
+    \multicolumn{\LT@cols}{p{1\textwidth}}{#1}
 }
 
 \def\fps@table{bph}
@@ -581,52 +807,113 @@
 \def\ext@table{lot}
 \def\fnum@table{\tablename~\thetable}
 
-%  4.3.4 - 4.1.14 Приложения
-\renewcommand\appendix{\par
- \setcounter{secnumdepth}{4}
- \setcounter{chapter}{0}%
- \EqInChapter\PicInChapter\TableInChapter%
- \gdef\@chapapp{\appendixname}%
- \gdef\thechapter{\Asbuk{chapter}}%
- \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle\appendixname~\Gost@MainChapterStyle}%
- \setlength\Gost@ChapterIndent{0mm}%
- \let\@sect\Gost@old@sect%
-}
 
 % 4.5 Сноски
 \RequirePackage[perpage,bottom]{footmisc}
 
 % Части документа- для выбора вида заголовков и т.д.
 \newcommand\structmatter{% common code for the front- and back-matter
- \setcounter{secnumdepth}{-1}%
- \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle}%
- \setlength\Gost@ChapterIndent{0mm}%
+    \setcounter{secnumdepth}{-1}%
+    \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle}%
+    \setlength\Gost@ChapterIndent{0mm}%
 }
 %  введение, обозначения
 \newcommand\frontmatter{\structmatter}
 %  основная часть
 \newcommand\mainmatter{
- \setcounter{secnumdepth}{4}
- \renewcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}%
- \setlength\Gost@ChapterIndent{\Gost@MainChapterIndent}%
+    \setcounter{secnumdepth}{4}
+    \renewcommand\Gost@ChapterStyle{\Gost@MainChapterStyle}%
+    \setlength\Gost@ChapterIndent{\Gost@MainChapterIndent}%
 }
 %  заключение, библиография
 \newcommand\backmatter{\structmatter}
 
 %всякие оглавления
-\newcommand\tableofcontents{\chapter*{\contentsname}\@starttoc{toc}}
+\newcommand\tableofcontents{\chapter*{\contentname}\@starttoc{toc}}           % FIXME \contentname is NOT standart command name so no language switch supported 
+
+
 \newcommand\listoffigures{\chapter*{\listfigurename}\@starttoc{lof}}
 \newcommand\listoftables{\chapter*{\listtablename}\@starttoc{lot}}
 
-\newcommand{\l@chapter}   {\@dottedtocline{1}{0mm}{1.6em}}
-\newcommand{\l@section}{\@dottedtocline{2}{10mm}{2.8em}}
-\newcommand{\l@subsection}   {\@dottedtocline{3}{20mm}{4.0em}}
-\newcommand{\l@subsubsection}{\@dottedtocline{4}{30mm}{5.2em}}
-\newcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
-\newcommand*\l@table {\@dottedtocline{1}{1.5em}{2.3em}}
+\newcommand{\l@part}   {\@dottedtocline{0}{0mm}{1.6em}}
+%\newcommand{\l@chapter}   {\@dottedtocline{1}{0mm}{1.6em}}
+
+% style for toc item
+\renewcommand*\@dottedtocline[5]{
+    \ifnum #1 > \c@tocdepth \else
+    \addpenalty{-\@highpenalty}%
+    \vskip \z@ \@plus.2\p@
+    \leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
+    \parindent #2\relax\@afterindenttrue
+    \interlinepenalty\@M
+    \leavevmode
+    \setlength\@tempdima{#3}%
+    \begingroup
+    \parindent \z@ \rightskip \@pnumwidth
+    \parfillskip -\@pnumwidth
+    \leavevmode %\bfseries
+    \advance\leftskip\@tempdima
+    \hskip -\leftskip
+    \@chapapp\hspace{.5em} #4\nobreak\dotfill \nobreak\hb@xt@\@pnumwidth{\hss #5}\par
+    \penalty\@highpenalty
+    \endgroup
+    \fi
+}
+
+
+
+\newcommand{\l@chapter}        {\@dottedtocline{1}{0mm}{1em}}
+\newcommand{\l@section}        {\@dottedtocline{2}{.8em}{2em}}
+\newcommand{\l@subsection}     {\@dottedtocline{3}{1.6em}{2.7em}}
+\newcommand{\l@subsubsection}  {\@dottedtocline{4}{2.4em}{3.5em}}
+\newcommand{\l@paragraph}      {\@dottedtocline{5}{3.2em}{4.8em}}
+\newcommand{\l@subparagraph}   {\@dottedtocline{6}{5.0em}{4.8em}}
+\newcommand*{\l@figure}        {\@dottedtocline{1}{1.5em}{2.3em}}
+\newcommand*{\l@table}         {\@dottedtocline{1}{1.5em}{2.3em}}
 \newcommand\@tocrmarg{2.55em} %отступ правого края оглавления перенесённых строк
 \newcommand\@dotsep{4.5}      %между точками в оглавлении в em
 \linespread{\Gost@LineSpread} %полуторный межстрочный интервал
+
+
+%  4.3.4 - 4.1.14 Приложения
+
+\newcommand\appendix{\par
+    \setcounter{secnumdepth}{4}
+    \setcounter{chapter}{0}%
+    \setcounter{section}{0}%
+    \EqInChapter\PicInChapter\TableInChapter%
+    \renewcommand\@chapapp{\appendixname}%
+    \gdef\thechapter{\Asbuk{chapter}}%
+    \renewcommand\Gost@ChapterStyle{\Gost@StructChapterStyle}%
+    \setlength\Gost@ChapterIndent{0mm}%
+    \let\@sect\Gost@old@sect%
+\renewcommand\@makechapterhead[1]{%
+  {\parindent \z@ \centering \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+    \GostTitleStyle\Gost@ChapterStyle \@chapapp\space \thechapter
+    \fi
+    \par
+    \interlinepenalty\@M
+    \Gost@ChapterStyle{##1}\par\nobreak
+    \vspace{\GostAfterTitleSkip}
+  }}
+
+\gdef\@chapter[##1]##2{\ifnum \c@secnumdepth >\m@ne
+                         \refstepcounter{chapter}%
+                         \typeout{\@chapapp\space\thechapter.}%
+                         \addcontentsline{toc}{chapter}%
+                         {\@chapapp\space\protect\numberline{\thechapter}##1}%
+                    \else
+                      \addcontentsline{toc}{chapter}{##1}%
+                    \fi
+                    \chaptermark{##1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                      \@makechapterhead{##2}%
+                      \@afterheading
+                    }
+}
+
 
 \AtBeginDocument{%
  \makeatletter%
@@ -638,21 +925,23 @@
 }
 
 %библиография
+\newcounter{biblio}
+\setcounter{biblio}{0}
 \newdimen\bibindent
 \newenvironment{thebibliography}[1]{
- \chapter{\bibname}%
- \list{\@biblabel{\@arabic\c@enumiv}}%
+ \chapter{\bibsname}%
+ \list{\@biblabel{\@arabic\c@biblio}}%
       {\settowidth\labelwidth{\@biblabel{#1}}%
        \leftmargin\labelwidth
        \advance\leftmargin\labelsep
        \@openbib@code
-       \usecounter{enumiv}%
+       \usecounter{biblio}%
        \let\p@enumiv\@empty
-       \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+       \renewcommand\thebiblio{\@arabic\c@biblio}}%
  \sloppy\clubpenalty4000\widowpenalty4000%
  \sfcode`\.\@m
 }{
- \setcounter{totalbib}{\c@enumiv}%
+%\setcounter{totbiblio}{\value{\c@biblio}}%
  \def\@noitemerr
  {\@latex@warning{Empty `thebibliography' environment}}%
  \endlist
@@ -661,9 +950,8 @@
 \setlength\bibindent{1.5em}
 
 % Точки после номеров в библиографии. Несовместимо с natbib! -- Коротков И.
-%\makeatletter
 \renewcommand*{\@biblabel}[1]{\hfill#1.}
-%\makeatother
+
 
 %индекс
 \newenvironment{theindex}{
@@ -724,7 +1012,7 @@
 \makeatother
 }
 
-\newcommand\AfterHyperrefFix{
+\newcommand\AfterHyperrefFix{% issue #31 fix (https://github.com/latex-g7-32/latex-g7-32/issues/31) 
  \makeatletter
  \let\Gost@old@sect\@sect
  \def\@sect##1##2##3##4##5##6[##7]##8{%
@@ -748,7 +1036,27 @@
   }
 }
 
-\newcommand\MakeDashesBold{
+%Fix xelatex invisible emdash on CMU, an ugly way
+\RequirePackage{color}
+\newlength{\emdashlenght}
+\settowidth{\emdashlenght}{---}
+\newcommand\MakeDashes{
+  \usepackage{trimclip}
+  \makeatletter
+  \let\Gost@old@cyrdash\cyrdash
+  \def\cyrdash{%
+    \ifdim\f@size pt>13pt%
+    \clipbox{0pt}{\hbox to .8em{\textcolor{white}{---}\hskip
+    -\emdashlenght \rule[.45ex]{\emdashlenght}{1pt}\hss}}%
+    \else%
+       \Gost@old@cyrdash%
+    \fi%
+  }
+  \FixBibliographyCyrdash
+  \makeatother
+}
+
+\newcommand\MakeDashesBold{% Fix invisible emdash on xelatex CMU, but not for 100 percent
   \usepackage{trimclip}
   \makeatletter
   \let\Gost@old@cyrdash\cyrdash
@@ -762,6 +1070,7 @@
   \FixBibliographyCyrdash
   \makeatother
 }
-\ifXeTeX
-\FixBibliographyCyrdash
-\fi
+%\ifXeTeX
+%\FixBibliographyCyrdash
+%\fi
+
