@@ -380,7 +380,7 @@
 \newcommand*\NirCode[1]{\renewcommand\Nir@Code{#1}} % Code of report changeable
 
 
-
+\RequirePackage{etoolbox}%                                  For \newrobustcmd
 \def\beamer@calltheme#1#2#3{%
     \def\beamer@themelist{#2}%
     \@for\beamer@themename:=\beamer@themelist\do
