@@ -1,0 +1,218 @@
+use File::Path qw(make_path);
+use File::Which;
+use File::Copy;
+use Cwd;
+
+$current_dir = cwd();
+$tex_dir = "$current_dir/tex";
+$graphics_dir = "$current_dir/graphics";
+$src_dir = "$current_dir/src";
+
+$use_pdflatex = 0;
+$build_dir = "build";
+
+sub my_option_handler {
+    my ($type, $arg, $argv) = @_;
+    if($type == 2){
+        do_after_options();
+    } elsif($type == 1){
+        return "$tex_dir/$arg";
+    } elsif($type == 0){
+        if ($arg eq '-use-pdflatex' || $arg eq '-up'){
+            $use_pdflatex = 1;
+            return 0;
+        } elsif ($arg eq '-build-dir' || $arg eq '-bd'){
+            if ($#$argv == -1){
+                die("Specify build directory after $arg!");
+            }
+            $build_dir = shift(@$argv);
+            return 0;
+        }
+    }
+    return 1;
+}
+
+sub my_help_print() {
+    print
+        "\n",
+        "Additional options:\n\n",,
+        "   -up, -use-pdflatex      - use PdfLaTeX instead of XeLaTeX\n",
+        "   -bd, -build-dir <path>  - change build directory\n",
+        "                             (default is 'build')\n"
+}
+
+my %exists_prog;
+foreach $prog ('inkscape', 'dot', 'dia', 'pygmentize', 'iconv'){
+    $exists_prog{$prog} = !!which($prog);
+}
+
+$pdflatex = '';
+
+sub do_after_options {
+    make_path($build_dir);
+    chdir($build_dir);
+    $pdflatex =
+        (($use_pdflatex) ? "pdflatex": "xelatex").
+        " -interaction=nonstopmode -shell-escape %O ".
+        (($exists_prog{pygmentize})?"%S":"\"\\def\\NoMinted{}\\input{%S}\"");
+}
+
+set_cus_option_handler('my_option_handler', 'my_help_print');
+
+$ENV{TEXINPUTS} =
+    (defined($ENV{TEXINPUTS}) ? "$ENV{TEXINPUTS}$Config{path_sep}" : '').
+    "$tex_dir$Config{path_sep}";
+$ENV{BIBINPUTS} =
+    (defined($ENV{BIBINPUTS}) ? "$ENV{BIBINPUTS}$Config{path_sep}" : '').
+    "$tex_dir$Config{path_sep}";
+
+$MSWin_back_slash = 0;
+$cleanup_includes_cusdep_generated = 1;
+$bibtex_use = 2;
+$pdf_mode = 1;
+$recorder = 1;
+
+$file_inc_dir  = "inc";
+$file_graphics_dir = "$file_inc_dir";
+$file_src_dir = "$file_inc_dir/src";
+$error_basename = "$file_inc_dir/error";
+
+sub custom_transform_cus_dep {
+    my ($name, $all) = @_;
+    if ($all){
+        if ($name =~ /^\Q$file_src_dir\E/) {
+            $name =~ s!^$file_src_dir!$src_dir!;
+        } else {
+            $name = '';
+        }
+    } else {
+        $name =~ s!^$file_graphics_dir!$graphics_dir!;
+    }
+    return $name;
+}
+
+sub make_dir_for_file {
+    my $path = (fileparse($_[0]))[1];
+    make_path($path);
+}
+
+if ($exists_prog{dot}){
+    add_cus_dep('dot', 'pdf', 0, 'dot2pdf');
+} else {
+    add_cus_dep('dot', 'pdf', 0, 'error_pdf');
+}
+
+if ($exists_prog{inkscape}){
+    add_cus_dep('svg', 'pdf', 0, 'svg2pdf');
+} else {
+    add_cus_dep('svg', 'pdf', 0, 'error_pdf');
+}
+
+if ($exists_prog{dia} && $exists_prog{inkscape}){
+    add_cus_dep('dia', 'pdf', 0, 'dia2pdf');
+} else {
+    add_cus_dep('dia', 'pdf', 0, 'error_pdf');
+}
+
+add_cus_dep( 'nlo', 'nls', 0, 'nlo2nls' );
+
+sub add_tmp {
+    my ($name, $num) = @_;
+    my ($base_name, $path, $ext)=fileparse($name, qr/\.[^.]*/);
+    if ($#_ == 2){
+        $ext = $_[2];
+    } else {
+        $ext =~ s/^\.*//g;
+    }
+    return "$path$base_name-tmp$num.$ext";
+}
+
+set_cus_dep_transform('custom_transform_cus_dep');
+add_cus_dep('all_cus_dep');
+
+sub error_pdf {
+    if (!-f "$error_basename.pdf"){
+        make_dir_for_file("$error_basename.pdf");
+        open(my $fh, '>', "$error_basename.tex") or die("Can't open file $error_basename.tex");
+        print $fh '\\documentclass{standalone}\\begin{document}No image\\end{document}';
+        close $fh;
+        system("xelatex -jobname $error_basename $error_basename.tex");
+    }
+    make_dir_for_file("$_[0].pdf");
+    copy("$error_basename.pdf", "$_[0].pdf");
+    return 0;
+}
+
+$inkscape_cmd = "inkscape -A \"%s\" \"%s\"";
+$dot_cmd = "dot -o\"%s\" -Tpdf \"%s\"";
+$dia_cmd = "dia -e \"%s\" -t svg \"%s\"";
+$crop_cmd = "pdfcrop \"%s\" \"%s\"";
+$iconv_cmd = "iconv -f UTF-8 -t KOI8-R \"%s\" > \"%s\"";
+$nomencl_cmd = "makeindex -s nomencl.ist -o \"%s\" \"%s\"";
+
+sub exec_cmd {
+    if ($_[0]){
+        print "Executing $_[0]\n";
+        system($_[0]);
+    }
+}
+
+sub nlo2nls {
+    exec_cmd(sprintf($nomencl_cmd, $cusdep_dest, $cusdep_source));
+}
+
+#for source files
+sub all_cus_dep {
+    make_dir_for_file($cusdep_dest);
+    if ($use_pdflatex){
+        if($exists_prog{iconv}){
+            exec_cmd(sprintf($iconv_cmd, $cusdep_source, $cusdep_dest));
+        } else {
+            open($fh, ">", $cusdep_dest) or die ("Can't open file $cusdep_dest");
+            print $fh 'No iconv => no listings!';
+            close $fh;
+        }
+    } else {
+        copy($cusdep_source, $cusdep_dest);
+    }
+    return 0;
+}
+
+sub dot2pdf {
+    make_dir_for_file($cusdep_dest);
+    foreach my $cmd (
+        sprintf($dot_cmd, add_tmp($cusdep_dest, 1), $cusdep_source),
+        sprintf($crop_cmd, add_tmp($cusdep_dest, 1), $cusdep_dest)
+    )
+    {
+        exec_cmd($cmd);
+    }
+    unlink(add_tmp($cusdep_dest, 1));
+    return 0;
+}
+
+sub svg2pdf {
+    make_dir_for_file($cusdep_dest);
+    foreach my $cmd (
+        sprintf($inkscape_cmd, add_tmp($cusdep_dest, 1), $cusdep_source),
+        sprintf($crop_cmd, add_tmp($cusdep_dest, 1), $cusdep_dest)
+    ) {
+        exec_cmd($cmd);
+    }
+    unlink(add_tmp($cusdep_dest, 1));
+    return 0;
+}
+
+sub dia2pdf {
+    make_dir_for_file($cusdep_dest);
+    foreach my $cmd (
+        sprintf($dia_cmd, add_tmp($cusdep_dest, 1, 'svg'), $cusdep_source),
+        sprintf($inkscape_cmd,  add_tmp($cusdep_dest, 2),  add_tmp($cusdep_dest, 1, 'svg')),
+        sprintf($crop_cmd,  add_tmp($cusdep_dest, 2), $cusdep_dest)
+    ) {
+        exec_cmd($cmd);
+    }
+    unlink(add_tmp($cusdep_dest, 1, 'svg'));
+    unlink(add_tmp($cusdep_dest, 2));
+    return 0;
+}
