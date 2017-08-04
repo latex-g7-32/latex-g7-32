@@ -36,8 +36,8 @@ https://github.com/latex-g7-32/latex-g7-32/archive/master.zip:
 Скопировать файлы: 
 `G2-105.sty  G7-32.cls  G7-32.sty  GostBase.clo  gosttitleGostRV15-110mipt.sty  gosttitleGostRV15-110.sty  local-minted.sty` в локальный texmf.
 Для линукс это будет `$HOME/texmf/`.
-Для Виндовс `C:\Users\USERNAME\texmf\`
-Проверить это можно командой `kpsewhich -var-value=TEXMFHOME`
+Для Виндовс `C:\Users\USERNAME\texmf\`.
+Проверить это можно командой `kpsewhich -var-value=TEXMFHOME`.
 Относительно texmf путь будет `texmf/tex/latex/latex-g7-32/`.
 
 
@@ -92,7 +92,7 @@ python3.4
 
 Копирует (или перемещает) файлы со стилями в общую `texmf` папку, макеты `LyX` в папку с настройками `LyX`. Для получения помощи вызовите `install.py --help`.
 
-## Использование LaTeX
+## Использование РПЗ
 После изменения РПЗ создайте директорию build в корне проекта, затем `cd ./build & cmake .. && make`. В ней появится файл РПЗ - rpz.pdf. Cmake по умолчанию собирает с xelatex.
 
 После изменения РПЗ запустите `make` в корне. Результатом будет `rpz.pdf`. Если требуется использование `pdfLaTeX` то в `Makefile` надо поменять в третье строке `xelatex` на `pdflatex`.
@@ -305,7 +305,7 @@ According to the requirements of
 [dvarubla](https://github.com/dvarubla)
 
 
-#### Благодарности
+## Благодарности
 [Ростислав Листеренко](https://github.com/kaedvann) (сообщения об ошибках)
 
 Стиль разрабатывается при поддержке ["Дизайн-центр МФТИ"](http://miptdesigncenter.tilda.ws), [НТКТеХЛАБ](http://ntktechlab.org). 
