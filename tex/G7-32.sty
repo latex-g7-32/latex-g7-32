@@ -310,8 +310,8 @@
 \newcommand*\NirIspStamp[1]{\renewcommand\Nir@IspStamp{#1}}     % Changeable head executor stamp
 
 %fix for first time compilation
-\newcommand\Nir@Title[1]{#1}
-%\newcommand*\Nir[1]{\Nir@Title{#1}}  %Название НИР, не совместимо с \NirTitle  
+\newcommand\Nir@Title{\vspace{-2ex}}
+\newcommand\Nir[1]{\renewcommand\Nir@Title{#1}}  %Название НИР, не совместимо с \NirTitle  
 \newcommand\Nir@TitleAndSubject{
     \vspace{5ex}
 \hrule\par\vspace{1ex}
