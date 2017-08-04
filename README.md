@@ -20,6 +20,7 @@
 ## Установка
 
 Скачать последнюю версию.
+
 C помощью git:
 ```
 git clone https://github.com/latex-g7-32/latex-g7-32
@@ -32,7 +33,8 @@ https://github.com/latex-g7-32/latex-g7-32/archive/master.zip:
 Или взять из [релизов](https://github.com/rominf/latex-g7-32/releases).
 Однако, релизы формируются с течением времени и могут содержать существенно устаревшую версию.
 
-Скопировать файлы: G2-105.sty  G7-32.cls  G7-32.sty  GostBase.clo  gosttitleGostRV15-110mipt.sty  gosttitleGostRV15-110.sty  local-minted.sty в локальный texmf.
+Скопировать файлы: 
+`G2-105.sty  G7-32.cls  G7-32.sty  GostBase.clo  gosttitleGostRV15-110mipt.sty  gosttitleGostRV15-110.sty  local-minted.sty` в локальный texmf.
 Для линукс это будет `$HOME/texmf/`.
 Для Виндовс `C:\Users\USERNAME\texmf\`
 Проверить это можно командой `kpsewhich -var-value=TEXMFHOME`
