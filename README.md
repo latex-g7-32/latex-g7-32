@@ -246,7 +246,7 @@ docker run --volume /path/to/latex-g7-32/:/doc/ somename
 четырьмя способами: (make, cmake) × (pdflatex, xelatex), если вам достаточно 
 какого‐то одного, то можно изменить `docker/build.sh`.
 
-##Альтернативная система сборки 
+## Альтернативная система сборки 
 Альтернативная система сборки с помощью модифицированного скрипта [latexmkmod](https://github.com/dvarubla/latexmkmod).
 
 Для сборки выполнить либо `build.sh`, либо `build.bat`: создастся директория build и в ней будет PDF файл. 
