@@ -246,6 +246,15 @@ docker run --volume /path/to/latex-g7-32/:/doc/ somename
 четырьмя способами: (make, cmake) × (pdflatex, xelatex), если вам достаточно 
 какого‐то одного, то можно изменить `docker/build.sh`.
 
+##Альтернативная система сборки 
+Альтернативная система сборки с помощью модифицированного скрипта [latexmkmod](https://github.com/dvarubla/latexmkmod).
+
+Для сборки выполнить либо `build.sh`, либо `build.bat`: создастся директория build и в ней будет PDF файл. 
+
+Минимальные требования: сам скрипт (установка описана по ссылке выше) и TeX Live.  В этом случае вместо изображений отобразятся заглушки и листингов с кодом не будет. 
+Чтобы появились изображения и код, нужно дополнительно установить: Python 2, Pygments (`pip install pygments`), Graphviz, Dia, Inkscape, при необходимости вручную добавить пути в `PATH`. 
+У меня в этой переменной вот что: `PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\texlive\2016\bin\win32;C:\Program Files\Graphviz2.38\bin;C:\Program Files\Dia\bin;C:\Program Files\Inkscape;C:\Python27\;C:\Python27\Scripts`.
+
 ## Использование LyX
 Откройте `lyx/rpz.lyx` и редактируйте.
 
