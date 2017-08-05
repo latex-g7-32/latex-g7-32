@@ -454,22 +454,7 @@
     BoldItalicFont = cmunbi.otf]
   }{
     \setmainfont{Times New Roman}
-    \newfontfamily\cyrillicfont{Times New Roman}
-  }
-  % Шрифт с засечками
-  \IfNoFont{Times New Roman}{
-    \setromanfont[
-    BoldFont = cmunbx.otf,
-    ItalicFont = cmunti.otf,
-    BoldItalicFont = cmunbi.otf]
-    {cmunrm.otf}
-    \newfontfamily\cyrillicfontrm{cmunrm.otf}[ % для кириллицы
-    BoldFont = cmunbx.otf,
-    ItalicFont = cmunti.otf,
-    BoldItalicFont = cmunbi.otf]
-  }{
-    \setmainfont{Times New Roman}
-    \newfontfamily\cyrillicfontrm{Times New Roman}
+    \newfontfamily\cyrillicfont{Times New Roman}%[Script = Cyrillic] % для кириллицы
   }
 
   % Шрифт без засечек
@@ -508,12 +493,10 @@
     BoldItalicFont = cmuntx.otf]
   }{
     \setmonofont{Times New Roman}
-    \newfontfamily\cyrillicfonttt{Times New Roman}[Script = Cyrillic] % для кириллицы
+    \newfontfamily\cyrillicfonttt{Times New Roman}
     % Шрифт для minted
     \defaultfontfeatures{}
-    \newfontfamily\cyrillicfontttnoftr{Times New Roman}[
-    NFSSFamily = cyrillicfontttnoftr
-    ]
+    \newfontfamily\cyrillicfontttnoftr{Times New Roman}
   }
 \else               % no times option
 
