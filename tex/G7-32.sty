@@ -19,13 +19,13 @@
 
 % ГОСТ 7.32-2001 ред. 2009 года.pdf item 6.1.2:
 % Полужирный шрифт не применяется
-\renewcommand\GostTitleStyle{
-    \if@usebold
-    \bfseries
-    \else
-    \normalfont
-    \fi
-}
+\renewcommand\GostTitleStyle{%
+    \if@usebold%
+    \bfseries%
+    \else%
+    \normalfont%
+    \fi%
+}%
 
 % ГОСТ 7.32-2001 ред. 2009 года.pdf item 6.2.1:
 % Заголовки структурных элементов следует располагать в середине
@@ -41,7 +41,11 @@
 % Get rid of the large font in chapter titles
 % (not sure whether this is regulated)
 % (TODO: Perhaps, this should be an option.)
-\renewcommand\Gost@MainChapterStyle{}
+\renewcommand\Gost@MainChapterStyle{%
+    \if@usebold%
+    \bfseries%
+    \fi%
+}%
 
 %стандартные части
 \newcommand\Executors{%список исполнителей

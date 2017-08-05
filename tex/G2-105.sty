@@ -85,10 +85,7 @@
 \setlength\columnseprule{0\p@}
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
-
 \setlength\parskip{0\p@ \@plus \p@}
-
-
 \setlength\leftmargini {2.5em}
 \setlength\leftmarginii{2.2em}
 \setlength\labelsep  {.5em}
@@ -279,7 +276,13 @@
 \newcommand\@makechapterhead[1]{%
   {\parindent \z@ \raggedright \normalfont
     \ifnum \c@secnumdepth >\m@ne
-    \hspace{\Gost@ChapterIndent}\GostTitleStyle\Gost@ChapterStyle \@chapapp\space \thechapter\hskip 5\p@
+    \hspace{\Gost@ChapterIndent}\Gost@MainChapterStyle%
+        \ifx\@chapapp\@empty%
+            \thechapter\hskip 5\p@%
+%
+        \else%
+            \@chapapp\space\thechapter\hskip 5\p@%
+        \fi
     \fi
     \interlinepenalty\@M
     \Gost@ChapterStyle{#1}\par\nobreak
@@ -305,12 +308,7 @@
 
 %  Подраздел
 \newcounter{section}[chapter]
-\renewcommand\thesection{
-    %\if@usebold
-    %\bfseries
-    %\fi
-    \thechapter.\@arabic\c@section
-}
+\renewcommand\thesection{\thechapter.\@arabic\c@section}
 \newcommand\section{%
  \@startsection{section}{1}%
  {\GostTitleIndent}{\GostBeforTitleSkip}{\GostAfterTitleSkip}%
@@ -814,7 +812,7 @@
 \newcommand\backmatter{\structmatter}
 
 %всякие оглавления
-\newcommand\tableofcontents{\chapter*{\contentsname}\@starttoc{toc}}           % FIXME \contentname is NOT standart command name so no language switch supported 
+\newcommand\tableofcontents{\chapter*{\contentsname}\@starttoc{toc}}           
 
 
 \newcommand\listoffigures{\chapter*{\listfigurename}\@starttoc{lof}}
@@ -875,7 +873,7 @@
 \renewcommand\@makechapterhead[1]{%
   {\parindent \z@ \centering \normalfont
     \ifnum \c@secnumdepth >\m@ne
-    \GostTitleStyle\Gost@ChapterStyle \@chapapp\space \thechapter
+        \GostTitleStyle\Gost@ChapterStyle \@chapapp\space\thechapter%
     \fi
     \par
     \interlinepenalty\@M
