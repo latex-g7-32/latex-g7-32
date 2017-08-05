@@ -454,7 +454,7 @@
     BoldItalicFont = cmunbi.otf]
   }{
     \setmainfont{Times New Roman}
-    \newfontfamily\cyrillicfont{Times New Roman}[Script = Cyrillic] % для кириллицы
+    \newfontfamily\cyrillicfont{Times New Roman}%[Script = Cyrillic] % для кириллицы
   }
 
   % Шрифт без засечек
@@ -474,7 +474,7 @@
   }
 
   % Моноширинный шрифт
-  \IfNoFont{Times New Roman}{
+  \IfNoFont{Courier New}{
     \setmonofont[
     BoldFont = cmuntb.otf,
     ItalicFont = cmunit.otf,
@@ -492,11 +492,11 @@
     ItalicFont = cmunit.otf,
     BoldItalicFont = cmuntx.otf]
   }{
-    \setmonofont{Times New Roman}
-    \newfontfamily\cyrillicfonttt{Times New Roman}
+    \setmonofont{Courier New}
+    \newfontfamily\cyrillicfonttt{Courier New}
     % Шрифт для minted
     \defaultfontfeatures{}
-    \newfontfamily\cyrillicfontttnoftr{Times New Roman}[
+    \newfontfamily\cyrillicfontttnoftr{Courier New}[
     NFSSFamily = cyrillicfontttnoftr
     ]
   }
