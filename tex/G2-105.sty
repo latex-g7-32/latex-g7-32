@@ -435,7 +435,7 @@
    %\RequirePackage{xltxtra}
   \RequirePackage{polyglossia}
   \defaultfontfeatures{Scale=MatchLowercase, Ligatures=TeX, Mapping=tex-text} % стандартные лигатуры TeX, замены нескольких дефисов на тире и т. п.
-  \setmainlanguage[spelling=modern,babelshorthands=true]{russian} % Язык по-умолчанию русский с поддержкой приятных команд пакета babel
+  \setmainlanguage[babelshorthands=true]{russian} % Язык по-умолчанию русский с поддержкой приятных команд пакета babel
   \PolyglossiaSetup{russian}{indentfirst=true}
   \setotherlanguage{english}
 
@@ -829,7 +829,7 @@
 \newcommand\backmatter{\structmatter}
 
 %всякие оглавления
-\newcommand\tableofcontents{\chapter*{\contentname}\@starttoc{toc}}           % FIXME \contentname is NOT standart command name so no language switch supported 
+\newcommand\tableofcontents{\chapter*{\contentsname}\@starttoc{toc}}           % FIXME \contentname is NOT standart command name so no language switch supported 
 
 
 \newcommand\listoffigures{\chapter*{\listfigurename}\@starttoc{lof}}
@@ -929,7 +929,7 @@
 \setcounter{biblio}{0}
 \newdimen\bibindent
 \newenvironment{thebibliography}[1]{
- \chapter{\bibsname}%
+ \chapter{\bibname}%
  \list{\@biblabel{\@arabic\c@biblio}}%
       {\settowidth\labelwidth{\@biblabel{#1}}%
        \leftmargin\labelwidth
