@@ -399,12 +399,13 @@
   \lccode`\-=`\-
   \defaulthyphenchar=127
 
-  \RequirePackage{cmap} %теперь из pdf можно копипастить русский текст
-  \RequirePackage[T2A]{fontenc} % T1 по этой же причине, иначе акробату плохо.
-  \RequirePackage[\Gost@encoding]{inputenc}
-  \RequirePackage[english,russian]{babel}
-  \RequirePackage{ucs} %теперь из pdf можно копипастить русский текст
-  \RequirePackage{mathtext}%русские буквы в формулах
+  \RequirePackage{cmap}%                             % теперь из pdf можно копипастить русский текст
+  \RequirePackage[T2A]{fontenc}%                     % T1 по этой же причине, иначе акробату плохо.
+  \RequirePackage[\Gost@encoding]{inputenc}%
+  \RequirePackage[english,russian]{babel}%
+  \RequirePackage{ucs}%                              %теперь из pdf можно копипастить русский текст
+  \RequirePackage{mathtext}%                         %русские буквы в формулах
+  \RequirePackage{xstring}%                          %\asbuk p. 6.4.6 GOST 7.32 
   \if@usepscyr
     \RequirePackage[math]{pscyr}
   \fi
@@ -612,17 +613,8 @@
 }
 
 % GOST 7.32 p. 6.4.6 excluded letters ё, з, й, о, ч, ъ, ы, ь. 
-\renewcommand*{\Asbuk}[1]{\@Ralph{\@nameuse{c@#1}}}
-\newcommand*{\@Ralph}[1]%
-{\ifcase #1\or А\or Б\or В\or Г\or Д\or Е\or Ж\or И\or К\or Л\or М\or Н%
-\or П\or Р\or С\or Т\or У\or Ф\or Х\or Ц\or Ш\or Щ\or Э\or Ю\or Я%
-\else\@ctrerr \fi}
-
-\renewcommand*{\asbuk}[1]{\@ralph{\@nameuse{c@#1}}} % если создать новую команду, почему-то не работает
-\newcommand*{\@ralph}[1]%
-{\ifcase #1\or а\or б\or в\or г\or д\or е\or ж\or и\or к\or л\or м\or н%
-\or п\or р\or с\or т\or у\or ф\or х\or ц\or ш\or щ\or э\or ю\or я%
-\else\@ctrerr \fi}
+\renewcommand*{\Asbuk}[1]{\protect\StrChar{АБВГДЕЖИКЛМНПРСТУФХЦШЩЭЮЯ}{\@nameuse{c@#1}}}
+\renewcommand*{\asbuk}[1]{\protect\StrChar{абвгдежиклмнпрстуфхцшщэюя}{\@nameuse{c@#1}}}
 
 \renewcommand{\@listI} {\Gost@List}
 \renewcommand{\@listii}{\Gost@NestedList}
