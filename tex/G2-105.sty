@@ -1020,12 +1020,8 @@
   \makeatletter
   \let\Gost@old@cyrdash\cyrdash
   \def\cyrdash{%
-    \ifdim\f@size pt>13pt%
     \clipbox{0pt}{\hbox to .8em{\textcolor{white}{---}\hskip
     -\emdashlenght \rule[.45ex]{\emdashlenght}{1pt}\hss}}%
-    \else%
-       \Gost@old@cyrdash%
-    \fi%
   }
   \FixBibliographyCyrdash
   \makeatother
@@ -1036,11 +1032,7 @@
   \makeatletter
   \let\Gost@old@cyrdash\cyrdash
   \def\cyrdash{%
-    \ifdim\f@size pt>13pt%
        \clipbox{0pt}{\hbox to .8em{\textbf{\Gost@old@cyrdash\hss}}}%
-    \else%
-       \Gost@old@cyrdash%
-    \fi%
   }
   \FixBibliographyCyrdash
   \makeatother
