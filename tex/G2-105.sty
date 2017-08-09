@@ -613,8 +613,8 @@
 }
 
 % GOST 7.32 p. 6.4.6 excluded letters ё, з, й, о, ч, ъ, ы, ь. 
-\renewcommand*{\Asbuk}[1]{\protect\StrChar{АБВГДЕЖИКЛМНПРСТУФХЦШЩЭЮЯ}{\@nameuse{c@#1}}}
-\renewcommand*{\asbuk}[1]{\protect\StrChar{абвгдежиклмнпрстуфхцшщэюя}{\@nameuse{c@#1}}}
+\renewcommand*{\Asbuk}[1]{\protect\StrChar{АБВГДЕЖИКЛМНПРСТУФХЦШЩЭЮЯ}{\the\@nameuse{c@#1}}}
+\renewcommand*{\asbuk}[1]{\protect\StrChar{абвгдежиклмнпрстуфхцшщэюя}{\the\@nameuse{c@#1}}}
 
 \renewcommand{\@listI} {\Gost@List}
 \renewcommand{\@listii}{\Gost@NestedList}
