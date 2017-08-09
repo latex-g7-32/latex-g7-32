@@ -17,21 +17,9 @@ citecolor=black, menucolor=black, filecolor=black,
 
 \usepackage{microtype}% полезный пакет для микротипографии, увы под xelatex мало чего умеет, но под pdflatex хорошо улучшает читаемость
 
-% Изменение начертания шрифта --- после чего выглядит таймсоподобно.
-% apt-get install scalable-cyrfonts-tex
-
-\ifPDFTeX
-\IfFileExists{cyrtimes.sty}
-    {
-        \usepackage{cyrtimespatched}
-    }
-    {
-        % А если Times нету, то будет CM...
-        % Чтобы отображались длинные тире в Acrobat
-        \MakeDashesBold
-    }
-\else
-    \MakeDashes
+% Тире могут быть невидимы в Adobe Reader
+\ifInvisibleDashes
+\MakeDashesBold
 \fi
 
 \usepackage{graphicx}   % Пакет для включения рисунков
