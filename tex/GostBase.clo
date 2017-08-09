@@ -1,10 +1,13 @@
 \newcommand\@ptsize{}
 \newif\if@usehyperref\@usehyperreffalse
-\newif\if@usepscyr   \@usepscyrfalse
-\newif\if@usetimes      \@usetimesfalse
 \newif\if@usebold      \@useboldfalse
 \newcommand\Gost@encoding{}
 \newcommand\Gost@LineSpread{1.3}
+\ifPDFTeX
+  \newcommand\Gost@fonts{times}
+\else
+  \newcommand\Gost@fonts{astra}
+\fi
 
 \DeclareOption{a3paper}{\setlength\paperheight{420mm}\setlength\paperwidth{297mm}}
 \DeclareOption{a4paper}{\setlength\paperheight{297mm}\setlength\paperwidth{210mm}}
@@ -18,8 +21,11 @@
 \DeclareOption{draft}{\setlength\overfullrule{5pt}}
 \DeclareOption{final}{\setlength\overfullrule{0pt}}
 \DeclareOption{usehyperref}{\@usehyperreftrue}
-\DeclareOption{usepscyr}{\@usepscyrtrue}
-\DeclareOption{times}{\@usetimestrue}
+\DeclareOption{usepscyr}{\renewcommand\Gost@fonts{pscyr}}
+\DeclareOption{pscyr}{\renewcommand\Gost@fonts{pscyr}}
+\DeclareOption{times}{\renewcommand\Gost@fonts{times}}
+\DeclareOption{astra}{\renewcommand\Gost@fonts{astra}}
+\DeclareOption{cm}{\renewcommand\Gost@fonts{cm}}
 \DeclareOption{bold}{\@useboldtrue}
 \DeclareOption{koi8-r}{\renewcommand\Gost@encoding{koi8-r}}
 \DeclareOption{cp1251}{\renewcommand\Gost@encoding{cp1251}}
