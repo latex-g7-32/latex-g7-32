@@ -43,6 +43,7 @@
 \ProvidesPackage{G2-105}[2015/11/01 v2.00 General reqs. GOST 2.105-95]
 \NeedsTeXFormat{LaTeX2e}
 
+\RequirePackage{iftex}
 \input{GostBase.clo}
 
 %стиль страницы
@@ -390,10 +391,16 @@
 \setcounter{tocdepth}{4} %% virens: обычно только первый подраздел
 
 % Импорт необходимых пакетов
-\RequirePackage{iftex}
 \if@usehyperref
  \RequirePackage[unicode]{hyperref}
 \fi
+
+\RequirePackage{xstring}
+
+\newcommand\Gost@Font@Warning[1]{#1 font(s) not found. Switching to default}
+\newif\ifInvisibleDashes
+\InvisibleDashesfalse
+
 \ifPDFTeX
   %  перенос в словах-с-дефисом
   \lccode`\-=`\-
@@ -405,10 +412,26 @@
   \RequirePackage[english,russian]{babel}%
   \RequirePackage{ucs}%                              %теперь из pdf можно копипастить русский текст
   \RequirePackage{mathtext}%                         %русские буквы в формулах
-  \RequirePackage{xstring}%                          %\asbuk p. 6.4.6 GOST 7.32 
-  \if@usepscyr
+
+  \InvisibleDashestrue
+  \IfStrEq{\Gost@fonts}{times}{
+   \IfFileExists{cyrtimes.sty}{
+    \RequirePackage{cyrtimespatched}
+	\InvisibleDashesfalse
+   }{
+    % apt-get install scalable-cyrfonts-tex
+    \@latex@warning{\Gost@Font@Warning{Cyrtimes}}
+   }}{}
+  \IfStrEq{\Gost@fonts}{pscyr}{
+   \IfFileExists{pscyr.sty}{
     \RequirePackage[math]{pscyr}
-  \fi
+	\InvisibleDashesfalse
+   }{
+    \@latex@warning{\Gost@Font@Warning{Pscyr}}
+   }}{}
+
+  \usepackage{upquote}
+
   % аналоги команд из XeLaTeX
   \def\cyrillicfonttt{\fontfamily{\ttdefault}\selectfont}
   \def\cyrillicfont{\fontfamily{\rmdefault}\selectfont}
@@ -438,11 +461,8 @@
   \PolyglossiaSetup{russian}{indentfirst=true}
   \setotherlanguage{english}
 
-
-\if@usetimes                % If times we have option 
-  % Основной шрифт
-  \IfNoFont{Times New Roman}{
-    \setmainfont[
+  \newcommand\Gost@use@cm@main{
+   \setmainfont[
     BoldFont = cmunbx.otf,
     ItalicFont = cmunti.otf,
     BoldItalicFont = cmunbi.otf]
@@ -451,14 +471,9 @@
     BoldFont = cmunbx.otf,
     ItalicFont = cmunti.otf,
     BoldItalicFont = cmunbi.otf]
-  }{
-    \setmainfont{Times New Roman}
-    \newfontfamily\cyrillicfont{Times New Roman}%[Script = Cyrillic] % для кириллицы
   }
-
-  % Шрифт без засечек
-  \IfNoFont{Arial}{
-    \setsansfont[
+  \newcommand\Gost@use@cm@sans{
+   \setsansfont[
     BoldFont = cmunsx.otf,
     ItalicFont = cmunsi.otf,
     BoldItalicFont = cmunso.otf]
@@ -467,6 +482,41 @@
     BoldFont = cmunsx.otf,
     ItalicFont = cmunsi.otf,
     BoldItalicFont = cmunso.otf]
+  }
+  \newcommand\Gost@use@cm@mono{
+   \setmonofont[
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+    {cmuntt.otf}
+    \newfontfamily{\cyrillicfonttt}{cmuntt.otf}[ % для кириллицы
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+    % Шрифт для minted
+    \defaultfontfeatures{}
+    \newfontfamily\cyrillicfontttnoftr{cmuntt.otf}[
+    NFSSFamily = cyrillicfontttnoftr,
+    BoldFont = cmuntb.otf,
+    ItalicFont = cmunit.otf,
+    BoldItalicFont = cmuntx.otf]
+  }
+
+  % Использовать шрифты times
+  \IfStrEq{\Gost@fonts}{times}{
+  % Основной шрифт
+  \IfNoFont{Times New Roman}{
+    \@latex@warning{\Gost@Font@Warning{Times New Roman}}
+    \Gost@use@cm@main
+  }{
+    \setmainfont{Times New Roman}
+    \newfontfamily\cyrillicfont{Times New Roman}%[Script = Cyrillic] % для кириллицы
+  }
+
+  % Шрифт без засечек
+  \IfNoFont{Arial}{
+    \@latex@warning{\Gost@Font@Warning{Arial}}
+    \Gost@use@cm@sans
   }{
     \setsansfont{Arial}
     \newfontfamily\cyrillicfontsf{Arial}
@@ -474,22 +524,8 @@
 
   % Моноширинный шрифт
   \IfNoFont{Courier New}{
-    \setmonofont[
-    BoldFont = cmuntb.otf,
-    ItalicFont = cmunit.otf,
-    BoldItalicFont = cmuntx.otf]
-    {cmuntt.otf}
-    \newfontfamily{\cyrillicfonttt}{cmunrm.otf}[ % для кириллицы
-    BoldFont = cmuntb.otf,
-    ItalicFont = cmunit.otf,
-    BoldItalicFont = cmuntx.otf]
-    % Шрифт для minted
-    \defaultfontfeatures{}
-    \newfontfamily\cyrillicfontttnoftr{cmunrm.otf}[
-    NFSSFamily = cyrillicfontttnoftr,
-    BoldFont = cmuntb.otf,
-    ItalicFont = cmunit.otf,
-    BoldItalicFont = cmuntx.otf]
+    \@latex@warning{\Gost@Font@Warning{Courier New}}
+    \Gost@use@cm@mono
   }{
     \setmonofont{Courier New}
     \newfontfamily\cyrillicfonttt{Courier New}
@@ -498,20 +534,14 @@
     \newfontfamily\cyrillicfontttnoftr{Courier New}[
     NFSSFamily = cyrillicfontttnoftr
     ]
-  }
-\else               % no times option
+  }}{}
 
+  % Использовать шрифты astra
+  \IfStrEq{\Gost@fonts}{astra}{
   % Основной шрифт
   \IfNoFont{PT Astra Serif}{
-    \setmainfont[
-    BoldFont = cmunbx.otf,
-    ItalicFont = cmunti.otf,
-    BoldItalicFont = cmunbi.otf]
-    {cmunrm.otf}
-    \newfontfamily\cyrillicfont{cmunrm.otf}[ % для кириллицы
-    BoldFont = cmunbx.otf,
-    ItalicFont = cmunti.otf,
-    BoldItalicFont = cmunbi.otf]
+    \@latex@warning{\Gost@Font@Warning{PT Astra Serif}}
+    \Gost@use@cm@main
   }{
     \setmainfont{PT Astra Serif}
     \newfontfamily\cyrillicfont{PT Astra Serif}[Script = Cyrillic] % для кириллицы
@@ -519,15 +549,8 @@
 
   % Шрифт без засечек
   \IfNoFont{PT Astra Sans}{
-    \setsansfont[
-    BoldFont = cmunsx.otf,
-    ItalicFont = cmunsi.otf,
-    BoldItalicFont = cmunso.otf]
-    {cmunss.otf}
-    \newfontfamily{\cyrillicfontsf}{cmunss.otf}[ % для кириллицы
-    BoldFont = cmunsx.otf,
-    ItalicFont = cmunsi.otf,
-    BoldItalicFont = cmunso.otf]
+    \@latex@warning{\Gost@Font@Warning{PT Astra Sans}}
+    \Gost@use@cm@sans
   }{
     \setsansfont{PT Astra Sans}
     \newfontfamily\cyrillicfontsf{PT Astra Sans}[Script = Cyrillic] % для кириллицы
@@ -535,22 +558,8 @@
 
   % Моноширинный шрифт
   \IfNoFont{Liberation Mono}{
-    \setmonofont[
-    BoldFont = cmuntb.otf,
-    ItalicFont = cmunit.otf,
-    BoldItalicFont = cmuntx.otf]
-    {cmuntt.otf}
-    \newfontfamily{\cyrillicfonttt}{cmunrm.otf}[ % для кириллицы
-    BoldFont = cmuntb.otf,
-    ItalicFont = cmunit.otf,
-    BoldItalicFont = cmuntx.otf]
-    % Шрифт для minted
-    \defaultfontfeatures{}
-    \newfontfamily\cyrillicfontttnoftr{cmunrm.otf}[
-    NFSSFamily = cyrillicfontttnoftr,
-    BoldFont = cmuntb.otf,
-    ItalicFont = cmunit.otf,
-    BoldItalicFont = cmuntx.otf]
+    \@latex@warning{\Gost@Font@Warning{Liberation Mono}}
+    \Gost@use@cm@mono
   }{
     \setmonofont{Liberation Mono}
     \newfontfamily\cyrillicfonttt{Liberation Mono}[Script = Cyrillic] % для кириллицы
@@ -560,12 +569,14 @@
     Script = Cyrillic,
     NFSSFamily = cyrillicfontttnoftr
     ]
-  }
+  }}{}
 
-
-\fi
-
-
+  % Использовать шрифты cm
+  \IfStrEq{\Gost@fonts}{cm}{
+    \Gost@use@cm@main
+    \Gost@use@cm@sans
+    \Gost@use@cm@mono
+  }{}
 
   % убирает точку после названий секций
   \addto\russian@capsformat{
@@ -577,9 +588,8 @@
 	\def\postsubparagraph{\@aftersepkern}
   }
 
-  \usepackage{trimclip}
   \def\cyrdash{%
-    \clipbox{0pt}{\hbox to .8em{---\hss}}%
+    \resizebox*{.8em}{\height}{---}%
   }
 \fi
 \RequirePackage{flafter}
@@ -1012,26 +1022,26 @@
 }
 
 %Fix xelatex invisible emdash on CMU, an ugly way
-\RequirePackage{color}
-\newlength{\emdashlenght}
-\settowidth{\emdashlenght}{---}
-\newcommand\MakeDashes{
-  \usepackage{trimclip}
-  \makeatletter
-  \let\Gost@old@cyrdash\cyrdash
-  \def\cyrdash{%
-    \ifdim\f@size pt>13pt%
-    \clipbox{0pt}{\hbox to .8em{\textcolor{white}{---}\hskip
-    -\emdashlenght \rule[.45ex]{\emdashlenght}{1pt}\hss}}%
-    \else%
-       \Gost@old@cyrdash%
-    \fi%
-  }
-  \FixBibliographyCyrdash
-  \makeatother
-}
+%\RequirePackage{color}
+%\newlength{\emdashlenght}
+%\settowidth{\emdashlenght}{---}
+%\newcommand\MakeDashes{
+%  \usepackage{trimclip}
+%  \makeatletter
+%  \let\Gost@old@cyrdash\cyrdash
+%  \def\cyrdash{%
+%    \ifdim\f@size pt>13pt%
+%    \clipbox{0pt}{\hbox to .8em{\textcolor{white}{---}\hskip
+%    -\emdashlenght \rule[.45ex]{\emdashlenght}{1pt}\hss}}%
+%    \else%
+%       \Gost@old@cyrdash%
+%    \fi%
+%  }
+%  \FixBibliographyCyrdash
+%  \makeatother
+%}
 
-\newcommand\MakeDashesBold{% Fix invisible emdash on xelatex CMU, but not for 100 percent
+\newcommand\MakeDashesBold{
   \usepackage{trimclip}
   \makeatletter
   \let\Gost@old@cyrdash\cyrdash
@@ -1045,7 +1055,8 @@
   \FixBibliographyCyrdash
   \makeatother
 }
-%\ifXeTeX
-%\FixBibliographyCyrdash
-%\fi
+
+\ifXeTeX
+\FixBibliographyCyrdash
+\fi
 
