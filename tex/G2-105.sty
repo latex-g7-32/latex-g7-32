@@ -1022,26 +1022,26 @@
 }
 
 %Fix xelatex invisible emdash on CMU, an ugly way
-\RequirePackage{color}
-\newlength{\emdashlenght}
-\settowidth{\emdashlenght}{---}
-\newcommand\MakeDashes{
-  \usepackage{trimclip}
-  \makeatletter
-  \let\Gost@old@cyrdash\cyrdash
-  \def\cyrdash{%
-    \ifdim\f@size pt>13pt%
-    \clipbox{0pt}{\hbox to .8em{\textcolor{white}{---}\hskip
-    -\emdashlenght \rule[.45ex]{\emdashlenght}{1pt}\hss}}%
-    \else%
-       \Gost@old@cyrdash%
-    \fi%
-  }
-  \FixBibliographyCyrdash
-  \makeatother
-}
+%\RequirePackage{color}
+%\newlength{\emdashlenght}
+%\settowidth{\emdashlenght}{---}
+%\newcommand\MakeDashes{
+%  \usepackage{trimclip}
+%  \makeatletter
+%  \let\Gost@old@cyrdash\cyrdash
+%  \def\cyrdash{%
+%    \ifdim\f@size pt>13pt%
+%    \clipbox{0pt}{\hbox to .8em{\textcolor{white}{---}\hskip
+%    -\emdashlenght \rule[.45ex]{\emdashlenght}{1pt}\hss}}%
+%    \else%
+%       \Gost@old@cyrdash%
+%    \fi%
+%  }
+%  \FixBibliographyCyrdash
+%  \makeatother
+%}
 
-\newcommand\MakeDashesBold{% Fix invisible emdash on xelatex CMU, but not for 100 percent
+\newcommand\MakeDashesBold{
   \usepackage{trimclip}
   \makeatletter
   \let\Gost@old@cyrdash\cyrdash
