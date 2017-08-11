@@ -39,6 +39,7 @@ set(TEX_TREE "${CMAKE_SOURCE_DIR}/tex")
 set(MIRROR_TREE "${CMAKE_BINARY_DIR}/mirror")
 set(TEX_MIRROR_TREE "${MIRROR_TREE}/tex")
 set(INC_TREE "${TEX_MIRROR_TREE}/inc")
+set(INC_IMG_TREE "${INC_TREE}/img")
 set(INC_DIA_TREE "${INC_TREE}/dia")
 set(INC_SVG_TREE "${INC_TREE}/svg")
 set(INC_DOT_TREE "${INC_TREE}/dot")
@@ -54,6 +55,7 @@ set(TARGET_PDF "${CMAKE_BINARY_DIR}/${TARGET_PDF_BASE}")
 file(MAKE_DIRECTORY "${MIRROR_TREE}")
 file(MAKE_DIRECTORY "${TEX_MIRROR_TREE}")
 file(MAKE_DIRECTORY "${INC_TREE}")
+file(MAKE_DIRECTORY "${INC_IMG_TREE}")
 file(MAKE_DIRECTORY "${INC_DIA_TREE}")
 file(MAKE_DIRECTORY "${INC_SVG_TREE}")
 file(MAKE_DIRECTORY "${INC_DOT_TREE}")
@@ -70,6 +72,7 @@ function(glob_in_dir varname dir)
 endfunction()
 glob_in_dir(tex_sources "${TEX_TREE}" *.tex *.sty *.clo *.bst *.cls *.bib)
 glob_in_dir(listing_sources "${CMAKE_SOURCE_DIR}/src" *)
+glob_in_dir(img_sources "${CMAKE_SOURCE_DIR}/graphics/img" *)
 glob_in_dir(svg_sources "${CMAKE_SOURCE_DIR}/graphics/svg" *.svg)
 glob_in_dir(dia_sources "${CMAKE_SOURCE_DIR}/graphics/dia" *.dia)
 glob_in_dir(dot_sources "${CMAKE_SOURCE_DIR}/graphics/dot" *.dot)
@@ -86,6 +89,19 @@ foreach(tex_src ${tex_sources})
         DEPENDS "${tex_src}"
     )
     list(APPEND tex_mirror_sources "${tex_dst}")
+endforeach()
+#▶2 Img sources
+set(img_mirror_sources)
+foreach(img_src ${img_sources})
+    get_filename_component(img_name "${img_src}" NAME)
+    set(img_dst "${INC_IMG_TREE}/${img_name}")
+    add_custom_command(
+        OUTPUT "${img_dst}"
+        VERBATIM
+        COMMAND "${CMAKE_COMMAND}" -E copy "${img_src}" "${img_dst}"
+        DEPENDS "${img_src}"
+    )
+    list(APPEND img_mirror_sources "${img_dst}")
 endforeach()
 #▶2 SVG
 set(svg_pdfs)
@@ -204,6 +220,7 @@ add_custom_target(
     DEPENDS
         ${svg_pdfs} ${dia_pdfs} ${dot_pdfs}
         ${tex_mirror_sources} ${mirror_listing_sources}
+        ${img_mirror_sources}
 )
 add_custom_target(
     bibtex
