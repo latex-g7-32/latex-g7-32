@@ -3,14 +3,18 @@ use File::Which;
 use File::Copy;
 use Cwd;
 
-$current_dir = cwd();
-$tex_dir = "$current_dir/tex";
-$graphics_dir = "$current_dir/graphics";
-$other_img_dir = "$graphics_dir/img";
-$src_dir = "$current_dir/src";
+sub set_dirs {
+    $current_dir = $_[0];
+    $tex_dir = "$current_dir/tex";
+    $graphics_dir = "$current_dir/graphics";
+    $other_img_dir = "$graphics_dir/img";
+    $src_dir = "$current_dir/src";
+}
 
 $use_pdflatex = 0;
 $build_dir = "build";
+$cur_dir = cwd();
+set_dirs($cur_dir);
 
 sub my_option_handler {
     my ($type, $arg, $argv) = @_;
@@ -23,10 +27,19 @@ sub my_option_handler {
             $use_pdflatex = 1;
             return 0;
         } elsif ($arg eq '-build-dir' || $arg eq '-bd'){
-            if ($#$argv == -1){
+            if ($#$argv == -1 || @$argv[0] eq '--'){
                 die("Specify build directory after $arg!");
             }
             $build_dir = shift(@$argv);
+            return 0;
+        } elsif($arg eq '-rel-curdir' || $arg eq '-rcd'){
+            if ($#$argv == -1 || @$argv[0] eq '--'){
+                die("Specify current directory relative path after $arg!");
+            }
+            $cur_dir = shift(@$argv);
+            set_dirs($cur_dir);
+            return 0;
+        } elsif($arg eq '-'){
             return 0;
         }
     }
@@ -37,9 +50,12 @@ sub my_help_print() {
     print
         "\n",
         "Additional options:\n\n",,
-        "   -up, -use-pdflatex      - use PdfLaTeX instead of XeLaTeX\n",
-        "   -bd, -build-dir <path>  - change build directory\n",
-        "                             (default is 'build')\n"
+        "   -up, -use-pdflatex       - use PdfLaTeX instead of XeLaTeX\n",
+        "   -bd, -build-dir <path>   - change build directory\n",
+        "                              (default is 'build')\n",
+        "   -rcd, -rel-curdir <path> - set current directory path relative to build\n",
+        "                              directory, for example ..\n",
+        "                              (absolute path is used by default\)n"
 }
 
 my %exists_prog;
@@ -50,6 +66,12 @@ foreach $prog ('inkscape', 'dot', 'dia', 'pygmentize', 'iconv'){
 $pdflatex = '';
 
 sub do_after_options {
+    $ENV{TEXINPUTS} =
+        (defined($ENV{TEXINPUTS}) ? "$ENV{TEXINPUTS}$Config{path_sep}" : '').
+        "$tex_dir$Config{path_sep}";
+    $ENV{BIBINPUTS} =
+        (defined($ENV{BIBINPUTS}) ? "$ENV{BIBINPUTS}$Config{path_sep}" : '').
+        "$tex_dir$Config{path_sep}";
     make_path($build_dir);
     chdir($build_dir);
     $pdflatex =
@@ -59,13 +81,6 @@ sub do_after_options {
 }
 
 set_cus_option_handler('my_option_handler', 'my_help_print');
-
-$ENV{TEXINPUTS} =
-    (defined($ENV{TEXINPUTS}) ? "$ENV{TEXINPUTS}$Config{path_sep}" : '').
-    "$tex_dir$Config{path_sep}";
-$ENV{BIBINPUTS} =
-    (defined($ENV{BIBINPUTS}) ? "$ENV{BIBINPUTS}$Config{path_sep}" : '').
-    "$tex_dir$Config{path_sep}";
 
 $MSWin_back_slash = 0;
 $cleanup_includes_cusdep_generated = 1;
