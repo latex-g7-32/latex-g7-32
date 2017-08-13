@@ -6,6 +6,7 @@ use Cwd;
 $current_dir = cwd();
 $tex_dir = "$current_dir/tex";
 $graphics_dir = "$current_dir/graphics";
+$other_img_dir = "$graphics_dir/img";
 $src_dir = "$current_dir/src";
 
 $use_pdflatex = 0;
@@ -75,20 +76,40 @@ $recorder = 1;
 $file_inc_dir  = "inc";
 $file_graphics_dir = "$file_inc_dir";
 $file_src_dir = "$file_inc_dir/src";
+$file_other_img_dir = "$file_inc_dir/img";
 $error_basename = "$file_inc_dir/error";
+
+@other_img_ext = (
+   'png', 'pdf', 'jpg', 'mps', 'jpeg', 'jbig2', 'jb2',
+   'PNG', 'PDF', 'JPG', 'JPEG', 'JBIG2', 'JB2'
+);
 
 sub custom_transform_cus_dep {
     my ($name, $all) = @_;
     if ($all){
         if ($name =~ /^\Q$file_src_dir\E/) {
-            $name =~ s!^$file_src_dir!$src_dir!;
+            $name =~ s!^\Q$file_src_dir\E!$src_dir!;
+            return $name;
+        } elsif($name =~ /^\Q$file_other_img_dir\E/) {
+            $src_name = $name;
+            $name =~ s!^\Q$file_other_img_dir\E!$other_img_dir!;
+            foreach my $ext (@other_img_ext){
+                if($name =~ /$ext$/ && -f $name){
+                    return $name;
+                }
+                if(-f "$name.$ext"){
+                    $name = ["$name.$ext", "$src_name.$ext"];
+                    return $name;
+                }
+            }
+            return '';
         } else {
-            $name = '';
+            return '';
         }
     } else {
-        $name =~ s!^$file_graphics_dir!$graphics_dir!;
+        $name =~ s!^\Q$file_graphics_dir\E!$graphics_dir!;
+        return $name;
     }
-    return $name;
 }
 
 sub make_dir_for_file {
@@ -164,7 +185,7 @@ sub nlo2nls {
 #for source files
 sub all_cus_dep {
     make_dir_for_file($cusdep_dest);
-    if ($use_pdflatex){
+    if ($use_pdflatex && $cusdep_source =~ /^\Q$src_dir\E/){
         if($exists_prog{iconv}){
             exec_cmd(sprintf($iconv_cmd, $cusdep_source, $cusdep_dest));
         } else {
