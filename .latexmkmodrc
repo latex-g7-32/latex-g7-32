@@ -55,7 +55,7 @@ sub my_help_print() {
         "                              (default is 'build')\n",
         "   -rcd, -rel-curdir <path> - set current directory path relative to build\n",
         "                              directory, for example ..\n",
-        "                              (absolute path is used by default\)n"
+        "                              (absolute path is used by default)\n"
 }
 
 my %exists_prog;
