@@ -3,13 +3,18 @@ use File::Which;
 use File::Copy;
 use Cwd;
 
-$current_dir = cwd();
-$tex_dir = "$current_dir/tex";
-$graphics_dir = "$current_dir/graphics";
-$src_dir = "$current_dir/src";
+sub set_dirs {
+    $current_dir = $_[0];
+    $tex_dir = "$current_dir/tex";
+    $graphics_dir = "$current_dir/graphics";
+    $other_img_dir = "$graphics_dir/img";
+    $src_dir = "$current_dir/src";
+}
 
 $use_pdflatex = 0;
 $build_dir = "build";
+$cur_dir = cwd();
+set_dirs($cur_dir);
 
 sub my_option_handler {
     my ($type, $arg, $argv) = @_;
@@ -22,10 +27,19 @@ sub my_option_handler {
             $use_pdflatex = 1;
             return 0;
         } elsif ($arg eq '-build-dir' || $arg eq '-bd'){
-            if ($#$argv == -1){
+            if ($#$argv == -1 || @$argv[0] eq '--'){
                 die("Specify build directory after $arg!");
             }
             $build_dir = shift(@$argv);
+            return 0;
+        } elsif($arg eq '-rel-curdir' || $arg eq '-rcd'){
+            if ($#$argv == -1 || @$argv[0] eq '--'){
+                die("Specify current directory relative path after $arg!");
+            }
+            $cur_dir = shift(@$argv);
+            set_dirs($cur_dir);
+            return 0;
+        } elsif($arg eq '-'){
             return 0;
         }
     }
@@ -36,9 +50,12 @@ sub my_help_print() {
     print
         "\n",
         "Additional options:\n\n",,
-        "   -up, -use-pdflatex      - use PdfLaTeX instead of XeLaTeX\n",
-        "   -bd, -build-dir <path>  - change build directory\n",
-        "                             (default is 'build')\n"
+        "   -up, -use-pdflatex       - use PdfLaTeX instead of XeLaTeX\n",
+        "   -bd, -build-dir <path>   - change build directory\n",
+        "                              (default is 'build')\n",
+        "   -rcd, -rel-curdir <path> - set current directory path relative to build\n",
+        "                              directory, for example ..\n",
+        "                              (absolute path is used by default)\n"
 }
 
 my %exists_prog;
@@ -49,6 +66,12 @@ foreach $prog ('inkscape', 'dot', 'dia', 'pygmentize', 'iconv'){
 $pdflatex = '';
 
 sub do_after_options {
+    $ENV{TEXINPUTS} =
+        (defined($ENV{TEXINPUTS}) ? "$ENV{TEXINPUTS}$Config{path_sep}" : '').
+        "$tex_dir$Config{path_sep}";
+    $ENV{BIBINPUTS} =
+        (defined($ENV{BIBINPUTS}) ? "$ENV{BIBINPUTS}$Config{path_sep}" : '').
+        "$tex_dir$Config{path_sep}";
     make_path($build_dir);
     chdir($build_dir);
     $pdflatex =
@@ -59,13 +82,6 @@ sub do_after_options {
 
 set_cus_option_handler('my_option_handler', 'my_help_print');
 
-$ENV{TEXINPUTS} =
-    (defined($ENV{TEXINPUTS}) ? "$ENV{TEXINPUTS}$Config{path_sep}" : '').
-    "$tex_dir$Config{path_sep}";
-$ENV{BIBINPUTS} =
-    (defined($ENV{BIBINPUTS}) ? "$ENV{BIBINPUTS}$Config{path_sep}" : '').
-    "$tex_dir$Config{path_sep}";
-
 $MSWin_back_slash = 0;
 $cleanup_includes_cusdep_generated = 1;
 $bibtex_use = 2;
@@ -75,20 +91,40 @@ $recorder = 1;
 $file_inc_dir  = "inc";
 $file_graphics_dir = "$file_inc_dir";
 $file_src_dir = "$file_inc_dir/src";
+$file_other_img_dir = "$file_inc_dir/img";
 $error_basename = "$file_inc_dir/error";
+
+@other_img_ext = (
+   'png', 'pdf', 'jpg', 'mps', 'jpeg', 'jbig2', 'jb2',
+   'PNG', 'PDF', 'JPG', 'JPEG', 'JBIG2', 'JB2'
+);
 
 sub custom_transform_cus_dep {
     my ($name, $all) = @_;
     if ($all){
         if ($name =~ /^\Q$file_src_dir\E/) {
-            $name =~ s!^$file_src_dir!$src_dir!;
+            $name =~ s!^\Q$file_src_dir\E!$src_dir!;
+            return $name;
+        } elsif($name =~ /^\Q$file_other_img_dir\E/) {
+            $src_name = $name;
+            $name =~ s!^\Q$file_other_img_dir\E!$other_img_dir!;
+            foreach my $ext (@other_img_ext){
+                if($name =~ /$ext$/ && -f $name){
+                    return $name;
+                }
+                if(-f "$name.$ext"){
+                    $name = ["$name.$ext", "$src_name.$ext"];
+                    return $name;
+                }
+            }
+            return '';
         } else {
-            $name = '';
+            return '';
         }
     } else {
-        $name =~ s!^$file_graphics_dir!$graphics_dir!;
+        $name =~ s!^\Q$file_graphics_dir\E!$graphics_dir!;
+        return $name;
     }
-    return $name;
 }
 
 sub make_dir_for_file {
@@ -164,7 +200,7 @@ sub nlo2nls {
 #for source files
 sub all_cus_dep {
     make_dir_for_file($cusdep_dest);
-    if ($use_pdflatex){
+    if ($use_pdflatex && $cusdep_source =~ /^\Q$src_dir\E/){
         if($exists_prog{iconv}){
             exec_cmd(sprintf($iconv_cmd, $cusdep_source, $cusdep_dest));
         } else {

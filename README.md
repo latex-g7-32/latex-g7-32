@@ -251,21 +251,20 @@ docker run --volume /path/to/latex-g7-32/:/doc/ somename
 
 Минимальные требования: сам скрипт и TeX Live.
 
-Сначала нужно установить этот скрипт. На Linux достаточно скопировать файл `latexmkmod.pl` в utils/latexmkmod. На Windows:
-
- 1. Скопировать `latexmkmod.pl` в каталог `TEXMFLOCAL`\scripts. (C:\texlive\texmf-local\scripts, например) Команда `kpsewhich -var-value TEXMFLOCAL` показывает, что находится в переменной `TEXMFLOCAL`. Если в каталоге `TEXMFLOCAL` нет папки scripts, её нужно создать.
- 2. Скопировать файл runscript.exe в latexmkmod.exe в директории, где находятся исполняемые файлы TeX Live (C:\texlive\2016\bin\win32, она обычно содержится в `PATH`)
- 3. Запустить mktexlsr из той же директории от имени администратора.
+Сначала нужно установить этот скрипт. На Linux достаточно скопировать файл `latexmkmod.pl` в utils/latexmkmod. На Windows в дополнение к этому ещё нужно добавить в `PATH` интерпретатор Perl. Он обычно включён в TeX Live, может находиться, например, в C:\texlive\2017\tlpkg\tlperl\bin
 
 Для сборки выполнить либо `build.sh` (Linux), либо `build.bat` (Windows): создастся директория build и в ней будет PDF файл.
 
-Если в командной строке указать опцию `-bd mybuilddir`, то выходные файлы будут в директории mybuilddir. Если указана опция `-up`, то используется PdfLaTeX вместо XeLaTeX. Опции latexmk также доступны (например, `-c` убирает выходные файлы)
+Если в командной строке указать опцию `-bd mybuilddir`, то выходные файлы будут в директории mybuilddir. Если указана опция `-up`, то используется PdfLaTeX вместо XeLaTeX. Опция `-rcd ..` указывает относительный путь к текущей директории относительно директории с выходными файлами, полезно, если в Windows текущая директория содержит русские буквы.
+
+Опции latexmk также доступны (например, `-c` убирает выходные файлы)
 
 Если установлен только TeX Live, то вместо изображений dot, dia, svg отобразятся заглушки и листингов с кодом не будет. Чтобы появились изображения, нужно установить Graphviz, Dia и Inkscape.
 
 Чтобы появились листинги кода при использовании XeLaTeX, нужно дополнительно установить: Python 2 и Pygments (`pip install pygments`). Если используется PdfLaTeX, нужно установить iconv.
 
-Пути к исполняемым файлам всех программ должны быть в `PATH`, при необходимости нужно их добавить туда вручную. Пример содержимого этой переменной: `PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\texlive\2016\bin\win32;C:\Program Files\Graphviz2.38\bin;C:\Program Files\Dia\bin;C:\Program Files\Inkscape;C:\Python27\;C:\Python27\Scripts`.
+Пути к исполняемым файлам всех программ должны быть в `PATH`, при необходимости нужно их добавить туда вручную. Пример содержимого этой переменной:
+`C:\Python27\;C:\Python27\Scripts;C:\texlive\2017\tlpkg\tlperl\bin;C:\texlive\2017\bin\win32;C:\Program Files (x86)\GnuWin32\bin;C:\Program Files\Inkscape;C:\Program Files (x86)\Dia\bin;C:\Program Files (x86)\Graphviz2.38\bin;`
 
 ## Использование LyX
 Откройте `lyx/rpz.lyx` и редактируйте.
