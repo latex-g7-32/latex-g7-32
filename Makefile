@@ -3,6 +3,7 @@
 LATEX=xelatex -interaction=nonstopmode -shell-escape
 # LATEX=pdflatex
 TD=./utils/texdepend
+GSCONV=./utils/gsconv.sh
 D2T=dot2tex -f pgf --crop --docpreamble "\usepackage[T2A]{fontenc} \usepackage[utf8]{inputenc} \usepackage[english, russian]{babel}"
 PDFTRIMWHITE=pdfcrop
 
@@ -91,6 +92,9 @@ clean:
 # 	$(RM) $(DIA)/*.pdf $(DIA)/*.eps
 	$(RM) -r $(DEPS)
 	$(RM) -r $(INC)
+
+printpdfs: $(PDF)
+	$(GSCONV) $(PDF)
 
 distclean: clean
 
