@@ -6,13 +6,20 @@ set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 
 project(diplom NONE)
 #▶1 includes
-include("${CMAKE_CURRENT_LIST_DIR}/cmake/RequireProgram.cmake")
+set(CMAKE_SCRIPTS_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include("${CMAKE_SCRIPTS_DIR}/RequireProgram.cmake")
 #▶1 requirements
 require_program(INKSCAPE_COMMAND inkscape)
 require_program(DIA_COMMAND dia)
 require_program(DOT_COMMAND dot)
 require_program(MAKEINDEX_COMMAND makeindex)
 require_program(PDFCROP_COMMAND pdfcrop)
+find_program(GS_COMMAND NAMES gs gswin32c)
+if(GS_COMMAND MATCHES "-NOTFOUND$")
+    message(STATUS "Failed to find gs")
+else()
+    message(STATUS "Found gs: ${GS_COMMAND}")
+endif()
 find_package(LATEX
              COMPONENTS XELATEX PDFLATEX BIBTEX
              REQUIRED)
@@ -51,6 +58,8 @@ set(NOM_NLS "${MAIN_TEX}.nls")
 
 set(TARGET_PDF_BASE rpz.pdf)
 set(TARGET_PDF "${CMAKE_BINARY_DIR}/${TARGET_PDF_BASE}")
+set(GSCONV_SCRIPT "${CMAKE_SCRIPTS_DIR}/GSConv.cmake")
+set(COPY_CONVERTED_SCRIPT "${CMAKE_SCRIPTS_DIR}/CopyConverted.cmake")
 #▶1 Prepare build directory
 file(MAKE_DIRECTORY "${MIRROR_TREE}")
 file(MAKE_DIRECTORY "${TEX_MIRROR_TREE}")
@@ -204,8 +213,8 @@ foreach(listing_src ${listing_sources})
                     "-DICONV_COMMAND=${ICONV_COMMAND}"
                     -DSRC_ENCODING=utf-8
                     -DDST_ENCODING=koi8-r
-                    -P "${CMAKE_SOURCE_DIR}/cmake/CopyConverted.cmake"
-            DEPENDS "${listing_src}"
+                    -P "${COPY_CONVERTED_SCRIPT}"
+            DEPENDS "${listing_src}" "${COPY_CONVERTED_SCRIPT}"
         )
     endif()
     list(APPEND mirror_listing_sources "${listing_dst}")
@@ -258,5 +267,16 @@ add_custom_target(
     COMMAND "${CMAKE_COMMAND}" -E copy "${TARGET_PDF_BASE}" "${TARGET_PDF}"
     DEPENDS latex-stage3
 )
-
+add_custom_target(
+    printpdfs
+    VERBATIM
+    COMMAND
+        "${CMAKE_COMMAND}"
+            "-DGS_COMMAND=${GS_COMMAND}"
+            "-DPDF=${TARGET_PDF_BASE}"
+            "-DTMPDIR=gs-tmp"
+            -P "${GSCONV_SCRIPT}"
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+    DEPENDS pdf "${GSCONV_SCRIPT}"
+)
 # vim: foldmarker=▶,▲ cms=#%s
