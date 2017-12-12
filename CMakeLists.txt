@@ -35,7 +35,7 @@ if(PREFER_XELATEX)
         require_program(XELATEX_COMPILER xelatex)
     endif()
     set(USED_LATEX_COMPILER
-        "${XELATEX_COMPILER}" -interaction=nonstopmode -shell-escape)
+        "${XELATEX_COMPILER}" -synctex=1 -interaction=nonstopmode -shell-escape)
 else()
     set(USED_LATEX_COMPILER "${PDFLATEX_COMPILER}")
     require_program(ICONV_COMMAND iconv)
