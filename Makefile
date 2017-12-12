@@ -73,7 +73,7 @@ $(INC)/svg/%.pdf : $(SVG)/%.svg
 		$(PDFTRIMWHITE) $*-tmp.pdf $*.pdf && \
 		rm $*-tmp.pdf
 
-$(INC)/img/%.pdf: $(IMG)/*
+$(INC)/img/%.pdf: $(IMG)/%.*
 	mkdir -p $(INC)/img
 	convert $< -quality 100 $@
 
