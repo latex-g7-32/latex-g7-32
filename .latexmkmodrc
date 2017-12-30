@@ -76,7 +76,7 @@ sub do_after_options {
     chdir($build_dir);
     $pdflatex =
         (($use_pdflatex) ? "pdflatex": "xelatex").
-        " -interaction=nonstopmode -shell-escape %O ".
+        " -synctex=1 -interaction=nonstopmode -shell-escape %O ".
         (($exists_prog{pygmentize})?"%S":"\"\\def\\NoMinted{}\\input{%S}\"");
 }
 
