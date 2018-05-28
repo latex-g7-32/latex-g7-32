@@ -165,8 +165,8 @@
 
 
 
-% 3.6 Абзацный отступ - 15..17 мм
-\setlength\parindent{15mm}
+% 6.1.1 - Абзацный отступ должен быть одинаковым по всему тексту отчета и равен 1,25 см
+\setlength\parindent{12.5mm}
 
 % 4.1.1 - 4.1.6 Деление документа
 
@@ -256,10 +256,8 @@
     \if@tablesonchapter%
     \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
     \fi%
-    \thispagestyle{plain}%
-    \global\@topnum\z@
-    \@afterindentfalse
-\secdef\@chapter\@schapter}
+    \global\@topnum\z@%
+    \secdef\@chapter\@schapter}
 \def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
     \refstepcounter{chapter}%
     \typeout{\@chapapp\space\thechapter.}%
@@ -458,7 +456,6 @@
   \RequirePackage{polyglossia}
   \defaultfontfeatures{Scale=MatchLowercase, Ligatures=TeX, Mapping=tex-text} % стандартные лигатуры TeX, замены нескольких дефисов на тире и т. п.
   \setmainlanguage[babelshorthands=true]{russian} % Язык по-умолчанию русский с поддержкой приятных команд пакета babel
-  \PolyglossiaSetup{russian}{indentfirst=true}
   \setotherlanguage{english}
 
   \newcommand\Gost@use@cm@main{
@@ -829,7 +826,7 @@
     \addpenalty{-\@highpenalty}%
     \vskip \z@ \@plus.2\p@
     \leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
-    \parindent #2\relax\@afterindenttrue
+    \parindent #2\relax
     \interlinepenalty\@M
     \leavevmode
     \setlength\@tempdima{#3}%
