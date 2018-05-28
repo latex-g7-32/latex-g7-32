@@ -256,6 +256,7 @@
     \if@tablesonchapter%
     \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
     \fi%
+    \global\@topnum\z@%
     \secdef\@chapter\@schapter}
 \def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
     \refstepcounter{chapter}%
