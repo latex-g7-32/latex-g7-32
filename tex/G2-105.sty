@@ -47,7 +47,6 @@
 \input{GostBase.clo}
 
 %стиль страницы
-\pagestyle{plain}
 \pagenumbering{arabic}
 \raggedbottom
 \onecolumn
@@ -64,24 +63,6 @@
 \renewcommand\floatpagefraction{.5}   %
 \renewcommand\dbltopfraction{.7}      %
 \renewcommand\dblfloatpagefraction{.5}%
-\def\ps@headings{%
-  \let\@oddfoot\@empty
-  \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
-  \let\@mkboth\markboth
-  \def\chaptermark##1{%
-    \markright {\MakeUppercase{%
-      \ifnum \c@secnumdepth >\m@ne
-          \@chapapp\ \thechapter. \ %
-      \fi
-      ##1}}}}
-\def\ps@myheadings{%
-    \let\@oddfoot\@empty\let\@evenfoot\@empty
-    \def\@evenhead{\thepage\hfil\slshape\leftmark}%
-    \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
-    \let\@mkboth\@gobbletwo
-    \let\chaptermark\@gobble
-    \let\sectionmark\@gobble
-}
 \setlength\columnsep{10\p@}
 \setlength\columnseprule{0\p@}
 \setlength\lineskip{1\p@}
@@ -99,39 +80,11 @@
 \setlength\fboxsep{3\p@}
 \setlength\fboxrule{.4\p@}
 
-% Счётчики общего числа страниц, таблиц, рисунков и источников
-\newcounter{totalpage}
-\newcounter{totaltable} \setcounter{totaltable} {0}
-\newcounter{totalfigure}\setcounter{totalfigure}{0}
-\newcounter{totalbib}   \setcounter{totalbib}   {0}
+
 \newif\if@tablesonchapter \@tablesonchapterfalse
 \newif\if@figuresonchapter\@figuresonchapterfalse
 
-% На последней странице ставятся метки с номерами
-%  - последней страницы
-%  - числа таблиц, имеющих caption
-%  - числа рисунков, имеющих caption
-\def\totalobjects@putlabel{%
- \addtocounter{totalpage}  {\c@page}
- \addtocounter{totaltable} {\c@table}
- \addtocounter{totalfigure}{\c@figure}
- \addtocounter{totaltable} {-1}
- \addtocounter{totalfigure}{-1}
- \addtocounter{totalbib}{-1}
- \refstepcounter{totalpage}  \label{reftotalpages}
- \refstepcounter{totaltable} \label{reftotaltables}
- \refstepcounter{totalfigure}\label{reftotalfigures}
- \refstepcounter{totalbib}   \label{reftotalbibs}
-}
-\AtEndDocument{\totalobjects@putlabel}
-
-% Команды отображение общего числа ...
-\newcommand\totalpages  {\pageref{reftotalpages}}
-\newcommand\totaltables {\ref{reftotaltables}   }
-\newcommand\totalfigures{\ref{reftotalfigures}  }
-\newcommand\totalbibs   {\ref{reftotalbibs}     }
-
-% Другая реализация обсчета рисунков и таблиц.
+% Счётчики общего числа страниц, таблиц, рисунков и источников
 \RequirePackage{lastpage}                   % Пакет для подсчета общего числа страниц
 \newcounter{totfigures}
 \newcounter{tottables}
@@ -207,7 +160,6 @@
 \newcounter{part}
 \newcommand\part{%
     \clearpage
-  \thispagestyle{plain}%
   \null\vfil
   \secdef\@part\@spart}
 
@@ -251,10 +203,10 @@
     \clearpage%
     \fi%
     \if@figuresonchapter%
-    \addtocounter{totalfigure}{\c@figure}\setcounter{figure}{0}%
+    \setcounter{figure}{0}%
     \fi%
     \if@tablesonchapter%
-    \addtocounter{totaltable} {\c@table }\setcounter{table}{0}%
+    \setcounter{table}{0}%
     \fi%
     \global\@topnum\z@%
     \secdef\@chapter\@schapter}
@@ -379,7 +331,6 @@
 
 \RequirePackage{titlesec}
 
-\newlength{\NirTitleDropSkip}
 %  Эта команда должна вставлятся между двумя заголовками
 \newcommand\ttl{\vspace{\Gost@TitleDropSkip}}
 
@@ -409,7 +360,6 @@
   \RequirePackage[\Gost@encoding]{inputenc}%
   \RequirePackage[english,russian]{babel}%
   \RequirePackage{ucs}%                              %теперь из pdf можно копипастить русский текст
-  \RequirePackage{mathtext}%                         %русские буквы в формулах
 
   \InvisibleDashestrue
   \IfStrEq{\Gost@fonts}{times}{
@@ -677,19 +627,6 @@
 % Убраны скобки вокруг  \arabic{equation} -- Крищенко В.
 % В какой-то момент (после ams*?) стало появляться две пары скобок вокруг номеров формул.
 %\renewcommand{\theequation}{\arabic{equation}}
-\newlength\Gost@EqRemLen
-\newlength\Gost@@EqRemLen
-\newenvironment{eqrem}{%
- \begin{tabular}{p{\Gost@@EqRemLen}p{\Gost@EqRemLen}}
-  где
-}{
- \end{tabular}
-}
-% пояснения м.б. в виде
-%  \begin{eqrem}
-%   & X~--- неизвестная \\
-%   & Y~--- ещё неизвестная \\
-%  \end{eqrem}
 
 % ... допускается нумерация формул в пределах раздела
 
@@ -898,12 +835,7 @@
 
 
 \AtBeginDocument{%
- \makeatletter%
-  \setlength\Gost@EqRemLen{\textwidth}%
-  \addtolength\Gost@EqRemLen{-10mm}%
-  \settowidth\Gost@@EqRemLen{где}%
-  \addtolength\Gost@EqRemLen{-\Gost@@EqRemLen}%
- \makeatother%
+ \pagestyle{plain}%
 }
 
 %библиография
@@ -940,7 +872,7 @@
                 \columnseprule \z@
                 \columnsep 35\p@
                 \twocolumn[\@makeschapterhead{\indexname}]%
-                \thispagestyle{plain}\parindent\z@
+                \parindent\z@
                 \parskip\z@ \@plus .3\p@\relax
                 \let\item\@idxitem}
                {\onecolumn}
