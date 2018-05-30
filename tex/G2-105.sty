@@ -44,35 +44,38 @@
 \raggedbottom
 \onecolumn
 
-%нечто
+% для содержания
 \newcommand\@pnumwidth{1.55em}
-\renewcommand\baselinestretch{}
-\@lowpenalty   51                     % default for report class
-\@medpenalty  151                     % default for report class
-\@highpenalty 301                     % default for report class
-\renewcommand\topfraction{.7}         % default for report class
-\renewcommand\bottomfraction{.3}      % default for report class
-\renewcommand\textfraction{.2}        %
-\renewcommand\floatpagefraction{.5}   %
-\renewcommand\dbltopfraction{.7}      %
-\renewcommand\dblfloatpagefraction{.5}%
+% штрафы для \linebreak или \pagebreak
+\@lowpenalty   51
+\@medpenalty  151
+\@highpenalty 301
+% параметры, влияющие на положение float-ов
+\renewcommand\topfraction{.7}
+\renewcommand\bottomfraction{.3}
+\renewcommand\textfraction{.2}
+\renewcommand\floatpagefraction{.5}
+% для \multicol
 \setlength\columnsep{10\p@}
 \setlength\columnseprule{0\p@}
+% дополнительные отступы между близко расположенными линиями
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
+% расстояние между абзацами
 \setlength\parskip{0\p@ \@plus \p@}
+% отступы для списков
 \setlength\leftmargini {2.5em}
 \setlength\leftmarginii{2.2em}
 \setlength\labelsep  {.5em}
 \setlength\labelwidth{\leftmargini}\addtolength\labelwidth{-\labelsep}
+% половина расстояния между столбцами array
 \setlength\arraycolsep{5\p@}
+% половина расстояния между столбцами tabular
 \setlength\tabcolsep{6\p@}
+% толщина границы array
 \setlength\arrayrulewidth{.4\p@}
+% расстояние между границами в двойной границе
 \setlength\doublerulesep{2\p@}
-\setlength\tabbingsep{\labelsep}
-\setlength\fboxsep{3\p@}
-\setlength\fboxrule{.4\p@}
-
 
 \newif\if@tablesonchapter \@tablesonchapterfalse
 \newif\if@figuresonchapter\@figuresonchapterfalse
