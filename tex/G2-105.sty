@@ -332,11 +332,6 @@
 %  в оглавлении- тоже могут быть все.
 \setcounter{tocdepth}{4} %% virens: обычно только первый подраздел
 
-% Импорт необходимых пакетов
-\if@usehyperref
- \RequirePackage[unicode]{hyperref}
-\fi
-
 \RequirePackage{xstring}
 
 \newcommand\Gost@Font@Warning[1]{#1 font(s) not found. Switching to default}
@@ -350,7 +345,7 @@
 
   \RequirePackage{cmap}%                             % теперь из pdf можно копипастить русский текст
   \RequirePackage[T2A]{fontenc}%                     % T1 по этой же причине, иначе акробату плохо.
-  \RequirePackage[\Gost@encoding]{inputenc}%
+  \RequirePackage[utf8x]{inputenc}%
   \RequirePackage[english,russian]{babel}%
   \RequirePackage{ucs}%                              %теперь из pdf можно копипастить русский текст
 
