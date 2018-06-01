@@ -1,7 +1,5 @@
 \newcommand\@ptsize{}
-\newif\if@usehyperref\@usehyperreffalse
 \newif\if@usebold      \@useboldfalse
-\newcommand\Gost@encoding{}
 \newcommand\Gost@LineSpread{1.3}
 \ifPDFTeX
   \newcommand\Gost@fonts{times}
@@ -20,18 +18,12 @@
 \DeclareOption{17pt}{\renewcommand\@ptsize{17}}
 \DeclareOption{draft}{\setlength\overfullrule{5pt}}
 \DeclareOption{final}{\setlength\overfullrule{0pt}}
-\DeclareOption{usehyperref}{\@usehyperreftrue}
 \DeclareOption{usepscyr}{\renewcommand\Gost@fonts{pscyr}}
 \DeclareOption{pscyr}{\renewcommand\Gost@fonts{pscyr}}
 \DeclareOption{times}{\renewcommand\Gost@fonts{times}}
 \DeclareOption{astra}{\renewcommand\Gost@fonts{astra}}
 \DeclareOption{cm}{\renewcommand\Gost@fonts{cm}}
 \DeclareOption{bold}{\@useboldtrue}
-\DeclareOption{koi8-r}{\renewcommand\Gost@encoding{koi8-r}}
-\DeclareOption{cp1251}{\renewcommand\Gost@encoding{cp1251}}
-\DeclareOption{utf8}{\renewcommand\Gost@encoding{utf8x}}
-\DeclareOption{cp866} {\renewcommand\Gost@encoding{cp866} }
-\DeclareOption{econommode}{\newcommand\Gost@LineSpread{1.3}\erroqweqwe}
 
 \ExecuteOptions{a4paper,14pt,final,utf8}
 \ProcessOptions
