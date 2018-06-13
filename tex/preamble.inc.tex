@@ -52,3 +52,14 @@ citecolor=black, menucolor=black, filecolor=black,
 
 % Центрирование подписей к плавающим окружениям
 %\usepackage[justification=centering]{caption}
+
+\usepackage{newfloat}
+\DeclareFloatingEnvironment[placement={h},name=Equation]{eqndescNoIndent}
+\edef\fixEqndesc{\noexpand\setlength{\noexpand\parindent}{\the\parindent}\noexpand\setlength{\noexpand\parskip}{\the\parskip}}
+\newenvironment{eqndesc}{%
+\begin{eqndescNoIndent}%
+\fixEqndesc%
+}
+{\end{eqndescNoIndent}}
+
+

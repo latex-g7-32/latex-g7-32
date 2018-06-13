@@ -32,6 +32,21 @@ a= cb
 \label{F:F1}
 \end{equation}
 
+А формула~\ref{eq:fourierrow} имеет некоторый смысл.
+Кроме этого она пытается иллюстрировать применение окружения \Code{eqndesc} которое размещает формулу совместно с её описанием.
+Однако обратите внимание на нумерацию формул~\ref{eq:fourierrow} и \ref{F:F2}. 
+
+\begin{eqndesc}
+    \begin{equation}\label{eq:fourierrow}
+        f(x) = \frac{a_0}{2} + \sum\limits_{k=1}^{+\infty} A_k\cos\left(k\frac{2\pi}{\tau}x+\theta_k\right)
+    \end{equation}
+
+    где $A_k$ --- амплитуда  k-го гармонического колебания,k\\
+    $A_k$ — амплитуда $k$-го гармонического колебания,\\
+    $ k\frac{2\pi}{\tau} = k\omega$ — круговая частота гармонического колебания,\\
+    $\theta_k$ — начальная фаза $k$-го колебания.
+\end{eqndesc}
+
 
 Окружение \texttt{cases} опять работает (см. \ref{F:F2}), спасибо И. Короткову за исправления..
 
