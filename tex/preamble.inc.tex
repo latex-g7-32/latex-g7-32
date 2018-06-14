@@ -54,10 +54,13 @@ citecolor=black, menucolor=black, filecolor=black,
 %\usepackage[justification=centering]{caption}
 
 \usepackage{newfloat}
-\DeclareFloatingEnvironment[placement={h},name=Equation]{eqndescNoIndent}
+\DeclareFloatingEnvironment[
+placement={!htpb},
+name=Equation
+]{eqndescNoIndent}
 \edef\fixEqndesc{\noexpand\setlength{\noexpand\parindent}{\the\parindent}\noexpand\setlength{\noexpand\parskip}{\the\parskip}}
-\newenvironment{eqndesc}{%
-\begin{eqndescNoIndent}%
+\newenvironment{eqndesc}[1][!htpb]{%
+    \begin{eqndescNoIndent}[#1]%
 \fixEqndesc%
 }
 {\end{eqndescNoIndent}}
