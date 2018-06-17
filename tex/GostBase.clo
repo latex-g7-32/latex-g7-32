@@ -25,7 +25,7 @@
 \DeclareOption{cm}{\renewcommand\Gost@fonts{cm}}
 \DeclareOption{bold}{\@useboldtrue}
 
-\ExecuteOptions{a4paper,14pt,final,utf8}
+\ExecuteOptions{a4paper,14pt,final}
 \ProcessOptions
 
 \input{size\@ptsize.clo}
