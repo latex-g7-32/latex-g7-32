@@ -14,13 +14,11 @@
 % -- Ivan Zakharyaschev <imz@altlinux.org>.
 
 % Параметры:
-%  a4paper, a5paper - размер бумаги. По-умолчанию- a4paper.
-%  econom - одинарный интервал. По-умолчанию нет.
-%  10pt, 12pt, 14pt - шрифт. По-умолчанию- 14pt
-%  draft, final - как обычно. По-умолчанию- final
-%  usehyperref - в DVI/PDF все ссылки будут активны. По-умолчанию нет.
-%  usepscyr    - использовать шрифтовой пакет PsCyr. По-умолчанию нет.
-%  cp866,koi8-r,cp1251 - кодировка текста. По-умолчанию koi8-r.
+%  a3paper, a4paper, a5paper - размер бумаги. По умолчанию - a4paper.
+%  10pt, 12pt, 14pt, 15pt, 16pt, 17pt - шрифт. По умолчанию - 14pt
+%  draft, final - черновая или финальная версия. По умолчанию - final
+%  pscyr, times, astra, cm - выбор шрифта. По умолчанию, в PDFLaTeX - times, в XeLaTeX - astra
+%  bold - полужирные заголовки. По умолчанию - нет.
 
 % В дополнение к стандартным типам заголовков \subsection{} и \subsubsection{}
 % есть \nsubsection и \nsubsubsection (именно без параметров),
