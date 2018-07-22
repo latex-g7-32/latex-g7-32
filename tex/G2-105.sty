@@ -101,7 +101,9 @@
 \AtEndDocument{%
   \addtocounter{totfigures}{\value{figure}}%
   \addtocounter{tottables}{\value{table}}%
+  \ifGost@HaveAppendices%
   \addtocounter{totappendices}{\value{chapter}}%
+  \fi%
   \addtocounter{totbiblio}{\value{biblio}}%
   \immediate\write\@mainaux{%
     \string\gdef\string\totfig{\number\value{totfigures}}%
@@ -786,8 +788,12 @@
 
 %  4.3.4 - 4.1.14 Приложения
 
+\newif\ifGost@HaveAppendices
+\Gost@HaveAppendicesfalse
+
 \newcommand\appendix{\par
     \setcounter{secnumdepth}{4}
+    \Gost@HaveAppendicestrue
     \setcounter{chapter}{0}%
     \setcounter{section}{0}%
     \EqInChapter\PicInChapter\TableInChapter%
