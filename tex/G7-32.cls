@@ -18,7 +18,6 @@
 %  10pt, 12pt, 14pt, 15pt, 16pt, 17pt - шрифт. По умолчанию - 14pt
 %  draft, final - черновая или финальная версия. По умолчанию - final
 %  pscyr, times, astra, cm - выбор шрифта. По умолчанию, в PDFLaTeX - times, в XeLaTeX - astra
-%  bold - полужирные заголовки. По умолчанию - нет.
 
 % В дополнение к стандартным типам заголовков \subsection{} и \subsubsection{}
 % есть \nsubsection и \nsubsubsection (именно без параметров),

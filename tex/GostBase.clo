@@ -1,5 +1,4 @@
 \newcommand\@ptsize{}
-\newif\if@usebold      \@useboldfalse
 \newcommand\Gost@LineSpread{1.3}
 \ifPDFTeX
   \newcommand\Gost@fonts{times}
@@ -23,7 +22,6 @@
 \DeclareOption{times}{\renewcommand\Gost@fonts{times}}
 \DeclareOption{astra}{\renewcommand\Gost@fonts{astra}}
 \DeclareOption{cm}{\renewcommand\Gost@fonts{cm}}
-\DeclareOption{bold}{\@useboldtrue}
 
 \ExecuteOptions{a4paper,14pt,final}
 \ProcessOptions

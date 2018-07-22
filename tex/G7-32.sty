@@ -17,14 +17,12 @@
 %Latex 2012 and up
 \newcommand*{\No}{\textnumero}
 
-% ГОСТ 7.32-2001 ред. 2009 года.pdf item 6.1.2:
-% Полужирный шрифт не применяется
+% ГОСТ 7.32-2017 применяется полужирный шрифт.
+% 6.2.3 Заголовки разделов и подразделов основной части отчета следует начинать с абзацного
+% отступа и размещать после порядкового номера, печатать с прописной буквы, полужирным шрифтом,
+% не подчеркивать, без точки в конце.
 \renewcommand\GostTitleStyle{%
-    \if@usebold%
     \bfseries%
-    \else%
-    \normalfont%
-    \fi%
 }%
 
 % ГОСТ 7.32-2001 ред. 2009 года.pdf item 6.2.1:
@@ -32,19 +30,14 @@
 % строки без точки в конце и печатать прописными буквами, не
 % подчёркивая.
 \renewcommand\Gost@StructChapterStyle{
-    \if@usebold
-    \bfseries
-    \fi
-    \centering\MakeUppercase
+    \bfseries\centering\MakeUppercase%
 }
 
 % Get rid of the large font in chapter titles
 % (not sure whether this is regulated)
 % (TODO: Perhaps, this should be an option.)
 \renewcommand\Gost@MainChapterStyle{%
-    \if@usebold%
     \bfseries%
-    \fi%
 }%
 
 %стандартные части
