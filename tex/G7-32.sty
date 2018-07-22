@@ -44,10 +44,10 @@
 \newcommand\Executors{%список исполнителей
  \chapter*{Список~%
            исполнителей}%
-}
+}%
 \newcommand\Referat{%реферат
  \chapter*{Реферат}%
-}
+}%
 
 \addto\captionsrussian{%
  \def\contentsname{%
@@ -65,25 +65,22 @@
 }
 
 \newenvironment{abstract}{%То же самое, только как у белых людей -- Коротков И.
- \Referat
+ \Referat%
 }{}
 \newcommand\Defines{%глоссарий
     \newpage
-    \section*{\centering ОПРЕДЕЛЕНИЯ}%Ugly hack((( FIXME
+    \section*{\centering ТЕРМИНЫ И ОПРЕДЕЛЕНИЯ}%Ugly hack((( FIXME
     % суть в том что Defines находится внутри nomencl и только section выкидывает в нужное место
-    \section*{\mdseries В настоящем отчете о НИР применяют следующие термины с соответствующими определениями.}% Ugly hack(((
-}
-%\newcommand\Defines{%определения
-% \chapter*{Определения}%
-%}
+    %\section*{\mdseries В настоящем отчете о НИР применяют следующие термины с соответствующими определениями.}% Ugly hack(((
+}%
+
 \newcommand\Abbreviations{%обозначения и сокращения
- \chapter*{Обозначения~и~%
-           сокращения}%
+ \chapter*{Перечень сокращений и обозначений}%
 }
-\newcommand\Introduction{%введение
+\newcommand\introduction{%введение
  \chapter{Введение}%
 }
-\newcommand\Conclusion{%заключение
+\newcommand\conclusion{%заключение
  \chapter{Заключение}%
 }
 
@@ -444,7 +441,7 @@
 } % It should be used before any uses of \NirFinalStage, of course.
 
 % Обозначения и сокращения
-\RequirePackage{nomencl}%
+\RequirePackage[russian]{nomencl}%
 
 \def\three@digits#1{\ifnum#1>99\else\ifnum#1>9 0\else00\fi\fi\number#1}
 
