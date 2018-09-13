@@ -22,6 +22,7 @@
 % отступа и размещать после порядкового номера, печатать с прописной буквы, полужирным шрифтом,
 % не подчеркивать, без точки в конце.
 \renewcommand\GostTitleStyle{%
+    \hyphenpenalty=10000%
     \bfseries%
 }%
 
@@ -30,6 +31,7 @@
 % строки без точки в конце и печатать прописными буквами, не
 % подчёркивая.
 \renewcommand\Gost@StructChapterStyle{
+    \hyphenpenalty=10000%
     \bfseries\centering\MakeUppercase%
 }
 
@@ -37,6 +39,7 @@
 % (not sure whether this is regulated)
 % (TODO: Perhaps, this should be an option.)
 \renewcommand\Gost@MainChapterStyle{%
+    \hyphenpenalty=10000%
     \bfseries%
 }%
 
