@@ -825,24 +825,24 @@
 
 % style for toc item
 \renewcommand*\@dottedtocline[5]{
-    \ifnum #1 > \c@tocdepth \else
+    \ifnum#1>\c@tocdepth \else
     \addpenalty{-\@highpenalty}%
-    \vskip \z@ \@plus.2\p@
-    \leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
-    \parindent #2\relax\@afterindenttrue
-    \interlinepenalty\@M
-    \leavevmode
+    \vskip\z@\@plus.2\p@%
+    \leftskip#2\relax\rightskip\@tocrmarg\parfillskip-\rightskip%
+    \parindent#2\relax\@afterindenttrue%
+    \interlinepenalty\@M%
+    \leavevmode%
     \setlength\@tempdima{#3}%
-    \begingroup
-    \parindent \z@ \rightskip \@pnumwidth
-    \parfillskip -\@pnumwidth
-    \leavevmode %\bfseries
-    \advance\leftskip\@tempdima
-    \hskip -\leftskip
-    \@chapapp\hspace{.5em} #4\nobreak\dotfill \nobreak\hb@xt@\@pnumwidth{\hss #5}\par
-    \penalty\@highpenalty
-    \endgroup
-    \fi
+    \begingroup%
+    \parindent\z@\rightskip\@pnumwidth%
+    \parfillskip-\@pnumwidth%
+    \leavevmode%\bfseries
+    \advance\leftskip\@tempdima%
+    \hskip-\leftskip%
+    \@chapapp\hspace{.1em}#4\nobreak\dotfill\nobreak\hb@xt@\@pnumwidth{\hss #5}\par%
+    \penalty\@highpenalty%
+    \endgroup%
+\fi%
 }
 
 
