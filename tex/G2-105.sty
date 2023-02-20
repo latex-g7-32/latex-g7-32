@@ -195,15 +195,15 @@
 
 % Chapter definition, see report class as reference
 \newcommand\chapter{
-    {\addtocounter{totfigures}{\value{figure}}}
-    {\addtocounter{tottables}{\value{table}}}
     \if@breakingbeforechapter%
     \clearpage%
     \fi%
     \if@figuresonchapter%
+    {\addtocounter{totfigures}{\value{figure}}}%
     \setcounter{figure}{0}%
     \fi%
     \if@tablesonchapter%
+    {\addtocounter{tottables}{\value{table}}}%
     \setcounter{table}{0}%
     \fi%
     \global\@topnum\z@%
