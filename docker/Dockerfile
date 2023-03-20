@@ -1,14 +1,15 @@
-FROM debian:stretch
+FROM debian:bookworm
 
 RUN apt-get update \
     && apt-get install --assume-yes cmake make \
                                     git \
                                     inkscape dia graphviz perl ghostscript \
-                                    python-pygments \
+                                    python3-pygments \
                                     imagemagick \
                                     texlive-latex-base texlive-lang-cyrillic \
                                     texlive-xetex texlive-latex-extra \
-                                    texlive-generic-extra texlive-fonts-extra \
+                                    texlive-plain-generic texlive-fonts-extra \
+                                    texlive-extra-utils \
     && (dpkg-query --showformat '${binary:Package}\n' --show '*-doc' \
         | xargs apt-get -y remove) \
     && apt-get clean \
