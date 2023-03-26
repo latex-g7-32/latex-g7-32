@@ -1,6 +1,5 @@
 FROM debian:bookworm
 
-# Update package lists and install necessary packages
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive \
        apt-get install --no-install-recommends --assume-yes \
@@ -29,8 +28,11 @@ RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* \
               /usr/share/doc/* /usr/share/man/*
 
-VOLUME ["/doc/"]
+RUN mkdir -p "/usr/share/fonts/truetype/"
+ADD --chown=root:root --chmod=644 ../fonts/*.ttf /usr/share/fonts/truetype/
+RUN fc-cache -f -v
 
-ADD scripts /scripts/
+WORKDIR /doc
+COPY ./docker/scripts /scripts
 
 ENTRYPOINT ["/scripts/boot.sh"]
