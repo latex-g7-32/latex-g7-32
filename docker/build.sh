@@ -34,7 +34,7 @@ build() {
         if test $succeeded -eq 1 ; then
             tgt_file="$RESDIR/rpz-${buildsystem}-${latex}.pdf"
             cp rpz.pdf "$tgt_file"
-            chmod a=rwx "$tgt_file"
+            chmod a=rw "$tgt_file"
         fi
     )
     rm -rf "$tmpdir"
