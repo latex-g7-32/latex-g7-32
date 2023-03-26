@@ -227,9 +227,11 @@ python без babun я не знаю, но исполняемый файл pygme
 дистрибутиве) создайте образ:
 
 ```Shell
-cd /path/to/latex-g7-32
-cd docker
-docker build -t somename .
+latex_g7_32="/path/to/latex-g7-32"
+```
+
+```Shell
+docker build -t latex-g7-32 -f "$latex_g7_32/docker/Dockerfile" "$latex_g7_32"
 ```
 
 Все необходимые зависимости будут установлены внутри образа.
@@ -237,8 +239,8 @@ docker build -t somename .
 Затем сборку можно будет осуществлять следующим образом:
 
 ```Shell
-rm -f /path/to/latex-g7-32/results
-docker run --volume /path/to/latex-g7-32/:/doc/ somename
+gio trash "$latex_g7_32/results"
+docker run --volume "$latex_g7_32":/doc latex-g7-32
 ```
 
 Созданные файлы появятся в каталоге `/path/to/latex-g7-32/results`, его 
