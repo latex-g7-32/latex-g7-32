@@ -4,9 +4,7 @@ set -e
 set -x
 set -u
 
-ARGS_make_pdflatex="LATEX=pdflatex"
 ARGS_make_xelatex=""
-ARGS_cmake_pdflatex="-DPREFER_XELATEX=false"
 ARGS_cmake_xelatex=""
 
 RESDIR="/doc/results"
@@ -31,8 +29,6 @@ build() {
                 make
                 cp rpz.pdf ..
             ) || succeeded=0
-        else
-            eval 'make $ARGS_make_'$latex || succeeded=0
         fi
 
         if test $succeeded -eq 1 ; then
