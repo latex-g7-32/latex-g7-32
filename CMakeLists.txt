@@ -80,6 +80,7 @@ function(glob_in_dir varname dir)
     set(${varname} ${sources_abs} PARENT_SCOPE)
 endfunction()
 glob_in_dir(tex_sources "${TEX_TREE}" *.tex *.sty *.clo *.bst *.cls *.bib)
+glob_in_dir(bst_sources "${CMAKE_SOURCE_DIR}/GOST/bibtex/bst/gost" *.bst)
 glob_in_dir(listing_sources "${CMAKE_SOURCE_DIR}/src" *)
 glob_in_dir(img_sources "${CMAKE_SOURCE_DIR}/graphics/img" *)
 glob_in_dir(svg_sources "${CMAKE_SOURCE_DIR}/graphics/svg" *.svg)
@@ -91,6 +92,18 @@ set(tex_mirror_sources)
 foreach(tex_src ${tex_sources})
     file(RELATIVE_PATH tex_src_rel "${TEX_TREE}" "${tex_src}")
     set(tex_dst "${TEX_MIRROR_TREE}/${tex_src_rel}")
+    add_custom_command(
+        OUTPUT "${tex_dst}"
+        VERBATIM
+        COMMAND "${CMAKE_COMMAND}" -E copy "${tex_src}" "${tex_dst}"
+        DEPENDS "${tex_src}"
+    )
+    list(APPEND tex_mirror_sources "${tex_dst}")
+endforeach()
+#▶2 Bst sources
+foreach(tex_src ${bst_sources})
+    get_filename_component(tex_src_name "${tex_src}" NAME)
+    set(tex_dst "${TEX_MIRROR_TREE}/${tex_src_name}")
     add_custom_command(
         OUTPUT "${tex_dst}"
         VERBATIM
@@ -125,7 +138,7 @@ foreach(svg_src ${svg_sources})
         WORKING_DIRECTORY "${INC_SVG_TREE}"
         VERBATIM
         COMMAND
-            "${INKSCAPE_COMMAND}" -A "${svg_dst_tmp_rel}" "${svg_src_rel}"
+            "${INKSCAPE_COMMAND}" -o "${svg_dst_tmp_rel}" "${svg_src_rel}"
         COMMAND
             "${PDFCROP_COMMAND}" "${svg_dst_tmp_rel}" "${svg_dst_rel}"
         COMMAND
@@ -150,7 +163,7 @@ foreach(dia_src ${dia_sources})
         COMMAND
             "${DIA_COMMAND}" -e "${dia_dst_svg_tmp_rel}" -t svg "${dia_src_rel}"
         COMMAND
-            "${INKSCAPE_COMMAND}" -A "${dia_dst_pdf_tmp_rel}"
+            "${INKSCAPE_COMMAND}" -o "${dia_dst_pdf_tmp_rel}"
                                   "${dia_dst_svg_tmp_rel}"
         COMMAND
             "${PDFCROP_COMMAND}" "${dia_dst_pdf_tmp_rel}" "${dia_dst_rel}"
@@ -178,7 +191,7 @@ foreach(dot_src ${dot_sources})
         COMMAND
             "${DOT_COMMAND}" -Tsvg "-o${dot_dst_svg_tmp_rel}" "${dot_src_rel}"
         COMMAND
-            "${INKSCAPE_COMMAND}" -A "${dot_dst_pdf_tmp_rel}"
+            "${INKSCAPE_COMMAND}" -o "${dot_dst_pdf_tmp_rel}"
                                   "${dot_dst_svg_tmp_rel}"
         COMMAND
             "${PDFCROP_COMMAND}" "${dot_dst_pdf_tmp_rel}" "${dot_dst_rel}"
@@ -280,3 +293,4 @@ add_custom_target(
     DEPENDS pdf "${GSCONV_SCRIPT}"
 )
 # vim: foldmarker=▶,▲ cms=#%s
+
