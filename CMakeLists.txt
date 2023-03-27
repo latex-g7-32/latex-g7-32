@@ -220,7 +220,6 @@ foreach(listing_src ${listing_sources})
     list(APPEND mirror_listing_sources "${listing_dst}")
 endforeach()
 #▶1 Main target
-# TODO(?) use texdepend
 add_custom_target(
     latex-stage1
     WORKING_DIRECTORY "${TEX_MIRROR_TREE}"
