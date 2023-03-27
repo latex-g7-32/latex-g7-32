@@ -125,7 +125,7 @@ foreach(svg_src ${svg_sources})
         WORKING_DIRECTORY "${INC_SVG_TREE}"
         VERBATIM
         COMMAND
-            "${INKSCAPE_COMMAND}" -A "${svg_dst_tmp_rel}" "${svg_src_rel}"
+            "${INKSCAPE_COMMAND}" -o "${svg_dst_tmp_rel}" "${svg_src_rel}"
         COMMAND
             "${PDFCROP_COMMAND}" "${svg_dst_tmp_rel}" "${svg_dst_rel}"
         COMMAND
@@ -150,7 +150,7 @@ foreach(dia_src ${dia_sources})
         COMMAND
             "${DIA_COMMAND}" -e "${dia_dst_svg_tmp_rel}" -t svg "${dia_src_rel}"
         COMMAND
-            "${INKSCAPE_COMMAND}" -A "${dia_dst_pdf_tmp_rel}"
+            "${INKSCAPE_COMMAND}" -o "${dia_dst_pdf_tmp_rel}"
                                   "${dia_dst_svg_tmp_rel}"
         COMMAND
             "${PDFCROP_COMMAND}" "${dia_dst_pdf_tmp_rel}" "${dia_dst_rel}"
@@ -178,7 +178,7 @@ foreach(dot_src ${dot_sources})
         COMMAND
             "${DOT_COMMAND}" -Tsvg "-o${dot_dst_svg_tmp_rel}" "${dot_src_rel}"
         COMMAND
-            "${INKSCAPE_COMMAND}" -A "${dot_dst_pdf_tmp_rel}"
+            "${INKSCAPE_COMMAND}" -o "${dot_dst_pdf_tmp_rel}"
                                   "${dot_dst_svg_tmp_rel}"
         COMMAND
             "${PDFCROP_COMMAND}" "${dot_dst_pdf_tmp_rel}" "${dot_dst_rel}"
@@ -279,3 +279,4 @@ add_custom_target(
     DEPENDS pdf "${GSCONV_SCRIPT}"
 )
 # vim: foldmarker=▶,▲ cms=#%s
+
