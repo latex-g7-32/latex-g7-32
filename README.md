@@ -5,8 +5,6 @@
 
 Изначально был написан в расчёте на `pdfLaTeX`, с коммита `23b1612` добавлена поддержка `XeLaTeX`. Помимо стилей содержит "рыбу" РПЗ (в той же папке `tex`). 
 
-Также имеются необходимые макеты (layout) для [LyX](http://ru.wikipedia.org/wiki/LyX) (редактор, редактирование в котором больше похоже на работу в `Microsoft Word`, чем на написание `LaTeX` кода, но результат получается такой же хороший, как в `LaTeX`). Для использования `LyX` также нужно скопировать стили LaTeX (из папки `tex`).
-
 ## Результат
 См. вкладку [Релизы](https://github.com/rominf/latex-g7-32/releases).
 
@@ -78,19 +76,6 @@ cm-unicode-fonts texlive-minted texlive-polyglossia texlive-xecyr
 ```
 inkscape dia graphviz python pygments
 ```
-
-#### LyX
-```
-lyx
-```
-
-#### Установочный скрипт
-```
-python3.4
-```
-На текущий момент не работает см. [#26](https://github.com/rominf/latex-g7-32/issues/11).
-
-Копирует (или перемещает) файлы со стилями в общую `texmf` папку, макеты `LyX` в папку с настройками `LyX`. Для получения помощи вызовите `install.py --help`.
 
 ## Использование РПЗ
 После изменения РПЗ создайте директорию build в корне проекта, затем `cd ./build & cmake .. && make`. В ней появится файл РПЗ - rpz.pdf. Cmake по умолчанию собирает с xelatex.
@@ -265,13 +250,6 @@ docker run --volume /path/to/latex-g7-32/:/doc/ somename
 
 Пути к исполняемым файлам всех программ должны быть в `PATH`, при необходимости нужно их добавить туда вручную. Пример содержимого этой переменной:
 `C:\Python27\;C:\Python27\Scripts;C:\texlive\2017\tlpkg\tlperl\bin;C:\texlive\2017\bin\win32;C:\Program Files (x86)\GnuWin32\bin;C:\Program Files\Inkscape;C:\Program Files (x86)\Dia\bin;C:\Program Files (x86)\Graphviz2.38\bin;`
-
-## Использование LyX
-Откройте `lyx/rpz.lyx` и редактируйте.
-
-В первый раз необходимо настроить параметры вызова XeLaTeX, для того, чтобы `minted` работал.
-
-Настроки -> Обработка файлов -> Конверторы -> LaTeX (XeTeX) -> PDF (XeTeX) -> Изменить -> Преобразователь: `xelatex -shell-escape $$i`.
 
 ## Шрифты
 
