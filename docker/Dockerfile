@@ -32,10 +32,6 @@ RUN mkdir -p "/usr/share/fonts/truetype/"
 ADD --chown=root:root --chmod=644 ../fonts/*.ttf /usr/share/fonts/truetype/
 RUN fc-cache -f -v
 
-ENV GIT_SSL_NO_VERIFY=true
-RUN git clone -b master --depth 1 https://github.com/kia999/GOST.git
-ENV BSTINPUTS=/GOST/bibtex/bst/gost
-
 WORKDIR /doc
 COPY ./docker/scripts /scripts
 
