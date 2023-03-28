@@ -82,6 +82,7 @@ endfunction()
 glob_in_dir(tex_sources "${TEX_TREE}" *.tex *.bib)
 glob_in_dir(bst_sources "${CMAKE_SOURCE_DIR}/GOST/bibtex/bst/gost" *.bst)
 glob_in_dir(library_sources "${CMAKE_SOURCE_DIR}/library" *.sty *.cls *.clo)
+glob_in_dir(style_sources "${CMAKE_SOURCE_DIR}/G7-32" *.sty *.cls *.clo)
 glob_in_dir(listing_sources "${CMAKE_SOURCE_DIR}/src" *)
 glob_in_dir(img_sources "${CMAKE_SOURCE_DIR}/graphics/img" *)
 glob_in_dir(svg_sources "${CMAKE_SOURCE_DIR}/graphics/svg" *.svg)
@@ -101,7 +102,7 @@ foreach(tex_src ${tex_sources})
     )
     list(APPEND tex_mirror_sources "${tex_dst}")
 endforeach()
-foreach(tex_src ${bst_sources} ${library_sources})
+foreach(tex_src ${bst_sources} ${style_sources} ${library_sources})
     get_filename_component(tex_src_name "${tex_src}" NAME)
     set(tex_dst "${TEX_MIRROR_TREE}/${tex_src_name}")
     add_custom_command(
@@ -292,4 +293,3 @@ add_custom_target(
     DEPENDS pdf "${GSCONV_SCRIPT}"
 )
 # vim: foldmarker=▶,▲ cms=#%s
-
