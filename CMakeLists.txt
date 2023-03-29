@@ -1,5 +1,5 @@
 #▶1 Header
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 3.18.4)
 
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
@@ -28,19 +28,14 @@ find_package(Perl REQUIRED)
 #▶2 Definitions
 set(PREFER_XELATEX on CACHE BOOL "Prefer XeLaTeX over PDFLaTeX")
 #▶2 Processing
-# CMake-2.8.7 actually has no XELATEX component, so it will not define 
-# XELATEX_COMPILER. Neither it will error out on unknown component above.
 if(PREFER_XELATEX)
-    if(NOT DEFINED XELATEX_COMPILER)
-        require_program(XELATEX_COMPILER xelatex)
-    endif()
-    set(USED_LATEX_COMPILER
-        "${XELATEX_COMPILER}" -synctex=1 -interaction=nonstopmode -shell-escape)
+    require_program(USED_LATEX_COMPILER latexmk)
 else()
-    set(USED_LATEX_COMPILER "${PDFLATEX_COMPILER}")
+    require_program(USED_LATEX_COMPILER latexmk)
     require_program(ICONV_COMMAND iconv)
 endif()
 #▶1 Variables
+set(LATEXMKRC "${CMAKE_SOURCE_DIR}/.latexmkrc")
 set(TEX_TREE "${CMAKE_SOURCE_DIR}/tex")
 
 set(MIRROR_TREE "${CMAKE_BINARY_DIR}/mirror")
@@ -52,9 +47,6 @@ set(INC_SVG_TREE "${INC_TREE}/svg")
 set(INC_DOT_TREE "${INC_TREE}/dot")
 set(INC_SRC_TREE "${INC_TREE}/src")
 set(MAIN_TEX rpz)
-set(NOM_NLO "${MAIN_TEX}.nlo")
-set(NOM_IST nomencl.ist)
-set(NOM_NLS "${MAIN_TEX}.nls")
 
 set(TARGET_PDF_BASE rpz.pdf)
 set(TARGET_PDF "${CMAKE_BINARY_DIR}/${TARGET_PDF_BASE}")
@@ -89,6 +81,8 @@ glob_in_dir(svg_sources "${CMAKE_SOURCE_DIR}/graphics/svg" *.svg)
 glob_in_dir(dia_sources "${CMAKE_SOURCE_DIR}/graphics/dia" *.dia)
 glob_in_dir(dot_sources "${CMAKE_SOURCE_DIR}/graphics/dot" *.dot)
 #▶1 Generate sources
+#▶2 .latexmkrc
+configure_file(${LATEXMKRC} ${TEX_MIRROR_TREE}/.latexmkrc COPYONLY)
 #▶2 Tex sources
 set(tex_mirror_sources)
 foreach(tex_src ${tex_sources})
@@ -235,42 +229,14 @@ foreach(listing_src ${listing_sources})
 endforeach()
 #▶1 Main target
 add_custom_target(
-    latex-stage1
+    latex-stage    
     WORKING_DIRECTORY "${TEX_MIRROR_TREE}"
     VERBATIM
-    COMMAND ${USED_LATEX_COMPILER} "${MAIN_TEX}"
+    COMMAND "${USED_LATEX_COMPILER}" "${MAIN_TEX}"
     DEPENDS
         ${svg_pdfs} ${dia_pdfs} ${dot_pdfs}
         ${tex_mirror_sources} ${mirror_listing_sources}
         ${img_mirror_sources}
-)
-add_custom_target(
-    bibtex
-    WORKING_DIRECTORY "${TEX_MIRROR_TREE}"
-    VERBATIM
-    COMMAND ${BIBTEX_COMPILER} "${MAIN_TEX}"
-    DEPENDS latex-stage1
-)
-add_custom_target(
-    makeindex
-    WORKING_DIRECTORY "${TEX_MIRROR_TREE}"
-    VERBATIM
-    COMMAND ${MAKEINDEX_COMMAND} "${NOM_NLO}" -s "${NOM_IST}" -o "${NOM_NLS}"
-    DEPENDS latex-stage1
-)
-add_custom_target(
-    latex-stage2
-    WORKING_DIRECTORY "${TEX_MIRROR_TREE}"
-    VERBATIM
-    COMMAND ${USED_LATEX_COMPILER} "${MAIN_TEX}"
-    DEPENDS bibtex makeindex
-)
-add_custom_target(
-    latex-stage3
-    WORKING_DIRECTORY "${TEX_MIRROR_TREE}"
-    VERBATIM
-    COMMAND ${USED_LATEX_COMPILER} "${MAIN_TEX}"
-    DEPENDS latex-stage2
 )
 add_custom_target(
     pdf
@@ -278,7 +244,7 @@ add_custom_target(
     VERBATIM
     WORKING_DIRECTORY "${TEX_MIRROR_TREE}"
     COMMAND "${CMAKE_COMMAND}" -E copy "${TARGET_PDF_BASE}" "${TARGET_PDF}"
-    DEPENDS latex-stage3
+    DEPENDS latex-stage
 )
 add_custom_target(
     printpdfs

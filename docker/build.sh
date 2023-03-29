@@ -4,8 +4,8 @@ set -e
 set -x
 set -u
 
-ARGS_make_xelatex=""
 ARGS_cmake_xelatex=""
+ARGS_cmake_pdflatex="-DPREFER_XELATEX=false"
 
 RESDIR="/doc/results"
 
