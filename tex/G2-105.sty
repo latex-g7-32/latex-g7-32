@@ -567,9 +567,37 @@
     \setlength{\labelsep}{2\GostItemGap}%     от метки до текста
 }
 
-% GOST 7.32 p. 6.4.6 excluded letters ё, з, й, о, ч, ъ, ы, ь. 
-\renewcommand*{\Asbuk}[1]{\protect\StrChar{АБВГДЕЖИКЛМНПРСТУФХЦШЩЭЮЯ}{\the\@nameuse{c@#1}}}
-\renewcommand*{\asbuk}[1]{\protect\StrChar{абвгдежиклмнпрстуфхцшщэюя}{\the\@nameuse{c@#1}}}
+% GOST 7.32 p. 6.4.6 excluded letters ё, з, й, о, ч, ъ, ы, ь.
+\def\Asbuk#1{\expandafter\gost@russian@Alph\csname c@#1\endcsname}
+\if@uni@ode
+  \def\gost@russian@Alph#1{\ifcase#1\or
+    А\or Б\or В\or Г\or Д\or Е\or Ж\or
+    И\or К\or Л\or М\or Н\or
+    П\or Р\or С\or Т\or У\or Ф\or Х\or
+    Ц\or Ш\or Щ\or Э\or Ю\or Я\else\@ctrerr\fi}
+\else
+  \def\gost@russian@Alph#1{\ifcase#1\or
+    \CYRA\or\CYRB\or\CYRV\or\CYRG\or\CYRD\or\CYRE\or\CYRZH\or
+    \CYRI\or\CYRK\or\CYRL\or\CYRM\or\CYRN\or
+    \CYRP\or\CYRR\or\CYRS\or\CYRT\or\CYRU\or\CYRF\or\CYRH\or
+    \CYRC\or\CYRSH\or\CYRSHCH\or\CYREREV\or\CYRYU\or
+    \CYRYA\else\@ctrerr\fi}
+\fi
+\def\asbuk#1{\expandafter\gost@russian@alph\csname c@#1\endcsname}
+\if@uni@ode
+  \def\gost@russian@alph#1{\ifcase#1\or
+    а\or б\or в\or г\or д\or е\or ж\or
+    и\or к\or л\or м\or н\or
+    п\or р\or с\or т\or у\or ф\or х\or
+    ц\or ш\or щ\or э\or ю\or я\else\@ctrerr\fi}
+\else
+  \def\gost@russian@alph#1{\ifcase#1\or
+    \cyra\or\cyrb\or\cyrv\or\cyrg\or\cyrd\or\cyre\or\cyrzh\or
+    \cyri\or\cyrk\or\cyrl\or\cyrm\or\cyrn\or
+    \cyrp\or\cyrr\or\cyrs\or\cyrt\or\cyru\or\cyrf\or\cyrh\or
+    \cyrc\or\cyrsh\or\cyrshch\or\cyrerev\or\cyryu\or
+    \cyrya\else\@ctrerr\fi}
+\fi
 
 \renewcommand{\@listI} {\Gost@List}
 \renewcommand{\@listii}{\Gost@NestedList}
