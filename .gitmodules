@@ -1,4 +1,0 @@
-[submodule "GOST"]
-	path = GOST
-	url = https://github.com/kia999/GOST
-	branch = master
