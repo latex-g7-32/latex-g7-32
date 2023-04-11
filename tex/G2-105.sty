@@ -571,9 +571,8 @@
   \PackageError{G2-105}{if@gost@uni@ode already defined.\MessageBreak
     Please contact author of G2-105.sty}
   \relax
-\else
-  \newif\if@gost@uni@ode%
 \fi
+\newif\if@gost@uni@ode
 \ifdefined\luatexversion \@gost@uni@odetrue \else
 \ifdefined\XeTeXrevision \@gost@uni@odetrue \fi\fi
 
