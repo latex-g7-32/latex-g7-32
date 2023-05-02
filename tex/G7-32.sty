@@ -70,11 +70,17 @@
 \newenvironment{abstract}{%То же самое, только как у белых людей -- Коротков И.
  \Referat%
 }{}
+
+\providecommand{\DefinesIntro}{В настоящем отчете о НИР применяют следующие термины с соответствующими определениями.}
 \newcommand\Defines{%глоссарий
     \newpage
     \section*{\centering ТЕРМИНЫ И ОПРЕДЕЛЕНИЯ}%Ugly hack((( FIXME
     % суть в том что Defines находится внутри nomencl и только section выкидывает в нужное место
-    \section*{\mdseries В настоящем отчете о НИР применяют следующие термины с соответствующими определениями.}% Ugly hack(((
+    \renewcommand\section{\@startsection {section}{1}{\parindent}%
+    {\parskip}
+    {\parskip}
+    {\normalfont}}
+    \section*{\DefinesIntro}
 }%
 
 \newcommand\Abbreviations{%обозначения и сокращения
