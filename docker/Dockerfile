@@ -1,36 +1,52 @@
-FROM debian:bookworm
+FROM alpine:latest AS font-builder
 
-RUN apt-get update \
+RUN apk --update add openssl wget unzip \
+  && rm -rf /var/cache/apk/* \
+  && mkdir -p /fonts \
+  && cd /fonts \
+  && wget http://astralinux.ru/information/fonts-astra/font-ptastra-serif-ver1003.zip \
+  && wget http://astralinux.ru/information/fonts-astra/font-ptastrasans-ttf-ver1002.zip \
+  && unzip font-ptastra-serif-ver1003.zip \
+  && unzip font-ptastrasans-ttf-ver1002.zip \
+  && rm -rf *.zip \
+  && apk add msttcorefonts-installer \
+  && update-ms-fonts 
+
+FROM debian:bookworm AS doc-builder
+
+COPY --from=font-builder /fonts /usr/share/fonts/truetype/astra/
+COPY --from=font-builder /usr/share/fonts/truetype/msttcorefonts /usr/share/fonts/truetype/msttcorefonts
+
+RUN chmod -R 644 /usr/share/fonts/truetype/astra/* \
+  && chmod -R 644 /usr/share/fonts/truetype/msttcorefonts/* \
+  && apt-get update \
   && DEBIAN_FRONTEND=noninteractive \
   apt-get install --no-install-recommends --assume-yes \
-  cmake \
-  make \
-  git \
-  inkscape \
-  dia \
-  graphviz \
-  perl \
-  ghostscript \
-  python3-pygments \
-  imagemagick \
   texlive-latex-base \
-  texlive-lang-cyrillic \
   texlive-xetex \
   texlive-latex-extra \
   texlive-plain-generic \
-  texlive-fonts-extra \
-  texlive-extra-utils
-
-RUN dpkg-query --showformat='${binary:Package}\n' --show '*-doc' \
-  | xargs apt-get -y remove
-
-RUN apt-get clean \
+  texlive-lang-cyrillic \
+  texlive-science \
+  python3-pygments \
+  cm-super \
+  fonts-liberation \
+  texlive-fonts-recommended \
+  fontconfig \
+  cmake \
+  make \
+  inkscape \
+  dia \
+  graphviz \
+  imagemagick \
+  texlive-extra-utils \ 
+  ghostscript \
+  && dpkg-query --showformat='${binary:Package}\n' --show '*-doc' \
+  | xargs apt-get -y remove \
+  && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* \
-  /usr/share/doc/* /usr/share/man/*
-
-RUN mkdir -p "/usr/share/fonts/truetype/"
-ADD --chown=root:root --chmod=644 ../fonts/*.ttf /usr/share/fonts/truetype/
-RUN fc-cache -f -v
+  /usr/share/doc/* /usr/share/man/* \
+  && fc-cache -f -v
 
 WORKDIR /doc
 COPY ./docker/scripts /scripts
