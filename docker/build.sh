@@ -4,7 +4,7 @@ set -e
 set -x
 set -u
 
-ARGS_make_xelatex=""
+ARGS_cmake_pdflatex="-DPREFER_XELATEX=false"
 ARGS_cmake_xelatex=""
 
 RESDIR="/doc/results"
@@ -45,4 +45,6 @@ build() {
 mkdir "$RESDIR"
 chmod a=rwx "$RESDIR"
 
-build cmake xelatex
+for latex in pdflatex xelatex; do
+	build cmake ${latex}
+done
