@@ -1,4 +1,4 @@
-Стиль LaTeX для оформления отчетов о НИР, расчётно-пояснительной записки к курсовым и дипломным работам (ГОСТ 7.32-2001 и ГОСТ РВ 15.110-2003)
+Шаблон LaTeX для оформления отчетов о НИР, расчётно-пояснительной записки к курсовым и дипломным работам (ГОСТ 7.32-2001 и ГОСТ РВ 15.110-2003)
 ===========
 
 Ориентирован на студентов IT специальностей, научных работников и др. кому необходимо составлять документы по ГОСТ 7.32-2001 или ГОСТ РВ 15.110-2003.
@@ -8,7 +8,7 @@
 Также имеются необходимые макеты (layout) для [LyX](http://ru.wikipedia.org/wiki/LyX) (редактор, редактирование в котором больше похоже на работу в `Microsoft Word`, чем на написание `LaTeX` кода, но результат получается такой же хороший, как в `LaTeX`). Для использования `LyX` также нужно скопировать стили LaTeX (из папки `tex`).
 
 ## Результат
-См. вкладку [Релизы](https://github.com/rominf/latex-g7-32/releases).
+См. вкладку [Релизы](https://github.com/latex-g7-32/latex-g7-32/releases).
 
 ### Попробовать online
 Спасибо [@KMax](https://github.com/rominf/latex-g7-32/issues/11), теперь [можно попробовать](https://www.sharelatex.com/project/54885f204b9308be064f025e) шаблон в ShareLaTeX.
@@ -23,14 +23,14 @@
 
 C помощью git:
 ```
-git clone https://github.com/latex-g7-32/latex-g7-32
+git clone --recurse-submodules https://github.com/latex-g7-32/latex-g7-32
 ```
 Или скачать zip:
 ```
-https://github.com/latex-g7-32/latex-g7-32/archive/master.zip:
+https://github.com/latex-g7-32/latex-g7-32/archive/refs/heads/7.32-2017-dev.zip
 ```
 
-Или взять из [релизов](https://github.com/rominf/latex-g7-32/releases).
+Или взять из [релизов](https://github.com/latex-g7-32/latex-g7-32/releases).
 Однако, релизы формируются с течением времени и могут содержать существенно устаревшую версию.
 
 Скопировать файлы: 
