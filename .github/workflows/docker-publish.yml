@@ -3,6 +3,7 @@ name: Build and Publish Docker Image
 on:
   push:
     branches: ["7.32-2017-dev"]
+    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
@@ -36,8 +37,8 @@ jobs:
           images: ghcr.io/${{ github.repository }}
           tags: |
             type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern=v{{version}}
+            type=semver,pattern=v{{major}}.{{minor}}
             type=sha,prefix=sha-
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
 
